@@ -1,0 +1,49 @@
+version: "3"
+
+services:
+  web:
+    image: docker.io/node:18.20.0-bookworm
+    container_name: fedired_web
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "3030:3030"
+    networks:
+      - fedirednet
+    environment:
+      NODE_ENV: production
+      PGPASSWORD: password
+      URL: http://localhost:3030
+    volumes:
+      - ./fedired:/fedired:rw
+      - ./docker-entrypoint.sh:/docker-entrypoint.sh:ro
+    entrypoint: /docker-entrypoint.sh
+
+  redis:
+    restart: unless-stopped
+    image: docker.io/redis:7.0-alpine
+    container_name: fedired_redis
+    networks:
+      - fedirednet
+    ports:
+      - "26379:6379"
+    volumes:
+      - ./redis:/data
+
+  db:
+    restart: unless-stopped
+    image: docker.io/groonga/pgroonga:3.1.8-alpine-12
+    container_name: fedired_db
+    networks:
+      - fedirednet
+    env_file:
+      - ../config.env
+    ports:
+      - "25432:5432"
+    volumes:
+      - ./db:/var/lib/postgresql/data
+
+networks:
+    fedirednet:
