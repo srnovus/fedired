@@ -29,7 +29,7 @@ Fedired is a powerful, decentralized social media platform built on top of Missk
 
 - **Donations**:  
   <a href="https://patreon.com/fedired">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Patreon_logo.svg" alt="Patreon" width="150"/>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Patreon_logo.svg" alt="Patreon" width="40"/>
   </a>
   
 - **Official Account**: Connect with us at [@fedired@fedired.com](https://fedired.com/@fedired).
