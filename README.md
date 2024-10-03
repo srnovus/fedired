@@ -21,7 +21,8 @@ Fedired is a powerful, decentralized social media platform built on top of Missk
 ## Documentation
 
 - [Installation Guide](https://github.com/fedired-dev/fedired/-/blob/main/docs/install.md)
-- [Installation Using Containers](https://github.com/fedired-dev/fedired/-/blob/main/docs/install-container.md)
+- [Installation Using Containers](https://github.com/fedired-dev/fedired/blob/main/docs/install-container.md)
+
 
 ---
 
