@@ -54,7 +54,7 @@ services:
 
   db:
     restart: unless-stopped
-    image: docker.io/postgres:16-alpine
+     image: groonga/pgroonga:latest
     container_name: fedired_db
     networks:
       - calcnet
