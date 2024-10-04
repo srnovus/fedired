@@ -37,7 +37,7 @@ port: 3000
 #───┘ PostgreSQL configuration └────────────────────────────────
 
 db:
-  host: localhost
+  host: db
   port: 5432
   #ssl: false
   # Database name
@@ -60,7 +60,7 @@ db:
 #───┘ Redis configuration └─────────────────────────────────────
 
 redis:
-  host: localhost
+  host: redis
   port: 6379
   #tls:
   #  host: localhost
