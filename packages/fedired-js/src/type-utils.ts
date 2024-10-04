@@ -1,8 +1,8 @@
 import type { Endpoints } from "./api.types.js";
 
-export type PropertyOfType<Type, U> = {
-	[K in keyof Type]: Type[K] extends U ? K : never;
-}[keyof Type];
+export type PropertyOfType<Type, U> = keyof {
+  [K in keyof Type as Type[K] extends U ? K : never]: K
+};
 
 export type EndpointsOf<T> = PropertyOfType<Endpoints, { res: T }>;
 
