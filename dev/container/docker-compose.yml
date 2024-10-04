@@ -2,7 +2,9 @@ version: "3"
 
 services:
   web:
-    image: docker.io/node:18.20.0-bookworm
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: fedired_web
     restart: unless-stopped
     depends_on:
@@ -18,8 +20,6 @@ services:
       URL: http://localhost:3030
     volumes:
       - ./fedired:/fedired:rw
-      - ./docker-entrypoint.sh:/docker-entrypoint.sh:ro
-    entrypoint: /docker-entrypoint.sh
 
   redis:
     restart: unless-stopped
