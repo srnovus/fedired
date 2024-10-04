@@ -7,11 +7,27 @@ const file = (relativePath) => join(repositoryRootDir, relativePath);
 
 await (async () => {
 	await fs.rm(file("built/_client_dist_/locales"), { recursive: true, force: true });
-	await Promise.all([
+	
+	// Crear un array de promesas para las operaciones de copia
+	const copyOperations = [
 		fs.cp(file("packages/backend/src/server/web"), file("packages/backend/built/server/web"), { recursive: true }),
-		fs.cp(file("custom/assets"), file("packages/backend/assets"), { recursive: true }),
 		fs.mkdir(file("built/_client_dist_/locales"), { recursive: true }),
-	]);
+	];
+
+	// Verificar si existe el directorio custom/assets antes de intentar copiarlo
+	try {
+		await fs.access(file("custom/assets"));
+		copyOperations.push(fs.cp(file("custom/assets"), file("packages/backend/assets"), { recursive: true }));
+	} catch (error) {
+		if (error.code === 'ENOENT') {
+			console.log('El directorio custom/assets no existe. Saltando la copia de assets personalizados.');
+		} else {
+			throw error;
+		}
+	}
+
+	// Ejecutar todas las operaciones de copia
+	await Promise.all(copyOperations);
 
 	const locales = (await import("../locales/index.mjs")).default;
 	const { version } = JSON.parse(await fs.readFile(file("package.json")));
