@@ -51,8 +51,9 @@ El siguiente comando construirá Fedired e inicializará la base de datos.
 Esto llevará algún tiempo.
 
 ```sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 pnpm install --frozen-lockfile
-NODE_ENV=production pnpm run build
+NODE_ENV=production NODE_OPTIONS='--max-old-space-size=3072' pnpm run build
 pnpm run init
 ```
 ## Lanzamiento
