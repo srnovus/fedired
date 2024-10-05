@@ -51,6 +51,7 @@ El siguiente comando construirá Fedired e inicializará la base de datos.
 Esto llevará algún tiempo.
 
 ```sh
+pnpm install --frozen-lockfile
 NODE_ENV=production pnpm run build
 pnpm run init
 ```
