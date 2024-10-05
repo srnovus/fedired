@@ -16,6 +16,8 @@
 ## Documentation
 
 - [Installation Guide](https://github.com/fedired-dev/fedired/blob/main/docs/install.md)
+- [Actualización de Fedired](https://github.com/fedired-dev/fedired/blob/main/docs/upgrade.md)
+- [Aviso para administradores de servidores](https://github.com/fedired-dev/fedired/blob/main/docs/notice-for-admins.md)
 
 > **Advertencia**: Actualmente, **Docker Compose** no está disponible. Esperamos tener una imagen de Docker pronto. Por favor, sigue la guía de instalación para obtener instrucciones detalladas.
 
