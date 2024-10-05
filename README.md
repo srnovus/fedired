@@ -1,5 +1,6 @@
 <div align="center">
   <img src="./title.svg" alt="Fedired Logo" style="border-radius:50%" width="400"/>
+</center></div>
 
 # 🌎 **Fedired: Open-source, decentralized social media platform – Free forever!** 🚀
 
