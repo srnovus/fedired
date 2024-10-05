@@ -2,7 +2,7 @@
 
 ## Para usuarios de systemd/pm2
 
-1. Verificar [`docs/notice-for-admins.md`](https://github.com/fedired-dev/fedired/-/blob/main/docs/notice-for-admins.md)
+1. Verificar [`docs/notice-for-admins.md`](https://github.com/fedired-dev/fedired/blob/main/docs/notice-for-admins.md)
 1. Detener el servidor
     ```sh
     sudo systemctl stop your-fedired-service.service
