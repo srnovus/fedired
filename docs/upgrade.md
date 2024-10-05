@@ -2,7 +2,7 @@
 
 ## Para usuarios de systemd/pm2
 
-1. Verificar [`docs/notice-for-admins.md`](https://github.com/fedired-dev/fedired/blob/main/docs/notice-for-admins.md)
+- Verificar [`docs/notice-for-admins.md`](https://github.com/fedired-dev/fedired/blob/main/docs/notice-for-admins.md)
 
 1. Cambiar al usuario `fedired` y de ir al directorio Fedired antes de ejecutar el comando `git`:
 
