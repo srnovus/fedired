@@ -27,7 +27,12 @@ cd ~/fedired
     NODE_ENV='production' NODE_OPTIONS='--max_old_space_size=3072' pnpm run rebuild
     pnpm run migrate
     ```
-4. Reiniciar el servidor
+5. Salga del usuario Fedired
+     ```sh
+    exit
+    ```
+		
+7. Reiniciar el servidor
     ```sh
     sudo systemctl restart fedired
     ```
