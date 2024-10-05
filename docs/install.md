@@ -367,7 +367,7 @@ En esta instrucción, usamos [Caddy](https://caddyserver.com/) para que el servi
 
 ## Actualizar la versión de Fedired
 
-Consulta las [instrucciones de actualización](https://github.com/fedired-dev/fedired/-/blob/main/docs/upgrade.md). Asegúrate de cambiar al usuario `fedired` y de ir al directorio Fedired antes de ejecutar el comando `git`:
+Consulta las [instrucciones de actualización](https://github.com/fedired-dev/fedired/blob/main/docs/upgrade.md). Asegúrate de cambiar al usuario `fedired` y de ir al directorio Fedired antes de ejecutar el comando `git`:
 
 ```sh
 sudo su --login fedired
