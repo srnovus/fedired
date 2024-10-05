@@ -19,6 +19,10 @@
 
 ```sh
 sudo corepack enable
+corepack prepare pnpm@latest --activate
+
+# verificar version
+pnpm --version
 ```
 ## Crear usuario de Linux
 
