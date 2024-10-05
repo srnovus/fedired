@@ -47,7 +47,7 @@ Y edite `default.yml` según el texto de ayuda del archivo.
 
 ## Construir e inicializar
 
-El siguiente comando construirá Misskey e inicializará la base de datos.
+El siguiente comando construirá Fedired e inicializará la base de datos.
 Esto llevará algún tiempo.
 
 ```sh
