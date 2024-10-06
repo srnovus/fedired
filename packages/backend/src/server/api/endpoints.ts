@@ -786,7 +786,7 @@ export interface IEndpointMeta {
 
 export interface IEndpoint {
 	name: string;
-	exec: any; // TODO: may be obosolete @ThatOneCalculator
+	exec: any; // TODO: may be obosolete @Fedired
 	meta: IEndpointMeta;
 	params: Schema;
 }
