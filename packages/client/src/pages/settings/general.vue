@@ -9,8 +9,8 @@
 				<I18n :src="i18n.ts.i18nInfo" tag="span">
 					<template #link>
 						<MkLink
-							url="https://hosted.weblate.org/engage/fedired/"
-							>Weblate</MkLink
+							url="https://crowdin.com/project/fedired"
+							>Crowdin</MkLink
 						>
 					</template>
 				</I18n>
