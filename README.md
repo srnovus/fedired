@@ -29,6 +29,10 @@ Las contribuciones son bienvenidas y apreciadas. Si deseas contribuir a **Fedire
 2. Crea una nueva rama para tu característica o corrección de errores.
 3. Realiza tus cambios y haz un commit.
 4. Envía un pull request.
+5. 5. Ayudanos a [Traducir](https://crowdin.com/project/fedired)
+
+[![Crowdin](https://badges.crowdin.net/fedired/localized.svg)](https://crowdin.com/project/fedired)
+
 
 ## Preguntas Frecuentes (FAQs)
 
