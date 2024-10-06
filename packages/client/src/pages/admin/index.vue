@@ -48,9 +48,9 @@
 						></MkInfo
 					>
 					<MkInfo warn class="info"
-						>Fedired is in maintenance mode.
+						>Si tienes Problemas lee nuestra Documentación.
 						<a
-							href="https://info.fedired.com/notes/9xsukr38m3komd63"
+							href="https://docs.fedired.com"
 							target="_bank"
 							class="_link"
 							>Check announcement</a
