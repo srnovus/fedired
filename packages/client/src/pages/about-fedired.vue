@@ -67,7 +67,7 @@
 								<template #suffix>Source Code</template>
 							</FormLink>
 							<FormLink
-								to="https://hosted.weblate.org/engage/fedired/"
+								to="https://crowdin.com/project/fedired"
 								external
 							>
 								<template #icon
