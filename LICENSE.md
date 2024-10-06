@@ -63,7 +63,7 @@ Esta licencia cubre el uso, modificación y distribución del software **Fedired
 
 ## 9. **Versiones Futuras**
 
-- **Fedired** se reserva el derecho de actualizar esta licencia. Las versiones futuras estarán disponibles en https://licence.fedired.com/. Las versiones anteriores seguirán aplicando a cualquier software distribuido bajo su versión correspondiente.
+- **Fedired** se reserva el derecho de actualizar esta licencia. Las versiones futuras estarán disponibles en https://license.fedired.com/. Las versiones anteriores seguirán aplicando a cualquier software distribuido bajo su versión correspondiente.
 
 ---
 
