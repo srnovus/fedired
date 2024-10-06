@@ -1323,8 +1323,7 @@ _registry:
   domain: "Domain"
   createKey: "Create key"
 _aboutFedired:
-  about: "fedired is a fork of Misskey made by ThatOneCalculator, which has been
-    in development since 2022."
+  about: "Decentralized social platform powered by Fedired technology."
   contributors: "Main contributors"
   allContributors: "All contributors"
   misskeyContributors: "Misskey contributors"
