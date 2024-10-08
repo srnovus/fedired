@@ -45,4 +45,7 @@ Sí, **Fedired** es completamente gratuito y siempre lo será.
 - **Contribuye en [GitHub](https://github.com/fedired-dev/fedired)**
 - **Haz una donación en [Patreon](https://patreon.com/fedired)**
 
+## Importante:
+Fedired es una bifurcación del proyecto Firefish, que a su vez era un fork de Misskey. Dado que Firefish ya no es mantenido, hemos decidido tomar el código y continuar su desarrollo para perfeccionarlo y adaptarlo a nuestras necesidades.
+
 <img src="https://app.greenweb.org/api/v3/greencheckimage/fedired.com?nocache=true" alt="This website runs on green hosting - verified by thegreenwebfoundation.org" width="200px" height="95px">
