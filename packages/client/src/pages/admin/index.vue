@@ -41,19 +41,19 @@
 					<MkInfo v-if="updateAvailable" warn class="info"
 						>{{ i18n.ts.updateAvailable }}
 						<a
-							href="https://github.com/fedired-dev/fedired/blob/main/docs/changelog.md"
+							href="https://github.com/fedired-dev/fedired/releases"
 							target="_bank"
 							class="_link"
 							>{{ i18n.ts.check }}</a
 						></MkInfo
 					>
 					<MkInfo warn class="info"
-						>Si tienes Problemas lee nuestra Documentación.
+						>Necesitas ayuda
 						<a
-							href="https://docs.fedired.com"
+							href="https://github.com/orgs/fedired-dev/discussions"
 							target="_bank"
 							class="_link"
-							>Check announcement</a
+							>Reciber Soporte</a
 						></MkInfo
 					>
 
