@@ -43,7 +43,7 @@
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
-							href="https://fedired.com/"
+							href="https://fedired.com/@srnovus/pages/1728251898199"
 							target="_blank"
 							class="_link"
 							>{{ i18n.ts.learnMore }}</a
@@ -57,7 +57,7 @@
 					<FormSection>
 						<div class="_formLinks">
 							<FormLink
-								to="https://github.com/fedired-dev/fedired"
+								to="https://fedired.com/@fedired/pages/1728530691714"
 								external
 							>
 								<template #icon
