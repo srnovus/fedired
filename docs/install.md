@@ -1,39 +1,3 @@
-
-## Requisitos Previos
-
-- **Servidor**: Se recomienda un servidor con al menos 1 CPU, 2GB de RAM y 20GB de espacio en disco.
-- **Sistema Operativo**: Ubuntu Server (18.04 o superior).
-- **Acceso a la Terminal**: Acceso root o sudo en el servidor.
-- **Nombre de Dominio**: Un dominio válido que apunte a tu servidor.
-
-
-### Runtime dependencies
-
-- Al menos [NodeJS](https://nodejs.org/en/) v18.20.0 (v20/v22 recomendado)
-- Al menos [PostgreSQL](https://www.postgresql.org/) v12 (v16 recomendado) con [PGroonga](https://pgroonga.github.io/) extension
-- Al menos [Redis](https://redis.io/) v7 o [Valkey](https://valkey.io/) v7
-- Proxy web (uno de los siguientes)
-  - Caddy (recomendado)
-  - Nginx (recomendado)
-  -Apache
-- [FFmpeg](https://ffmpeg.org/) para transcodificación de vídeo (**opcional**)
-- Servidor de caché (**opcional**, uno de los siguientes)
-  - [DragonflyDB](https://www.dragonflydb.io/)
-  - [KeyDB](https://keydb.dev/)
-  - Another [Redis](https://redis.io/) / [Valkey](https://valkey.io/) server
-
-### Construir dependencias
-
-- Al menos [Rust](https://www.rust-lang.org/) v1.74
-- C/C++ compilador y herramientas de construcción (like [GNU Make](https://www.gnu.org/software/make/))
-  - `build-essential` on Debian/Ubuntu Linux
-  - `base-devel` on Arch Linux
-  - `"Development Tools"` on Fedora/Red Hat Linux
-- [Python 3](https://www.python.org/)
-- [Perl](https://www.perl.org/)
-
-Este documento muestra un procedimiento de ejemplo para instalar estas dependencias y Fedired en Debian 12. Tenga en cuenta que hay mucho espacio para personalizar la configuración del servidor; Este documento simplemente demuestra una instalación sencilla.
-
 ### Instalar en sistemas que no sean Linux
 
 No probamos Fedired en sistemas que no sean Linux, por lo que te recomendamos que instales Fedired en un entorno de este tipo **solo si puedes solucionar los problemas tú mismo**. No hay ningún tipo de soporte. Dicho esto, es posible instalar Fedired en algunos sistemas que no sean Linux.
@@ -362,17 +326,6 @@ En esta instrucción, usamos [Caddy](https://caddyserver.com/) para que el servi
     ```sh
     sudo systemctl enable --now fedired
     ```
-
-# Mantener el servidor
-
-## Actualizar la versión de Fedired
-
-Consulta las [instrucciones de actualización](https://github.com/fedired-dev/fedired/blob/main/docs/upgrade.md). Asegúrate de cambiar al usuario `fedired` y de ir al directorio Fedired antes de ejecutar el comando `git`:
-
-```sh
-sudo su --login fedired
-cd ~/fedired
-```
 
 ## Rotar registros
 
