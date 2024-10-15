@@ -32,14 +32,16 @@
 							:class="{
 								_physics_circle_: !emoji.emoji.startsWith(':'),
 							}"
-							><MkEmoji
+						>
+							<MkEmoji
 								class="emoji"
 								:emoji="emoji.emoji"
 								:custom-emojis="instanceEmojis"
 								:is-reaction="false"
 								:normal="true"
 								:no-style="true"
-						/></span>
+							/>
+						</span>
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
