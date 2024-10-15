@@ -249,21 +249,30 @@ definePageMetadata({
 		align-items: center; // Alinea verticalmente el contenido
 		text-decoration: none; // Elimina el subrayado
 		color: inherit; // Hereda el color del texto
+		background: var(--MI_THEME-buttonBg); // Fondo del cuadro
+		border-radius: 8px; // Bordes redondeados
+		padding: 12px; // Espaciado interno
+		margin: 8px 0; // Espaciado entre contribuyentes
+		width: 100%; // Ancho completo
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Sombra para el efecto de elevación
+		transition: transform 0.2s, box-shadow 0.2s; // Transición suave
 
 		&:hover {
-			opacity: 0.8; // Efecto de hover
+			transform: translateY(-2px); // Efecto de elevación al pasar el mouse
+			box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); // Sombra más intensa al pasar el mouse
 		}
 
 		img {
-			width: 40px; // Ajusta el tamaño de la imagen
-			height: 40px; // Ajusta el tamaño de la imagen
+			width: 50px; // Ajusta el tamaño de la imagen
+			height: 50px; // Ajusta el tamaño de la imagen
 			border-radius: 50%; // Hace que la imagen sea circular
-			margin-right: 8px; // Espaciado a la derecha de la imagen
+			margin-right: 12px; // Espaciado a la derecha de la imagen
 		}
 
 		span {
-			font-size: 16px; // Tamaño de fuente para el nombre de usuario
+			font-size: 18px; // Tamaño de fuente para el nombre de usuario
 			font-weight: bold; // Negrita para el nombre de usuario
+			color: var(--MI_THEME-textColor); // Color del texto
 		}
 	}
 }
