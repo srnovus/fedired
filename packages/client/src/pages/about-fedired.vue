@@ -88,6 +88,7 @@
 								Donar
 								<template #suffix>Donation</template>
 							</FormLink>
+							</FormSection>
 												<FormSection>
 						<template #label>Hecho por</template>
 						<div :class="_formLinks">
