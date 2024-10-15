@@ -19,6 +19,5 @@ export function createConnection() {
 }
 
 export const subscriber = createConnection();
-subscriber.subscribe(config.host);
-
+subscriber.subscribe(config.redis.prefix ?? config.host);
 export const redisClient = createConnection();
