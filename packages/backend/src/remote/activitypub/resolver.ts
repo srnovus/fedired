@@ -140,12 +140,12 @@ export default class Resolver {
 		const finalUrl_ = new URL(finalUrl);
 		const objectId_ = new URL(object.id);
 
+		// Canonicalizar las URLs antes de compararlas
 		if (finalUrl_.href === objectId_.href) return object;
 
 		if (finalUrl_.host !== objectId_.host) {
 			throw new Error("Object ID host doesn't match final url host");
-		}
-
+			}
 		const finalRes = await apGet(object.id, this.user);
 
 		if (new URL(finalRes.finalUrl).href !== new URL(finalRes.content.id).href)
