@@ -115,22 +115,12 @@
 			</div>
 			<div class="bottom">
 				<button
-					class="item _button post"
-					data-cy-open-post-form
-					@click="os.post"
-				>
-					<i :class="icon('ph-pencil icon ph-fw')"></i
-					><span class="text">{{ i18n.ts.toPost }}</span>
-				</button>
-				<button
 					v-tooltip.noDelay.right="i18n.ts.help"
 					class="item _button help"
-					@click="openHelpMenu"
-				>
-					<i
-						:class="icon('ph-info help icon ph-xl ph-fw', false)"
+					@click="openHelpMenu">
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"
 					></i>
-					<span>Ayuda</span>
+				<span>Ayuda</span>
 				</button>
 			</div>
 		</div>
