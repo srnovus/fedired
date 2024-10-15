@@ -130,6 +130,7 @@
 					<i
 						:class="icon('ph-info help icon ph-xl ph-fw', false)"
 					></i>
+					<span>Ayuda</span>
 				</button>
 			</div>
 		</div>
