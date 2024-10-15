@@ -14,7 +14,6 @@
 
 - [Instancia Oficial](https://fedired.com)
 - [Documentacion](https://docs.fedired.com)
-- [Estado de los Servidores](https://status.fedired.com)
 - [Repositorio Oficial](https://github.com/fedired-dev/fedired)
 - [Donaciones](https://patreon.com/fedired)
 - [Traduciones](https://crowdin.com/project/fedired)
