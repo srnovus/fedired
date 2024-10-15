@@ -69,7 +69,7 @@
 								<template #suffix>Source Code</template>
 							</FormLink>
 							<FormLink
-								to="https://hosted.weblate.org/engage/fedired/"
+								to="https://crowdin.com/project/fedired/"
 								external
 							>
 								<template #icon
@@ -83,7 +83,7 @@
 								external
 							>
 								<template #icon>
-									<i :class="icon('ph-heart')"></i> <!-- Puedes cambiar el ícono según lo que prefieras -->
+									<i :class="icon('ph-heart')"></i> 
 									</template>
 								Donar
 								<template #suffix>Donation</template>
@@ -97,7 +97,6 @@
 								<img src="https://avatars.githubusercontent.com/u/81489497?v=4" :class="_contributorAvatar">
 								<span :class="_contributorUsername">@srnovus</span>
 							</a>
-							<!-- Puedes agregar más contribuyentes aquí -->
 						</div>
 					</FormSection>
 				</div>
@@ -183,6 +182,44 @@ definePageMetadata({
 		padding: 16px;
 		border-radius: var(--radius);
 
+		> .icon {
+			display: block;
+			width: 80px; // 
+			margin: 0 auto;
+			border-radius: 16px;
+			position: relative;
+			z-index: 1;
+		}
+
+		> .misskey {
+			margin: 0.75em auto 0 auto;
+			width: max-content;
+			position: relative;
+			z-index: 1;
+		}
+
+		> .version {
+			margin: 0 auto;
+			width: max-content;
+			opacity: 0.5;
+			position: relative;
+			z-index: 1;
+		}
+
+		> .emoji {
+			position: absolute;
+			z-index: 1;
+			top: 0;
+			left: 0;
+			visibility: hidden;
+
+			> .emoji {
+				pointer-events: none;
+				font-size: 24px;
+				width: 24px;
+			}
+		}
+
 		&.playing {
 			&,
 			* {
@@ -197,43 +234,70 @@ definePageMetadata({
 				visibility: visible;
 			}
 		}
+	}
+}
 
-		> .icon {
-			display: block;
-			inline-size: 100px;
-			margin-block: 0;
-			margin-inline: auto;
-			border-radius: 3px;
+// Estilos para la sección "Hecho por"
+._formLinks {
+	display: flex;
+	flex-direction: column; // Cambia a fila si prefieres
+	align-items: center; // Centra los elementos
+	margin-top: 16px; // Espaciado superior
+
+	a {
+		display: flex;
+		align-items: center; // Alinea verticalmente el contenido
+		text-decoration: none; // Elimina el subrayado
+		color: inherit; // Hereda el color del texto
+
+		&:hover {
+			opacity: 0.8; // Efecto de hover
 		}
 
-		> .misskey {
-			margin-block-start: 0.75em;
-			margin-inline-end: auto;
-			margin-block-end: 0;
-			margin-inline-start: auto;
-			inline-size: max-content;
+		img {
+			width: 40px; // Ajusta el tamaño de la imagen
+			height: 40px; // Ajusta el tamaño de la imagen
+			border-radius: 50%; // Hace que la imagen sea circular
+			margin-right: 8px; // Espaciado a la derecha de la imagen
 		}
 
-		> .version {
-			margin-block: 0;
-			margin-inline: auto;
-			inline-size: max-content;
-			opacity: 0.5;
-		}
-
-		> .emoji {
-			position: absolute;
-			inset-block-start: 0;
-			inset-inline-start: 0;
-			visibility: hidden;
-
-			> .emoji {
-				pointer-events: none;
-				font-size: 24px;
-				inline-size: 24px;
-			}
+		span {
+			font-size: 16px; // Tamaño de fuente para el nombre de usuario
+			font-weight: bold; // Negrita para el nombre de usuario
 		}
 	}
 }
-</style>
 
+.contributors {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-gap: 12px;
+}
+
+.contributor {
+	display: flex;
+	align-items: center;
+	padding: 12px;
+	background: var(--MI_THEME-buttonBg);
+	border-radius: 6px;
+
+	&:hover {
+		text-decoration: none;
+		background: var(--MI_THEME-buttonHoverBg);
+	}
+
+	&.active {
+		color: var(--MI_THEME-accent);
+		background: var(--MI_THEME-buttonHoverBg);
+	}
+}
+
+.contributorAvatar {
+	width: 30px;
+	border-radius: 100%;
+}
+
+.contributorUsername {
+	margin-left: 12px;
+}
+</style>
