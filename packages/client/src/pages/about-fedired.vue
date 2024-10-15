@@ -92,11 +92,13 @@
 					</FormSection>
 					<FormSection>
 						<template #label>Hecho por</template>
-						<div :class="_formLinks">
-							<a href="https://github.com/srnovus" target="_blank" :class="_contributor">
-								<img src="https://avatars.githubusercontent.com/u/81489497?v=4" :class="_contributorAvatar">
-								<span :class="_contributorUsername">@srnovus</span>
-							</a>
+						<div class="contributors">
+							<div class="contributor" v-for="contributor in contributors" :key="contributor.username">
+								<a :href="contributor.link" target="_blank" class="_contributor">
+									<img :src="contributor.avatar" class="contributorAvatar" />
+									<span class="contributorUsername">{{ contributor.username }}</span>
+								</a>
+							</div>
 						</div>
 					</FormSection>
 				</div>
@@ -172,6 +174,10 @@ definePageMetadata({
 	title: i18n.ts.aboutFedired,
 	icon: null,
 });
+
+const contributors = [
+	{ username: '@srnovus', link: 'https://github.com/srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4' },
+];
 </script>
 
 <style lang="scss" scoped>
@@ -279,25 +285,40 @@ definePageMetadata({
 
 .contributors {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-	grid-gap: 12px;
-}
+	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); // Cuadrícula responsiva
+	gap: 16px; // Espaciado entre los cuadros
 
-.contributor {
-	display: flex;
-	align-items: center;
-	padding: 12px;
-	background: var(--MI_THEME-buttonBg);
-	border-radius: 6px;
+	.contributor {
+		display: flex;
+		align-items: center;
+		padding: 12px;
+		background: var(--MI_THEME-buttonBg); // Fondo del cuadro
+		border-radius: 8px; // Bordes redondeados
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra para el efecto de elevación
+		transition: background 0.3s; // Transición suave
 
-	&:hover {
-		text-decoration: none;
-		background: var(--MI_THEME-buttonHoverBg);
-	}
+		&:hover {
+			background: var(--MI_THEME-buttonHoverBg); // Cambio de fondo al pasar el mouse
+		}
 
-	&.active {
-		color: var(--MI_THEME-accent);
-		background: var(--MI_THEME-buttonHoverBg);
+		a {
+			display: flex;
+			align-items: center;
+			text-decoration: none; // Elimina el subrayado
+			color: inherit; // Hereda el color del texto
+
+			img {
+				width: 40px; // Ajusta el tamaño de la imagen
+				height: 40px; // Ajusta el tamaño de la imagen
+				border-radius: 50%; // Hace que la imagen sea circular
+				margin-right: 8px; // Espaciado a la derecha de la imagen
+			}
+
+			span {
+				font-size: 16px; // Tamaño de fuente para el nombre de usuario
+				font-weight: bold; // Negrita para el nombre de usuario
+			}
+		}
 	}
 }
 
