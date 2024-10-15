@@ -128,6 +128,15 @@
 			</nav>
 			<div class="bottom">
 				<button
+					v-tooltip.noDelay.right="i18n.ts.toPost"
+					class="item _button post"
+					data-cy-open-post-form
+					@click="os.post"
+				>
+					<i :class="icon('icon ph-pencil ph-fw ph-lg')"></i
+					><span class="text">{{ i18n.ts.toPost }}</span>
+				</button>
+				<button
 					v-tooltip.noDelay.right="i18n.ts.help"
 					class="item _button help"
 					@click="openHelpMenu"
