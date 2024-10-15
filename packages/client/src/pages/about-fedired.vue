@@ -43,7 +43,7 @@
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
-							href="https://join.fedired.com"
+							href="https://fedired.com/"
 							target="_blank"
 							class="_link"
 							>{{ i18n.ts.learnMore }}</a
@@ -67,7 +67,7 @@
 								<template #suffix>Source Code</template>
 							</FormLink>
 							<FormLink
-								to="https://crowdin.com/project/fedired"
+								to="https://hosted.weblate.org/engage/fedired/"
 								external
 							>
 								<template #icon
@@ -75,6 +75,16 @@
 								></template>
 								{{ i18n.ts._aboutFedired.translation }}
 								<template #suffix>Translate</template>
+							</FormLink>
+							<FormLink
+								to="https://patreon.com/fedired/"
+								external
+							>
+								<template #icon>
+									<i :class="icon('ph-heart')"></i> 
+									</template>
+								Donar
+								<template #suffix>Donation</template>
 							</FormLink>
 						</div>
 					</FormSection>
