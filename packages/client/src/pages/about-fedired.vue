@@ -83,19 +83,21 @@
 								external
 							>
 								<template #icon>
-									<i :class="icon('ph-heart')"></i> 
+									<i :class="icon('ph-heart')"></i> <!-- Puedes cambiar el ícono según lo que prefieras -->
 									</template>
 								Donar
 								<template #suffix>Donation</template>
 							</FormLink>
-							</FormSection>
-												<FormSection>
+						</div>
+					</FormSection>
+					<FormSection>
 						<template #label>Hecho por</template>
 						<div :class="_formLinks">
 							<a href="https://github.com/srnovus" target="_blank" :class="_contributor">
 								<img src="https://avatars.githubusercontent.com/u/81489497?v=4" :class="_contributorAvatar">
 								<span :class="_contributorUsername">@srnovus</span>
 							</a>
+							<!-- Puedes agregar más contribuyentes aquí -->
 						</div>
 					</FormSection>
 				</div>
@@ -234,3 +236,4 @@ definePageMetadata({
 	}
 }
 </style>
+
