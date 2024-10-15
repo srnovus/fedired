@@ -86,6 +86,13 @@
 								Donar
 								<template #suffix>Donation</template>
 							</FormLink>
+												<FormSection>
+						<template #label>Hecho por</template>
+						<div :class="_formLinks">
+							<a href="https://github.com/srnovus" target="_blank" :class="_contributor">
+								<img src="https://avatars.githubusercontent.com/u/81489497?v=4" :class="_contributorAvatar">
+								<span :class="_contributorUsername">@srnovus</span>
+							</a>
 						</div>
 					</FormSection>
 				</div>
