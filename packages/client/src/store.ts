@@ -250,7 +250,7 @@ export const defaultStore = markRaw(
 		},
 		showFixedPostForm: {
 			where: "device",
-			default: false,
+			default: ture,
 		},
 		enableInfiniteScroll: {
 			where: "device",
