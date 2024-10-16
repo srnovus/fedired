@@ -112,7 +112,7 @@
 					<i :class="icon('ph-gear-six icon ph-fw')"></i
 					><span class="text">{{ i18n.ts.settings }}</span>
 				</MkA>
-			</div>
+				<div class="divider"></div>
 				<MkA
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
@@ -121,7 +121,7 @@
 					to="#"
 					@click="openHelpMenu"
 				>
-					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)" style="margin-inline-end: 8px;"></i>
 					<span class="text">Ayuda</span>
 				</MkA>
 			</div>
