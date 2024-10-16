@@ -113,11 +113,10 @@
 					><span class="text">{{ i18n.ts.settings }}</span>
 				</MkA>
 			</div>
-			<div class="bottom">
 				<MkA
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button help"
+					class="item help"
 					active-class="active"
 					to="#"
 					@click="openHelpMenu"
