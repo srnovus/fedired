@@ -137,17 +137,19 @@
 					><span class="text">{{ i18n.ts.toPost }}</span>
 				</button>
 				<div class="divider"></div>
-				<MkA
-					v-click-anime
-					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button"
-					active-class="active"
-					to="#"
-					@click="openHelpMenu"
-				>
-					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
-					<span class="text">Ayuda</span>
-				</MkA>
+				<button>
+					<MkA
+						v-click-anime
+						v-tooltip.noDelay.right="i18n.ts.help"
+						class="item _button"
+						active-class="active"
+						to="#"
+						@click="openHelpMenu"
+					>
+						<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
+						<span class="text">Ayuda</span>
+					</MkA>
+				</button>
 			</div>
 		</div>
 	</header>
