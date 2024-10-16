@@ -1,3 +1,4 @@
+```packages/client/src/pages/user/home.vue
 <template>
 	<MkSpacer :content-max="narrow ? 800 : 1100">
 		<div
@@ -44,10 +45,10 @@
 										:nowrap="true"
 									/>
 									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
-										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
+										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación para administrador -->
 									</span>
 									<span v-if="user.isModerator && user.username === 'fedired'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
-										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
+										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación para moderador -->
 									</span>
 									<div v-if="isModerator">
 										<span
