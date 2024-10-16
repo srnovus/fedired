@@ -43,6 +43,10 @@
 										:user="user"
 										:nowrap="true"
 									/>
+									<span v-if="user.isAdmin" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge)">
+										<i :class="icon('ph-crown')"></i> <!-- Ícono de administrador -->
+										<i :class="icon('ph-bold ph-seal-check')"></i> <!-- Ícono de verificación -->
+									</span>
 									<div v-if="isModerator">
 										<span
 											v-if="user.isSilenced"
@@ -395,11 +399,11 @@ const timeForThem = computed(() => {
 			)
 			.trim(),
 		props.user.location!.replace(
-			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.].*/,
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź].*/,
 			"",
 		),
 		props.user.location!.replace(
-			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź].*/,
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.].*/,
 			"",
 		),
 	];
