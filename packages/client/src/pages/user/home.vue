@@ -375,12 +375,11 @@ const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 const hideFollowButton = defaultStore.state.hideFollowButtons;
 
 const emit = defineEmits(["refresh"]);
-const props = withDefaults(
-	defineProps<{
-		user: entities.UserDetailed;
-	}>(),
-	{},
-);
+const props = defineProps<{
+	user: entities.UserDetailed;
+}>();
+
+console.log('User data:', props.user); // Verifica los datos del usuario
 
 const parallaxAnimationId = ref<null | number>(null);
 const narrow = ref<null | boolean>(null);
@@ -882,5 +881,11 @@ onUnmounted(() => {
 			margin-inline-start: var(--margin);
 		}
 	}
+}
+
+@media (max-width: 600px) {
+    .icon-verificado {
+        font-size: 1.5em; // Ajusta el tamaño del ícono para pantallas pequeñas
+    }
 }
 </style>
