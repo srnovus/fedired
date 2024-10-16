@@ -43,7 +43,7 @@
 										:user="user"
 										:nowrap="true"
 									/>
-									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge); margin-left: 4px;">
+									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="i18n.ts.verified" style="color: var(--badge); margin-left: 4px;">
 										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 1.2em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
 									</span>
 									<div v-if="isModerator">
