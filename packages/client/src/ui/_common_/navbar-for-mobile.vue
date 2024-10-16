@@ -125,6 +125,7 @@
 					<span class="text">Ayuda</span>
 				</MkA>
 			</div>
+		 </div>
 		</div>
 </template>
 
