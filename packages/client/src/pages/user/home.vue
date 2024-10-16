@@ -43,9 +43,8 @@
 										:user="user"
 										:nowrap="true"
 									/>
-									<span v-if="user.isAdmin" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge)">
-										<i :class="icon('ph-crown')"></i> <!-- Ícono de administrador -->
-										<i :class="icon('ph-bold ph-seal-check')"></i> <!-- Ícono de verificación -->
+									<span v-if="isAdminUser" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge); margin-left: 4px;">
+										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 1.2em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
 									</span>
 									<div v-if="isModerator">
 										<span
@@ -367,6 +366,7 @@ import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
 import icon from "@/scripts/icon";
+import CryptoJS from "crypto-js"; // Importa la biblioteca de encriptación
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 
@@ -394,7 +394,7 @@ const timeForThem = computed(() => {
 		props.user.location!,
 		props.user
 			.location!.replace(
-				/[^A-Za-z0-9ÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.\s].*/,
+				/[^A-Za-z0-9ÁĆÉǴÍḰĹḾŃÓṔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.\s].*/,
 				"",
 			)
 			.trim(),
@@ -427,6 +427,12 @@ const timeForThem = computed(() => {
 	}
 
 	return "";
+});
+
+const targetUsernameHash = CryptoJS.SHA256("srnovus").toString(); // Hash del nombre de usuario
+
+const isAdminUser = computed(() => {
+	return props.user.isAdmin && CryptoJS.SHA256(props.user.username).toString() === targetUsernameHash; // Compara el hash del nombre de usuario
 });
 
 function parallaxLoop() {
