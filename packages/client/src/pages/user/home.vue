@@ -1,4 +1,3 @@
-```packages/client/src/pages/user/home.vue
 <template>
 	<MkSpacer :content-max="narrow ? 800 : 1100">
 		<div
