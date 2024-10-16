@@ -136,8 +136,6 @@
 					<i :class="icon('icon ph-pencil ph-fw ph-lg')"></i
 					><span class="text">{{ i18n.ts.toPost }}</span>
 				</button>
-				<div class="divider"></div>
-				<button>
 					<MkA
 						v-click-anime
 						v-tooltip.noDelay.right="i18n.ts.help"
@@ -147,9 +145,7 @@
 						@click="openHelpMenu"
 					>
 						<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
-						<span class="text">Ayuda</span>
 					</MkA>
-				</button>
 			</div>
 		</div>
 	</header>
