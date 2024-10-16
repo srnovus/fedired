@@ -136,16 +136,17 @@
 					<i :class="icon('icon ph-pencil ph-fw ph-lg')"></i
 					><span class="text">{{ i18n.ts.toPost }}</span>
 				</button>
-				<button
+				<div class="divider"></div>
+				<MkA
+					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button help"
+					class="item"
+					to="#"
 					@click="openHelpMenu"
 				>
-					<i
-						:class="icon('help icon ph-info ph-xl ph-fw', false)"
-					></i>
-				<span>Ayuda</span>
-				</button>
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
+					<span class="text">Ayuda</span>
+				</MkA>
 			</div>
 		</div>
 	</header>
