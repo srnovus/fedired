@@ -116,13 +116,13 @@
 				<MkA
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item help"
+					class="item"
 					active-class="active"
 					to="#"
 					@click="openHelpMenu"
 				>
 					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
-					<span>Ayuda</span>
+					<span class="text">Ayuda</span>
 				</MkA>
 			</div>
 		</div>
