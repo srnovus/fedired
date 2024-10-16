@@ -136,20 +136,20 @@
 					<i :class="icon('icon ph-pencil ph-fw ph-lg')"></i
 					><span class="text">{{ i18n.ts.toPost }}</span>
 				</button>
-					<MkA
-						v-click-anime
-						v-tooltip.noDelay.right="i18n.ts.help"
-						class="item _button"
-						active-class="active"
-						to="#"
-						@click="openHelpMenu"
-					>
-						<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
-					</MkA>
+				<button
+					v-tooltip.noDelay.right="i18n.ts.help"
+					class="item _button help"
+					@click="openHelpMenu"
+				>
+					<i
+						:class="icon('help icon ph-info ph-xl ph-fw', false)"
+					></i>
+				</button>
 			</div>
 		</div>
 	</header>
 </template>
+
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref, watch } from "vue";
@@ -275,10 +275,10 @@ function more(ev: MouseEvent) {
 			}
 		}
 
-		#fedired_app > :not(.wallpaper) & {
+		#firefish_app > :not(.wallpaper) & {
 			background: var(--navBg);
 		}
-		#fedired_app > .wallpaper:not(.centered) & {
+		#firefish_app > .wallpaper:not(.centered) & {
 			border-inline-end: 1px solid var(--divider);
 		}
 	}
@@ -633,7 +633,7 @@ function more(ev: MouseEvent) {
 							content: "";
 							display: block;
 							block-size: 100%;
-								aspect-ratio: 1;
+							aspect-ratio: 1;
 							margin: auto;
 							position: absolute;
 							inset: 0;
