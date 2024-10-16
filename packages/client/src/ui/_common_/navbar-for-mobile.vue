@@ -121,7 +121,7 @@
 					to="#"
 					@click="openHelpMenu"
 				>
-					<i :class="icon('ph-info help icon ph-xl ph-fw', false)" style="margin-inline-end: 8px;"></i>
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
 					<span class="text">Ayuda</span>
 				</MkA>
 			</div>
