@@ -117,7 +117,6 @@
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
 					class="item"
-					active-class="active"
 					to="#"
 					@click="openHelpMenu"
 				>
