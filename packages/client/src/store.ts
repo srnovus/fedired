@@ -250,7 +250,7 @@ export const defaultStore = markRaw(
 		},
 		showFixedPostForm: {
 			where: "device",
-			default: true,
+			default: false,
 		},
 		enableInfiniteScroll: {
 			where: "device",
