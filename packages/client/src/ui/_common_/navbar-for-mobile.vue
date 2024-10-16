@@ -358,6 +358,10 @@ function more() {
 					background-color: var(--activeBgColor); // Esto puede hacer que parezca presionado
 					color: var(--activeTextColor);
 				}
+				// Estilos generales para el botón
+				&:focus {
+					outline: none; // Eliminar el contorno si no es deseado (prueba)
+				}
 			}
 		}
 	}
