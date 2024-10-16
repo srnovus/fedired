@@ -634,7 +634,7 @@ function more(ev: MouseEvent) {
 							content: "";
 							display: block;
 							block-size: 100%;
-							aspect-ratio: 1;
+								aspect-ratio: 1;
 							margin: auto;
 							position: absolute;
 							inset: 0;
