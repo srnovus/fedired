@@ -43,7 +43,8 @@
 										:user="user"
 										:nowrap="true"
 									/>
-									<span v-if="isAdminUser" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge); margin-left: 4px;">
+									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="i18n.ts.isAdmin" style="color: var(--badge); margin-left: 4px;">
+										<i :class="icon('ph-crown')" style="font-size: 1.2em;"></i> <!-- Ícono de administrador, tamaño aumentado -->
 										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 1.2em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
 									</span>
 									<div v-if="isModerator">
@@ -366,7 +367,6 @@ import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
 import icon from "@/scripts/icon";
-import CryptoJS from "crypto-js"; // Importa la biblioteca de encriptación
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 
@@ -427,12 +427,6 @@ const timeForThem = computed(() => {
 	}
 
 	return "";
-});
-
-const targetUsernameHash = CryptoJS.SHA256("srnovus").toString(); // Hash del nombre de usuario
-
-const isAdminUser = computed(() => {
-	return props.user.isAdmin && CryptoJS.SHA256(props.user.username).toString() === targetUsernameHash; // Compara el hash del nombre de usuario
 });
 
 function parallaxLoop() {
