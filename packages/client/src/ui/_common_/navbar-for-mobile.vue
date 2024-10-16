@@ -115,12 +115,14 @@
 			</div>
 			<div class="bottom">
 				<button
+					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
 					class="item _button help"
-					@click="openHelpMenu">
-					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"
-					></i>
-				<span>Ayuda</span>
+					active-class="active"
+					@click="openHelpMenu"
+				>
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
+					<span>Ayuda</span>
 				</button>
 			</div>
 		</div>
