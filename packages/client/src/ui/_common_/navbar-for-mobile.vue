@@ -126,7 +126,6 @@
 				</MkA>
 			</div>
 		</div>
-			</div>
 		</div>
 </template>
 
