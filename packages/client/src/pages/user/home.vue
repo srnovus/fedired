@@ -86,7 +86,7 @@
 										v-if="user.isAdmin"
 										v-tooltip.noDelay="i18n.ts.isAdmin"
 										style="color: var(--badge)"
-										><i :class="icon('ph-bold ph-seal-check')"></i
+										><i :class="icon('ph-bold ph-shield-check')"></i
 									></span>
 									<span
 										v-if="!user.isAdmin && user.isModerator"
@@ -158,7 +158,7 @@
 									v-if="user.isAdmin"
 									v-tooltip.noDelay="i18n.ts.isAdmin"
 									style="color: var(--badge)"
-									><i :class="icon('ph-bold ph-seal-check')"></i
+									><i :class="icon('ph-bold ph-shield-check')"></i
 								></span>
 								<span
 									v-if="!user.isAdmin && user.isModerator"
