@@ -140,7 +140,7 @@
 				<MkA
 					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item"
+					class="item _button"
 					to="#"
 					@click="openHelpMenu"
 				>
