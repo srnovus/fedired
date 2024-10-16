@@ -125,7 +125,8 @@
 					<span class="text">Ayuda</span>
 				</MkA>
 			</div>
-		 </div>
+		</div>
+			</div>
 		</div>
 </template>
 
@@ -353,6 +354,10 @@ function more() {
 						border-radius: 999px;
 						background: var(--accentedBg);
 					}
+				}
+				.item.active {
+					background-color: var(--activeBgColor); // Esto puede hacer que parezca presionado
+					color: var(--activeTextColor);
 				}
 			}
 		}
