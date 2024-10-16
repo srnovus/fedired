@@ -12,7 +12,7 @@ export const wsUrl = `${url
 	.replace("https://", "wss://")}/streaming`;
 export const lang = localStorage.getItem("lang");
 export const langs = _LANGS_;
-export const locale = JSON.parse(localStorage.getItem("locale") || "en-US");
+export const locale = JSON.parse(localStorage.getItem("locale") || "es-ES");
 export const version: string = _VERSION_;
 export const instanceName = siteName === "Fedired" ? host : siteName;
 export const ui = localStorage.getItem("ui");
