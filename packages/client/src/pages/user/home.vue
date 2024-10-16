@@ -38,7 +38,17 @@
 							<div class="fade"></div>
 							<div class="title">
 								<div class="nameColumn">
-									<MkUserNameWithVerification :user="user" />
+									<MkUserName
+										class="name"
+										:user="user"
+										:nowrap="true"
+									/>
+									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
+										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
+									</span>
+									<span v-if="user.isModerator && user.username === 'fedired'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
+										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
+									</span>
 									<div v-if="isModerator">
 										<span
 											v-if="user.isSilenced"
