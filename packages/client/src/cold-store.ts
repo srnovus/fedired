@@ -14,11 +14,11 @@ interface Plugin {
 	ast: unknown[];
 }
 
-import darkTheme from "@/themes/d-rosepine.json5";
+import darkTheme from "@/themes/d-future.json5";
 /**
  * Storage for configuration information that does not need to be constantly loaded into memory (non-reactive)
  */
-import lightTheme from "@/themes/l-rosepinedawn.json5";
+import lightTheme from "@/themes/l-vivid.json5";
 
 const ColdStoreDefault = {
 	lightTheme,
