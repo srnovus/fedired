@@ -2,7 +2,7 @@ import { In, Not } from "typeorm";
 import Ajv from "ajv";
 import type { ILocalUser, IRemoteUser } from "@/models/entities/user.js";
 import { User } from "@/models/entities/user.js";
-import config from "@/config/index.js";
+import { config } from "@/config.js";
 import type { Packed } from "@/misc/schema.js";
 import type { Promiseable } from "@/prelude/await-all.js";
 import { awaitAll } from "@/prelude/await-all.js";
@@ -26,6 +26,7 @@ import {
 	MessagingMessages,
 	Mutings,
 	RenoteMutings,
+	ReplyMutings,
 	Notes,
 	NoteUnreads,
 	Notifications,
@@ -36,7 +37,6 @@ import {
 	UserSecurityKeys,
 } from "../index.js";
 import type { Instance } from "../entities/instance.js";
-import AsyncLock from "async-lock";
 
 const userInstanceCache = new Cache<Instance | null>(
 	"userInstance",
@@ -53,16 +53,11 @@ type IsMeAndIsUserDetailed<
 	? ExpectsMe extends true
 		? Packed<"MeDetailed">
 		: ExpectsMe extends false
-		? Packed<"UserDetailedNotMe">
-		: Packed<"UserDetailed">
+			? Packed<"UserDetailedNotMe">
+			: Packed<"UserDetailed">
 	: Packed<"UserLite">;
 
 const ajv = new Ajv();
-
-export type PackedUserCache = {
-	locks: AsyncLock;
-	results: IsMeAndIsUserDetailed<any, any>[];
-}
 
 const localUsernameSchema = {
 	type: "string",
@@ -185,6 +180,13 @@ export const UserRepository = db.getRepository(User).extend({
 				},
 				take: 1,
 			}).then((n) => n > 0),
+			isReplyMuted: ReplyMutings.count({
+				where: {
+					muterId: me,
+					muteeId: target,
+				},
+				take: 1,
+			}).then((n) => n > 0),
 		});
 	},
 
@@ -233,7 +235,7 @@ export const UserRepository = db.getRepository(User).extend({
 			reads.length > 0
 				? {
 						id: Not(In(reads.map((read) => read.announcementId))),
-				  }
+					}
 				: {},
 		);
 
@@ -241,29 +243,24 @@ export const UserRepository = db.getRepository(User).extend({
 	},
 
 	async userFromURI(uri: string): Promise<User | null> {
-		try {
-			const dbResolver = new DbResolver();
-			let local = await dbResolver.getUserFromApId(uri);
-			if (local) {
-				return local;
-			}
-
-			// fetching Object once from remote
-			const resolver = new Resolver();
-			const object = (await resolver.resolve(uri)) as any;
-
-			// /@user If a URI other than the id is specified,
-			// the URI is determined here
-			if (uri !== object.id) {
-				local = await dbResolver.getUserFromApId(object.id);
-				if (local != null) return local;
-			}
-
-			return isActor(object) ? await createPerson(getApId(object)) : null;
+		const dbResolver = new DbResolver();
+		let local = await dbResolver.getUserFromApId(uri);
+		if (local) {
+			return local;
 		}
-		catch {
-			return null;
+
+		// fetching Object once from remote
+		const resolver = new Resolver();
+		const object = (await resolver.resolve(uri)) as any;
+
+		// /@user If a URI other than the id is specified,
+		// the URI is determined here
+		if (uri !== object.id) {
+			local = await dbResolver.getUserFromApId(object.id);
+			if (local != null) return local;
 		}
+
+		return isActor(object) ? await createPerson(getApId(object)) : null;
 	},
 
 	async getHasUnreadAntenna(userId: User["id"]): Promise<boolean> {
@@ -295,7 +292,7 @@ export const UserRepository = db.getRepository(User).extend({
 				? await NoteUnreads.findOneBy({
 						userId: userId,
 						noteChannelId: In(channels.map((x) => x.followeeId)),
-				  })
+					})
 				: null;
 
 		return unread != null;
@@ -338,8 +335,8 @@ export const UserRepository = db.getRepository(User).extend({
 		return elapsed < USER_ONLINE_THRESHOLD
 			? "online"
 			: elapsed < USER_ACTIVE_THRESHOLD
-			? "active"
-			: "offline";
+				? "active"
+				: "offline";
 	},
 
 	async getAvatarUrl(user: User): Promise<string> {
@@ -349,7 +346,6 @@ export const UserRepository = db.getRepository(User).extend({
 				this.getIdenticonUrl(user.id)
 			);
 		} else if (user.avatarId) {
-			if (user.avatarUrl) return DriveFiles.getFinalUrl(user.avatarUrl);
 			const avatar = await DriveFiles.findOneByOrFail({ id: user.avatarId });
 			return (
 				DriveFiles.getPublicUrl(avatar, true) || this.getIdenticonUrl(user.id)
@@ -360,9 +356,7 @@ export const UserRepository = db.getRepository(User).extend({
 	},
 
 	getAvatarUrlSync(user: User): string {
-		if (user.avatarId && user.avatarUrl) {
-			return DriveFiles.getFinalUrl(user.avatarUrl);
-		} else if (user.avatar) {
+		if (user.avatar) {
 			return (
 				DriveFiles.getPublicUrl(user.avatar, true) ||
 				this.getIdenticonUrl(user.id)
@@ -376,45 +370,6 @@ export const UserRepository = db.getRepository(User).extend({
 		return `${config.url}/identicon/${userId}`;
 	},
 
-	getFreshPackedUserCache(): PackedUserCache {
-		return {
-			locks: new AsyncLock(),
-			results: [],
-		};
-	},
-
-	async getRandomFollower(targetId: string): Promise<User | null> {
-		return await this.createQueryBuilder("u")
-			.select(`u.id`)
-			.leftJoinAndSelect("following", "f", `f."followerId" = u.id`)
-			.where(`f."followeeId" = :id`, { id: targetId })
-			.getOne();
-	},
-
-	async packCached<
-		ExpectsMe extends boolean | null = null,
-		D extends boolean = false,
-	>(
-		src: User["id"] | User,
-		cache: PackedUserCache,
-		me?: { id: User["id"] } | null | undefined,
-		options?: {
-			detail?: D;
-			includeSecrets?: boolean;
-			isPrivateMode?: boolean;
-		},
-	): Promise<IsMeAndIsUserDetailed<ExpectsMe, D>> {
-		const id = typeof src === "object" ? src.id : src;
-		return cache.locks.acquire(id, async () => {
-			const result = cache.results.find(p => p.id === id);
-			if (result) return result as IsMeAndIsUserDetailed<ExpectsMe, D>
-			return this.pack<ExpectsMe, D>(src, me, options).then(result => {
-				cache.results.push(result);
-				return result;
-			});
-		});
-	},
-
 	async pack<
 		ExpectsMe extends boolean | null = null,
 		D extends boolean = false,
@@ -424,14 +379,12 @@ export const UserRepository = db.getRepository(User).extend({
 		options?: {
 			detail?: D;
 			includeSecrets?: boolean;
-			isPrivateMode?: boolean;
 		},
 	): Promise<IsMeAndIsUserDetailed<ExpectsMe, D>> {
 		const opts = Object.assign(
 			{
 				detail: false,
 				includeSecrets: false,
-				isPrivateMode: false
 			},
 			options,
 		);
@@ -440,9 +393,17 @@ export const UserRepository = db.getRepository(User).extend({
 
 		if (typeof src === "object") {
 			user = src;
+			if (src.avatar === undefined && src.avatarId)
+				src.avatar = (await DriveFiles.findOneBy({ id: src.avatarId })) ?? null;
+			if (src.banner === undefined && src.bannerId)
+				src.banner = (await DriveFiles.findOneBy({ id: src.bannerId })) ?? null;
 		} else {
 			user = await this.findOneOrFail({
 				where: { id: src },
+				relations: {
+					avatar: true,
+					banner: true,
+				},
 			});
 		}
 
@@ -468,49 +429,25 @@ export const UserRepository = db.getRepository(User).extend({
 			profile == null
 				? null
 				: profile.ffVisibility === "public" || isMe
-				? user.followingCount
-				: profile.ffVisibility === "followers" &&
-				  relation &&
-				  relation.isFollowing
-				? user.followingCount
-				: null;
+					? user.followingCount
+					: profile.ffVisibility === "followers" &&
+							relation &&
+							relation.isFollowing
+						? user.followingCount
+						: null;
 
 		const followersCount =
 			profile == null
 				? null
 				: profile.ffVisibility === "public" || isMe
-				? user.followersCount
-				: profile.ffVisibility === "followers" &&
-				  relation &&
-				  relation.isFollowing
-				? user.followersCount
-				: null;
+					? user.followersCount
+					: profile.ffVisibility === "followers" &&
+							relation &&
+							relation.isFollowing
+						? user.followersCount
+						: null;
 
 		const falsy = opts.detail ? false : undefined;
-
-		if (opts.isPrivateMode) {
-			const packed = {
-				id: user.id,
-				username: user.username,
-				host: user.host,
-
-				...(opts.detail
-				? {
-						twoFactorEnabled: profile!.twoFactorEnabled,
-						usePasswordLessLogin: profile!.usePasswordLessLogin,
-						securityKeys: profile!.twoFactorEnabled
-							? UserSecurityKeys.countBy({
-									userId: user.id,
-								}).then((result) => result >= 1)
-							: false,
-					}
-				: {}),
-			} as Promiseable<Packed<"User">> as Promiseable<
-			IsMeAndIsUserDetailed<ExpectsMe, D>
-		>;
-
-			return await awaitAll(packed);
-		}
 
 		const packed = {
 			id: user.id,
@@ -518,19 +455,23 @@ export const UserRepository = db.getRepository(User).extend({
 			username: user.username,
 			host: user.host,
 			avatarUrl: this.getAvatarUrlSync(user),
-			avatarBlurhash: user.avatarId ? (user.avatarBlurhash ?? user.avatar?.blurhash ?? null) : null,
+			avatarBlurhash: user.avatar?.blurhash || null,
 			avatarColor: null, // 後方互換性のため
+			emojiModPerm: user.emojiModPerm ?? "unauthorized",
 			isAdmin: user.isAdmin || falsy,
 			isModerator: user.isModerator || falsy,
 			isBot: user.isBot || falsy,
 			isLocked: user.isLocked,
+			isIndexable: user.isIndexable,
 			isCat: user.isCat || falsy,
-			speakAsCat: user.speakAsCat || falsy,
+			speakAsCat: user.speakAsCat,
+			readCatLanguage: user.readCatLanguage,
 			instance: user.host
 				? userInstanceCache
 						.fetch(
 							user.host,
 							() => Instances.findOneBy({ host: user.host! }),
+							false,
 							(v) => v != null,
 						)
 						.then((instance) =>
@@ -555,7 +496,7 @@ export const UserRepository = db.getRepository(User).extend({
 						url: profile!.url,
 						uri: user.uri,
 						movedToUri: user.movedToUri
-							? await this.userFromURI(user.movedToUri)
+							? await this.userFromURI(user.movedToUri).catch(() => null)
 							: null,
 						alsoKnownAs: user.alsoKnownAs,
 						createdAt: user.createdAt.toISOString(),
@@ -563,10 +504,10 @@ export const UserRepository = db.getRepository(User).extend({
 						lastFetchedAt: user.lastFetchedAt
 							? user.lastFetchedAt.toISOString()
 							: null,
-						bannerUrl: user.bannerId ? (DriveFiles.getFinalUrlMaybe(user.bannerUrl) ?? (user.banner
+						bannerUrl: user.banner
 							? DriveFiles.getPublicUrl(user.banner, false)
-							: null)) : null,
-						bannerBlurhash: user.bannerId ? (user.bannerBlurhash ?? user.banner?.blurhash ?? null) : null,
+							: null,
+						bannerBlurhash: user.banner?.blurhash || null,
 						bannerColor: null, // 後方互換性のため
 						isSilenced: user.isSilenced || falsy,
 						isSuspended: user.isSuspended || falsy,
@@ -575,8 +516,8 @@ export const UserRepository = db.getRepository(User).extend({
 						birthday: profile!.birthday,
 						lang: profile!.lang,
 						fields: profile!.fields,
-						followersCount: followersCount || 0,
-						followingCount: followingCount || 0,
+						followersCount: followersCount ?? null,
+						followingCount: followingCount ?? null,
 						notesCount: user.notesCount,
 						pinnedNoteIds: pins.map((pin) => pin.noteId),
 						pinnedNotes: Notes.packMany(
@@ -590,15 +531,16 @@ export const UserRepository = db.getRepository(User).extend({
 						pinnedPage: profile!.pinnedPageId
 							? Pages.pack(profile!.pinnedPageId, me)
 							: null,
-						publicReactions: profile!.publicReactions,
-						ffVisibility: profile!.ffVisibility,
+						// TODO: federate publicReactions
+						publicReactions:
+							user.host == null ? profile!.publicReactions : false,
+						// TODO: federate ffVisibility
+						ffVisibility: user.host == null ? profile!.ffVisibility : "private",
 						twoFactorEnabled: profile!.twoFactorEnabled,
 						usePasswordLessLogin: profile!.usePasswordLessLogin,
-						securityKeys: profile!.twoFactorEnabled
-							? UserSecurityKeys.countBy({
-									userId: user.id,
-								}).then((result) => result >= 1)
-							: false,
+						securityKeys: UserSecurityKeys.countBy({
+							userId: user.id,
+						}).then((result) => result >= 1),
 					}
 				: {}),
 
@@ -606,13 +548,13 @@ export const UserRepository = db.getRepository(User).extend({
 				? {
 						avatarId: user.avatarId,
 						bannerId: user.bannerId,
-						injectFeaturedNote: profile!.injectFeaturedNote,
-						receiveAnnouncementEmail: profile!.receiveAnnouncementEmail,
-						alwaysMarkNsfw: profile!.alwaysMarkNsfw,
-						carefulBot: profile!.carefulBot,
-						autoAcceptFollowed: profile!.autoAcceptFollowed,
-						noCrawle: profile!.noCrawle,
-						preventAiLearning: profile!.preventAiLearning,
+						injectFeaturedNote: profile?.injectFeaturedNote,
+						receiveAnnouncementEmail: profile?.receiveAnnouncementEmail,
+						alwaysMarkNsfw: profile?.alwaysMarkNsfw,
+						carefulBot: profile?.carefulBot,
+						autoAcceptFollowed: profile?.autoAcceptFollowed,
+						noCrawle: profile?.noCrawle,
+						preventAiLearning: profile?.preventAiLearning,
 						isExplorable: user.isExplorable,
 						isDeleted: user.isDeleted,
 						hideOnlineStatus: user.hideOnlineStatus,
@@ -633,30 +575,28 @@ export const UserRepository = db.getRepository(User).extend({
 						hasUnreadNotification: this.getHasUnreadNotification(user.id),
 						hasPendingReceivedFollowRequest:
 							this.getHasPendingReceivedFollowRequest(user.id),
-						integrations: profile!.integrations,
-						mutedWords: profile!.mutedWords,
-						mutedInstances: profile!.mutedInstances,
-						mutingNotificationTypes: profile!.mutingNotificationTypes,
-						emailNotificationTypes: profile!.emailNotificationTypes,
+						mutedWords: profile?.mutedWords.map((row) => row.split(" ")),
+						mutedPatterns: profile?.mutedPatterns,
+						mutedInstances: profile?.mutedInstances,
+						mutingNotificationTypes: profile?.mutingNotificationTypes,
+						emailNotificationTypes: profile?.emailNotificationTypes,
 					}
 				: {}),
 
 			...(opts.includeSecrets
 				? {
-						email: profile!.email,
-						emailVerified: profile!.emailVerified,
-						securityKeysList: profile!.twoFactorEnabled
-							? UserSecurityKeys.find({
-									where: {
-										userId: user.id,
-									},
-									select: {
-										id: true,
-										name: true,
-										lastUsed: true,
-									},
-								})
-							: [],
+						email: profile?.email,
+						emailVerified: profile?.emailVerified,
+						securityKeysList: UserSecurityKeys.find({
+							where: {
+								userId: user.id,
+							},
+							select: {
+								id: true,
+								name: true,
+								lastUsed: true,
+							},
+						}),
 					}
 				: {}),
 
@@ -671,6 +611,7 @@ export const UserRepository = db.getRepository(User).extend({
 						isBlocked: relation.isBlocked,
 						isMuted: relation.isMuted,
 						isRenoteMuted: relation.isRenoteMuted,
+						isReplyMuted: relation.isReplyMuted,
 					}
 				: {}),
 		} as Promiseable<Packed<"User">> as Promiseable<
@@ -687,9 +628,8 @@ export const UserRepository = db.getRepository(User).extend({
 			detail?: D;
 			includeSecrets?: boolean;
 		},
-		cache?: PackedUserCache,
 	): Promise<IsUserDetailed<D>[]> {
-		return Promise.all(users.map((u) => this.packCached(u, cache ?? this.getFreshPackedUserCache(), me, options)));
+		return Promise.all(users.map((u) => this.pack(u, me, options)));
 	},
 
 	isLocalUser,
