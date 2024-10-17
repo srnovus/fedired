@@ -1,27 +1,30 @@
 import { URL } from "node:url";
 import promiseLimit from "promise-limit";
 
-import config from "@/config/index.js";
 import { registerOrFetchInstanceDoc } from "@/services/register-or-fetch-instance-doc.js";
 import type { Note } from "@/models/entities/note.js";
 import { updateUsertags } from "@/services/update-hashtag.js";
 import {
 	Users,
 	Instances,
-	DriveFiles,
 	Followings,
 	UserProfiles,
 	UserPublickeys,
+	DriveFiles,
 } from "@/models/index.js";
 import type { IRemoteUser, CacheableUser } from "@/models/entities/user.js";
 import { User } from "@/models/entities/user.js";
 import type { Emoji } from "@/models/entities/emoji.js";
 import { UserNotePining } from "@/models/entities/user-note-pining.js";
-import { genId } from "@/misc/gen-id.js";
-import { instanceChart, usersChart } from "@/services/chart/index.js";
+import {
+	genIdAt,
+	InternalEvent,
+	isSameOrigin,
+	publishToInternalStream,
+	toPuny,
+} from "backend-rs";
 import { UserPublickey } from "@/models/entities/user-publickey.js";
 import { isDuplicateKeyValueError } from "@/misc/is-duplicate-key-value-error.js";
-import { toPuny } from "@/misc/convert-host.js";
 import { UserProfile } from "@/models/entities/user-profile.js";
 import { toArray } from "@/prelude/array.js";
 import { fetchInstanceMetadata } from "@/services/fetch-instance-metadata.js";
@@ -29,12 +32,11 @@ import { normalizeForSearch } from "@/misc/normalize-for-search.js";
 import { truncate } from "@/misc/truncate.js";
 import { StatusError } from "@/misc/fetch.js";
 import { uriPersonCache } from "@/services/user-cache.js";
-import { publishInternalEvent } from "@/services/stream.js";
 import { db } from "@/db/postgre.js";
 import { apLogger } from "../logger.js";
 import { htmlToMfm } from "../misc/html-to-mfm.js";
-import { fromHtml } from "../../../mfm/from-html.js";
-import type { IActor, IObject, IApPropertyValue } from "../type.js";
+import { fromHtml } from "@/mfm/from-html.js";
+import type { IActor, IObject } from "../type.js";
 import {
 	isCollectionOrOrderedCollection,
 	isCollection,
@@ -48,17 +50,8 @@ import Resolver from "../resolver.js";
 import { extractApHashtags } from "./tag.js";
 import { resolveNote, extractEmojis } from "./note.js";
 import { resolveImage } from "./image.js";
-import {
-	getSubjectHostFromUri,
-	getSubjectHostFromRemoteUser,
-	getSubjectHostFromAcctParts
-} from "@/remote/resolve-user.js"
-import { RecursionLimiter } from "@/models/repositories/user-profile.js";
-import { UserConverter } from "@/server/api/mastodon/converters/user.js";
-
+import { inspect } from "node:util";
 import fetch from "node-fetch";
-
-const logger = apLogger;
 
 const nameLength = 128;
 const summaryLength = 2048;
@@ -136,7 +129,7 @@ function validateActor(x: IObject, uri: string): IActor {
 /**
  * Fetch a Person.
  *
- * If the target Person is registered in Fedired, it will be returned.
+ * If the target Person is registered in fedired, it will be returned.
  */
 export async function fetchPerson(
 	uri: string,
@@ -148,7 +141,7 @@ export async function fetchPerson(
 	if (cached) return cached;
 
 	// Fetch from the database if the URI points to this server
-	if (uri.startsWith(`${config.url}/`)) {
+	if (isSameOrigin(uri)) {
 		const id = uri.split("/").pop();
 		const u = await Users.findOneBy({ id });
 		if (u) await uriPersonCache.set(uri, u);
@@ -173,12 +166,8 @@ export async function fetchPerson(
 export async function createPerson(
 	uri: string,
 	resolver?: Resolver,
-	subjectHost?: string,
-	limiter: RecursionLimiter = new RecursionLimiter()
 ): Promise<User> {
-	if (typeof uri !== "string") throw new Error("uri is not string");
-
-	if (uri.startsWith(config.url)) {
+	if (isSameOrigin(uri)) {
 		throw new StatusError(
 			"cannot resolve local user",
 			400,
@@ -188,76 +177,21 @@ export async function createPerson(
 
 	if (resolver == null) resolver = new Resolver();
 
-	let object = (await resolver.resolve(uri)) as any;
+	const object = (await resolver.resolve(uri)) as any;
 
-	let person: IActor;
-	try {
-		person = validateActor(object, uri);
-	}
-	catch (e: any) {
-		if (typeof object.publicKey?.owner !== 'string')
-			throw e;
+	const person = validateActor(object, uri);
 
-		// Work around GoToSocial issue #1186 (ref: https://github.com/superseriousbusiness/gotosocial/issues/1186)
-		logger.info(`Received stub actor, re-resolving with key owner uri: ${object.publicKey.owner}`);
-		object = (await resolver.resolve(object.publicKey.owner)) as any;
-		person = validateActor(object, uri);
-	}
+	apLogger.info(`Creating Person: ${person.id}`);
 
-	logger.info(`Creating the Person: ${person.id}`);
+	const host = toPuny(new URL(object.id).hostname);
 
-	const usernameLower = person.preferredUsername?.toLowerCase();
-
-	const urlHostname = toPuny(new URL(object.id).hostname);
-
-	const host = subjectHost ?? await getSubjectHostFromUri(object.id) ?? await getSubjectHostFromAcctParts(usernameLower, urlHostname) ?? urlHostname;
-
-	if (usernameLower !== null) {
-		let checkUser = (await Users.findOneBy({
-			usernameLower: usernameLower,
-			host: toPuny(new URL(object.id).hostname),
-		})) as IRemoteUser | null;
-
-		if (checkUser != null) {
-			logger.info('Person already exists');
-			if (host != checkUser.host) {
-				logger.info(`Updating existing person with canonical account domain (${usernameLower}@${checkUser.host} -> ${usernameLower}@${host})`);
-				await Users.update(
-					{
-						usernameLower: usernameLower,
-						host: checkUser.host,
-					},
-					{
-						host: host,
-					},
-				);
-				checkUser.host = host;
-			}
-			logger.info('Returning existing person');
-			return checkUser;
-		}
-
-		if (host != toPuny(new URL(object.id).hostname)) {
-			checkUser = (await Users.findOneBy({
-				usernameLower: usernameLower,
-				host: host,
-			})) as IRemoteUser | null;
-
-			if (checkUser != null) {
-				logger.info('Person already exists');
-				logger.info('Returning existing person');
-				return checkUser;
-			}
-		}
-	}
-
-	const { fields } = await analyzeAttachments(person.attachment || []);
+	const fields = analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
 		.splice(0, 32);
 
-	const isBot = getApType(object) === "Service";
+	const isBot = getApType(object) !== "Person";
 
 	const bday = person["vcard:bday"]?.match(/^\d{4}-\d{2}-\d{2}/);
 
@@ -271,11 +205,11 @@ export async function createPerson(
 
 	if (typeof person.followers === "string") {
 		try {
-			let data = await fetch(person.followers, {
+			const data = await fetch(person.followers, {
 				headers: { Accept: "application/json" },
-				size: 1024 * 1024
+				size: 1024 * 1024,
 			});
-			let json_data = JSON.parse(await data.text());
+			const json_data = JSON.parse(await data.text());
 
 			followersCount = json_data.totalItems;
 		} catch {
@@ -287,11 +221,11 @@ export async function createPerson(
 
 	if (typeof person.following === "string") {
 		try {
-			let data = await fetch(person.following, {
+			const data = await fetch(person.following, {
 				headers: { Accept: "application/json" },
-				size: 1024 * 1024
+				size: 1024 * 1024,
 			});
-			let json_data = JSON.parse(await data.text());
+			const json_data = JSON.parse(await data.text());
 
 			followingCount = json_data.totalItems;
 		} catch (e) {
@@ -299,77 +233,111 @@ export async function createPerson(
 		}
 	}
 
-	// Prepare objects
-	let user = new User({
-		id: genId(),
-		avatarId: null,
-		bannerId: null,
-		createdAt: new Date(),
-		lastFetchedAt: new Date(),
-		name: truncate(person.name, nameLength),
-		isLocked: !!person.manuallyApprovesFollowers,
-		movedToUri: person.movedTo,
-		alsoKnownAs: person.alsoKnownAs,
-		isExplorable: !!person.discoverable,
-		username: person.preferredUsername,
-		usernameLower: person.preferredUsername!.toLowerCase(),
-		host,
-		inbox: person.inbox,
-		sharedInbox:
-			person.sharedInbox ||
-			(person.endpoints ? person.endpoints.sharedInbox : undefined),
-		followersUri: person.followers
-			? getApId(person.followers)
-			: undefined,
-		followersCount:
-			followersCount !== undefined
-				? followersCount
-				: person.followers &&
-				typeof person.followers !== "string" &&
-				isCollectionOrOrderedCollection(person.followers)
-					? person.followers.totalItems
-					: undefined,
-		followingCount:
-			followingCount !== undefined
-				? followingCount
-				: person.following &&
-				typeof person.following !== "string" &&
-				isCollectionOrOrderedCollection(person.following)
-					? person.following.totalItems
-					: undefined,
-		featured: person.featured ? getApId(person.featured) : undefined,
-		uri: person.id,
-		tags,
-		isBot,
-		isCat: (person as any).isCat === true,
-	}) as IRemoteUser;
+	let notesCount: number | undefined;
 
-	const profile = new UserProfile({
-		userId: user.id,
-		description: person.summary
-			? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
-			: null,
-		url: url,
-		fields,
-		birthday: bday ? bday[0] : null,
-		location: person["vcard:Address"] || null,
-		userHost: host,
-	});
+	if (typeof person.outbox === "string") {
+		try {
+			const data = await fetch(person.outbox, {
+				headers: { Accept: "application/json" },
+			});
+			const json_data = JSON.parse(await data.text());
 
-	const publicKey = person.publicKey
-		? new UserPublickey({
-			userId: user.id,
-			keyId: person.publicKey.id,
-			keyPem: person.publicKey.publicKeyPem,
-		})
-		: null;
+			notesCount = json_data.totalItems;
+		} catch (e) {
+			notesCount = undefined;
+		}
+	}
 
+	// Create user
+	let user: IRemoteUser;
+	const now = new Date();
 	try {
-		// Save the objects atomically using a db transaction, note that we should never run any code in a transaction block directly
+		// Start transaction
 		await db.transaction(async (transactionalEntityManager) => {
-			await transactionalEntityManager.save(user);
-			await transactionalEntityManager.save(profile);
-			if (publicKey) await transactionalEntityManager.save(publicKey);
+			user = (await transactionalEntityManager.save(
+				new User({
+					id: genIdAt(now),
+					avatarId: null,
+					bannerId: null,
+					createdAt: now,
+					lastFetchedAt: now,
+					name: truncate(person.name, nameLength),
+					isLocked: !!person.manuallyApprovesFollowers,
+					movedToUri: person.movedTo,
+					alsoKnownAs: person.alsoKnownAs,
+					isExplorable: !!person.discoverable,
+					username: person.preferredUsername,
+					usernameLower: person.preferredUsername!.toLowerCase(),
+					host,
+					inbox: person.inbox,
+					sharedInbox:
+						person.sharedInbox ||
+						(person.endpoints ? person.endpoints.sharedInbox : undefined),
+					followersUri: person.followers
+						? getApId(person.followers)
+						: undefined,
+					followersCount:
+						followersCount !== undefined
+							? followersCount
+							: person.followers &&
+									typeof person.followers !== "string" &&
+									isCollectionOrOrderedCollection(person.followers)
+								? person.followers.totalItems
+								: undefined,
+					followingCount:
+						followingCount !== undefined
+							? followingCount
+							: person.following &&
+									typeof person.following !== "string" &&
+									isCollectionOrOrderedCollection(person.following)
+								? person.following.totalItems
+								: undefined,
+					notesCount:
+						notesCount !== undefined
+							? notesCount
+							: person.outbox &&
+									typeof person.outbox !== "string" &&
+									isCollectionOrOrderedCollection(person.outbox)
+								? person.outbox.totalItems
+								: undefined,
+					featured: person.featured ? getApId(person.featured) : undefined,
+					uri: person.id,
+					tags,
+					isBot,
+					isCat: (person as any).isCat === true,
+					speakAsCat:
+						person.speakAsCat != null
+							? person.speakAsCat === true
+							: (person as any).isCat === true,
+					isIndexable: person.indexable,
+				}),
+			)) as IRemoteUser;
+
+			await transactionalEntityManager.save(
+				new UserProfile({
+					userId: user.id,
+					description: person._misskey_summary
+						? truncate(person._misskey_summary, summaryLength)
+						: person.summary
+							? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+							: null,
+					url: url,
+					fields,
+					birthday: bday ? bday[0] : null,
+					location: person["vcard:Address"] || null,
+					userHost: host,
+				}),
+			);
+
+			if (person.publicKey) {
+				await transactionalEntityManager.save(
+					new UserPublickey({
+						userId: user.id,
+						keyId: person.publicKey.id,
+						keyPem: person.publicKey.publicKeyPem,
+					}),
+				);
+			}
 		});
 	} catch (e) {
 		// duplicate key error
@@ -385,7 +353,8 @@ export async function createPerson(
 				throw new Error("already registered");
 			}
 		} else {
-			logger.error(e instanceof Error ? e : new Error(e as string));
+			apLogger.info(`Failed to create a Person actor: ${person.url}`);
+			apLogger.debug(inspect(e));
 			throw e;
 		}
 	}
@@ -393,55 +362,41 @@ export async function createPerson(
 	// Register host
 	registerOrFetchInstanceDoc(host).then((i) => {
 		Instances.increment({ id: i.id }, "usersCount", 1);
-		instanceChart.newUser(i.host);
 		fetchInstanceMetadata(i);
 	});
-
-	usersChart.update(user!, true);
 
 	// Hashtag update
 	updateUsertags(user!, tags);
 
-	// Mentions update, then prewarm html cache
-	if (await limiter.shouldContinue()) UserProfiles.updateMentions(user!.id, limiter)
-		.then(_ => UserConverter.prewarmCacheById(user!.id));
-
 	//#region Fetch avatar and header image
 	const [avatar, banner] = await Promise.all(
-		[person.icon, person.image].map((img) =>
+		[person.icon, person.image].map((img, index) =>
 			img == null
 				? Promise.resolve(null)
-				: resolveImage(user!, img).catch(() => null),
+				: resolveImage(
+						user,
+						img,
+						index === 0 ? "userAvatar" : index === 1 ? "userBanner" : null,
+					).catch(() => null),
 		),
 	);
 
-	const avatarId = avatar?.id ?? null;
-	const avatarBlurhash = avatar?.blurhash ?? null;
-	const avatarUrl = avatar ? DriveFiles.getDatabasePrefetchUrl(avatar, true) : null;
-	const bannerId = banner?.id ?? null;
-	const bannerBlurhash = banner?.blurhash ?? null;
-	const bannerUrl = banner ? DriveFiles.getDatabasePrefetchUrl(banner, false) : null;
+	const avatarId = avatar ? avatar.id : null;
+	const bannerId = banner ? banner.id : null;
 
 	await Users.update(user!.id, {
 		avatarId,
-		avatarBlurhash,
-		avatarUrl,
 		bannerId,
-		bannerBlurhash,
-		bannerUrl,
 	});
 
 	user!.avatarId = avatarId;
-	user!.avatarBlurhash = avatarBlurhash;
-	user!.avatarUrl = avatarUrl;
 	user!.bannerId = bannerId;
-	user!.bannerBlurhash = bannerBlurhash;
-	user!.bannerUrl = bannerUrl;
 	//#endregion
 
 	//#region Get custom emoji
 	const emojis = await extractEmojis(person.tag || [], host).catch((e) => {
-		logger.info(`extractEmojis: ${e}`);
+		apLogger.info("Failed to extract emojis");
+		apLogger.debug(inspect(e));
 		return [] as Emoji[];
 	});
 
@@ -452,29 +407,30 @@ export async function createPerson(
 	});
 	//#endregion
 
-	await updateFeatured(user!.id, resolver, limiter).catch((err) => logger.error(err));
+	await updateFeatured(user!.id, resolver).catch((err) => {
+		apLogger.info(`Failed to update featured collection of ${user.uri}`);
+		apLogger.debug(inspect(err));
+	});
 
 	return user!;
 }
 
 /**
  * Update Person data from remote.
- * If the target Person is not registered in Fedired, it is ignored.
+ * If the target Person is not registered in fedired, it is ignored.
  * @param uri URI of Person
  * @param resolver Resolver
  * @param hint Hint of Person object (If this value is a valid Person, it is used for updating without Remote resolve)
- * @param userHint Hint of IRemoteUser object, used for updating user information for remotes that only support webfinger with acct: query
  */
 export async function updatePerson(
 	uri: string,
 	resolver?: Resolver | null,
 	hint?: IObject,
-	userHint?: IRemoteUser,
 ): Promise<void> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
 	// Skip if the URI points to this server
-	if (uri.startsWith(`${config.url}/`)) {
+	if (isSameOrigin(uri)) {
 		return;
 	}
 
@@ -492,28 +448,31 @@ export async function updatePerson(
 
 	const person = validateActor(object, uri);
 
-	logger.info(`Updating the Person: ${person.id}`);
-
-	const host = await getSubjectHostFromUri(uri) ?? await getSubjectHostFromRemoteUser(userHint);
+	apLogger.info(`Updating the Person: ${person.id}`);
 
 	// Fetch avatar and header image
 	const [avatar, banner] = await Promise.all(
-		[person.icon, person.image].map((img) =>
+		[person.icon, person.image].map((img, index) =>
 			img == null
 				? Promise.resolve(null)
-				: resolveImage(user, img).catch(() => null),
+				: resolveImage(
+						user,
+						img,
+						index === 0 ? "userAvatar" : index === 1 ? "userBanner" : null,
+					).catch(() => null),
 		),
 	);
 
 	// Custom pictogram acquisition
 	const emojis = await extractEmojis(person.tag || [], user.host).catch((e) => {
-		logger.info(`extractEmojis: ${e}`);
+		apLogger.info("Failed to extract emojis");
+		apLogger.debug(inspect(e));
 		return [] as Emoji[];
 	});
 
 	const emojiNames = emojis.map((emoji) => emoji.name);
 
-	const { fields } = await analyzeAttachments(person.attachment || []);
+	const fields = analyzeAttachments(person.attachment || []);
 
 	const tags = extractApHashtags(person.tag)
 		.map((tag) => normalizeForSearch(tag))
@@ -531,11 +490,11 @@ export async function updatePerson(
 
 	if (typeof person.followers === "string") {
 		try {
-			let data = await fetch(person.followers, {
+			const data = await fetch(person.followers, {
 				headers: { Accept: "application/json" },
-				size: 1024 * 1024
+				size: 1024 * 1024,
 			});
-			let json_data = JSON.parse(await data.text());
+			const json_data = JSON.parse(await data.text());
 
 			followersCount = json_data.totalItems;
 		} catch {
@@ -547,15 +506,30 @@ export async function updatePerson(
 
 	if (typeof person.following === "string") {
 		try {
-			let data = await fetch(person.following, {
+			const data = await fetch(person.following, {
 				headers: { Accept: "application/json" },
-				size: 1024 * 1024
+				size: 1024 * 1024,
 			});
-			let json_data = JSON.parse(await data.text());
+			const json_data = JSON.parse(await data.text());
 
 			followingCount = json_data.totalItems;
 		} catch {
 			followingCount = undefined;
+		}
+	}
+
+	let notesCount: number | undefined;
+
+	if (typeof person.outbox === "string") {
+		try {
+			const data = await fetch(person.outbox, {
+				headers: { Accept: "application/json" },
+			});
+			const json_data = JSON.parse(await data.text());
+
+			notesCount = json_data.totalItems;
+		} catch (e) {
+			notesCount = undefined;
 		}
 	}
 
@@ -570,24 +544,37 @@ export async function updatePerson(
 			followersCount !== undefined
 				? followersCount
 				: person.followers &&
-				  typeof person.followers !== "string" &&
-				  isCollectionOrOrderedCollection(person.followers)
-				? person.followers.totalItems
-				: undefined,
+						typeof person.followers !== "string" &&
+						isCollectionOrOrderedCollection(person.followers)
+					? person.followers.totalItems
+					: undefined,
 		followingCount:
 			followingCount !== undefined
 				? followingCount
 				: person.following &&
-				  typeof person.following !== "string" &&
-				  isCollectionOrOrderedCollection(person.following)
-				? person.following.totalItems
-				: undefined,
+						typeof person.following !== "string" &&
+						isCollectionOrOrderedCollection(person.following)
+					? person.following.totalItems
+					: undefined,
+		notesCount:
+			notesCount !== undefined
+				? notesCount
+				: person.outbox &&
+						typeof person.outbox !== "string" &&
+						isCollectionOrOrderedCollection(person.outbox)
+					? person.outbox.totalItems
+					: undefined,
 		featured: person.featured,
 		emojis: emojiNames,
 		name: truncate(person.name, nameLength),
 		tags,
-		isBot: getApType(object) === "Service",
+		isBot: getApType(object) !== "Person",
 		isCat: (person as any).isCat === true,
+		speakAsCat:
+			person.speakAsCat != null
+				? person.speakAsCat === true
+				: (person as any).isCat === true,
+		isIndexable: person.indexable,
 		isLocked: !!person.manuallyApprovesFollowers,
 		movedToUri: person.movedTo || null,
 		alsoKnownAs: person.alsoKnownAs || null,
@@ -595,19 +582,15 @@ export async function updatePerson(
 	} as Partial<User>;
 
 	if (avatar) {
+		if (user?.avatarId)
+			await DriveFiles.update(user.avatarId, { usageHint: null });
 		updates.avatarId = avatar.id;
-		updates.avatarUrl = DriveFiles.getDatabasePrefetchUrl(avatar, true);
-		updates.avatarBlurhash = avatar.blurhash;
 	}
 
 	if (banner) {
+		if (user?.bannerId)
+			await DriveFiles.update(user.bannerId, { usageHint: null });
 		updates.bannerId = banner.id;
-		updates.bannerUrl = DriveFiles.getDatabasePrefetchUrl(banner, false);
-		updates.bannerBlurhash = banner.blurhash;
-	}
-
-	if (host) {
-		updates.host = host;
 	}
 
 	// Update user
@@ -623,31 +606,25 @@ export async function updatePerson(
 		);
 	}
 
-	// Get old profile to see if we need to update any matching html cache entries
-	const oldProfile = await UserProfiles.findOneBy({ userId: user.id });
+	await UserProfiles.update(
+		{ userId: user.id },
+		{
+			url: url,
+			fields,
+			description: person._misskey_summary
+				? truncate(person._misskey_summary, summaryLength)
+				: person.summary
+					? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
+					: null,
+			birthday: bday ? bday[0] : null,
+			location: person["vcard:Address"] || null,
+		},
+	);
 
-	const newProfile = {
-		url: url,
-		fields,
-		description: person._misskey_summary
-			? truncate(person._misskey_summary, summaryLength)
-			: person.summary
-				? await htmlToMfm(truncate(person.summary, summaryLength), person.tag)
-				: null,
-		birthday: bday ? bday[0] : null,
-		location: person["vcard:Address"] || null
-	} as Partial<UserProfile>;
-
-	await UserProfiles.update({ userId: user.id }, newProfile);
-
-	publishInternalEvent("remoteUserUpdated", { id: user.id });
+	publishToInternalStream(InternalEvent.RemoteUser, { id: user.id });
 
 	// Hashtag Update
 	updateUsertags(user, tags);
-
-	// Mentions update, then prewarm html cache
-	UserProfiles.updateMentions(user!.id)
-		.then(_ => UserConverter.prewarmCacheById(user!.id, oldProfile));
 
 	// If the user in question is a follower, followers will also be updated.
 	await Followings.update(
@@ -661,19 +638,21 @@ export async function updatePerson(
 		},
 	);
 
-	await updateFeatured(user.id, resolver).catch((err) => logger.error(err));
+	await updateFeatured(user.id, resolver).catch((err) => {
+		apLogger.info(`Failed to update featured collection of ${user.uri}`);
+		apLogger.debug(inspect(err));
+	});
 }
 
 /**
  * Resolve Person.
  *
- * If the target person is registered in Fedired, it returns it;
- * otherwise, it fetches it from the remote server, registers it in Fedired, and returns it.
+ * If the target person is registered in fedired, it returns it;
+ * otherwise, it fetches it from the remote server, registers it in fedired, and returns it.
  */
 export async function resolvePerson(
 	uri: string,
 	resolver?: Resolver,
-	limiter: RecursionLimiter = new RecursionLimiter()
 ): Promise<CacheableUser> {
 	if (typeof uri !== "string") throw new Error("uri is not string");
 
@@ -687,75 +666,37 @@ export async function resolvePerson(
 
 	// Fetched from remote server and registered
 	if (resolver == null) resolver = new Resolver();
-	return await createPerson(uri, resolver, undefined, limiter);
+	return await createPerson(uri, resolver);
 }
 
-const services: {
-	[x: string]: (id: string, username: string) => any;
-} = {
-	"misskey:authentication:github": (id, login) => ({ id, login }),
-	"misskey:authentication:discord": (id, name) => $discord(id, name),
-};
-
-const $discord = (id: string, name: string) => {
-	if (typeof name !== "string") {
-		name = "unknown#0000";
-	}
-	const [username, discriminator] = name.split("#");
-	return { id, username, discriminator };
-};
-
-function addService(target: { [x: string]: any }, source: IApPropertyValue) {
-	const service = services[source.name];
-
-	if (typeof source.value !== "string") {
-		source.value = "unknown";
-	}
-
-	const [id, username] = source.value.split("@");
-
-	if (service) {
-		target[source.name.split(":")[2]] = service(id, username);
-	}
-}
-
-export async function analyzeAttachments(
+export function analyzeAttachments(
 	attachments: IObject | IObject[] | undefined,
 ) {
 	const fields: {
 		name: string;
 		value: string;
 	}[] = [];
-	const services: { [x: string]: any } = {};
 
 	if (Array.isArray(attachments)) {
 		for (const attachment of attachments.filter(isPropertyValue)) {
-			if (isPropertyValue(attachment.identifier)) {
-				addService(services, attachment.identifier);
-			} else {
-				fields.push({
-					name: attachment.name,
-					value: await fromHtml(attachment.value),
-				});
-			}
+			fields.push({
+				name: attachment.name,
+				value: fromHtml(attachment.value),
+			});
 		}
 	}
 
-	return { fields, services };
+	return fields;
 }
 
-export async function updateFeatured(userId: User["id"], resolver?: Resolver, limiter: RecursionLimiter = new RecursionLimiter()) {
+export async function updateFeatured(userId: User["id"], resolver?: Resolver) {
 	const user = await Users.findOneByOrFail({ id: userId });
 	if (!Users.isRemoteUser(user)) return;
 	if (!user.featured) return;
 
-	logger.info(`Updating the featured: ${user.uri}`);
+	apLogger.info(`Updating the featured collection: ${user.uri}`);
 
 	if (resolver == null) resolver = new Resolver();
-
-	// Attempt to get a local user that follows the remote user
-	const follower = await Users.getRandomFollower(userId);
-	if (follower) resolver.setUser(follower);
 
 	// Resolve to (Ordered)Collection Object
 	const collection = await resolver.resolveCollection(user.featured);
@@ -767,36 +708,34 @@ export async function updateFeatured(userId: User["id"], resolver?: Resolver, li
 		? collection.items
 		: collection.orderedItems;
 	const items = await Promise.all(
-		toArray(unresolvedItems).map((x) => resolver.resolve(x)),
+		toArray(unresolvedItems).map((x) => resolver?.resolve(x)),
 	);
 
-	// Resolve and register Notes
-	resolver.reset();
+	// Resolve and regist Notes
 	const limit = promiseLimit<Note | null>(2);
 	const featuredNotes = await Promise.all(
 		items
 			.filter((item) => getApType(item) === "Note") // TODO: Maybe it doesn't have to be a Note.
-			.slice(0, 5)
-			.map((item) => limit(() => resolveNote(item, resolver, limiter))),
+			.slice(0, 15)
+			.map((item) => limit(() => resolveNote(item, resolver))),
 	);
 
-	// Prepare the objects
-	// For now, generate the id at a different time and maintain the order.
-	const data: Partial<UserNotePining>[] = [];
-	let td = 0;
-	for (const note of featuredNotes.filter((note) => note != null)) {
-		td -= 1000;
-		data.push({
-			id: genId(new Date(Date.now() + td)),
-			createdAt: new Date(),
-			userId: user.id,
-			noteId: note!.id,
-		});
-	}
-
-	// Save the objects atomically using a db transaction, note that we should never run any code in a transaction block directly
 	await db.transaction(async (transactionalEntityManager) => {
-		await transactionalEntityManager.delete(UserNotePining, { userId: user.id });
-		await transactionalEntityManager.insert(UserNotePining, data);
+		await transactionalEntityManager.delete(UserNotePining, {
+			userId: user.id,
+		});
+
+		// For now, generate the id at a different time and maintain the order.
+		let td = 0;
+		for (const note of featuredNotes.filter((note) => note != null)) {
+			td -= 1000;
+			const createdAt = new Date(Date.now() + td);
+			transactionalEntityManager.insert(UserNotePining, {
+				id: genIdAt(createdAt),
+				createdAt,
+				userId: user.id,
+				noteId: note!.id,
+			});
+		}
 	});
 }
