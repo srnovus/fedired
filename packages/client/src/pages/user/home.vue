@@ -38,6 +38,7 @@
 							<div class="fade"></div>
 							<div class="title">
 								<div class="nameColumn">
+									<MkUserNameWithVerification :user="user" />
 									<MkUserName
 										class="name"
 										:user="user"
