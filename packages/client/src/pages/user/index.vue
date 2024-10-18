@@ -68,6 +68,7 @@ function fetchUser(): void {
 	os.api("users/show", acct.parse(props.acct))
 		.then((u) => {
 			user.value = u;
+			console.log('User data:', user.value); // Verifica los datos del usuario
 		})
 		.catch((err) => {
 			error.value = err;
