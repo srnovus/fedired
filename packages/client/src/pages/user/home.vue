@@ -370,6 +370,7 @@ import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
 import icon from "@/scripts/icon";
+import MkUserName from '@/components/MkUserName.vue';
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 
