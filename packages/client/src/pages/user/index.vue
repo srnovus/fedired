@@ -11,7 +11,7 @@
 		<div>
 			<transition name="fade" mode="out-in">
 				<div v-if="user">
-				<UserTitle :user="user" />
+				 <UserTitle :user="user" />
 					<XHome
 						v-if="tab === 'home'"
 						:user="user"
