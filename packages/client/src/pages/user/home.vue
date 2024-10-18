@@ -370,7 +370,7 @@ import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
 import icon from "@/scripts/icon";
-import MkUserNameWithVerification from '@/components/MkUserNameWithVerification.vue'; // Asegúrate de que la ruta sea correcta
+import MkUserNameWithVerification from '@/components/MkUserNameWithVerification.vue';
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 
@@ -422,16 +422,15 @@ const timeForThem = computed(() => {
 			timeZone: tz,
 			hour12: false,
 		});
-function formatTheirTime(theirTime) {
-	if (theirTime && theirTime.includes(",") && theirTime.includes(" ")) {
-		const hourPart = theirTime.split(",")[1].trim().split(":")[0].replace("24", "0");
-		const minutePart = theirTime.split(" ")[1].slice(-5, -3);
-		return ` (${hourPart}:${minutePart})`;
+		return ` (${theirTime
+			.split(",")[1]
+			.trim()
+			.split(":")[0]
+			.replace("24", "0")}:${theirTime.split(" ")[1].slice(-5, -3)})`;
 	}
-	
-	return "";
-}
 
+	return "";
+});
 
 function parallaxLoop() {
 	parallaxAnimationId.value = window.requestAnimationFrame(parallaxLoop);
@@ -566,10 +565,11 @@ onUnmounted(() => {
 									.user-name {
 										
 								}
-	}
+						}
+					}
+				}
 			}
 		}
-	}
 
 				> .follow-container {
 					position: relative;
