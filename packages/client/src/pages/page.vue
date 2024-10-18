@@ -139,23 +139,20 @@
 								</button>
 							</div>
 							<div class="user">
-								<MkAvatar :user="page.user" class="avatar" />
-								<div class="name">
-									<MkUserName
-										:user="page.user"
-										style="display: block"
-									/>
-									<MkAcct :user="page.user" />
-								</div>
-								<MkFollowButton
-									v-if="!me || me.id != page.user.id"
-									:user="page.user"
-									:inline="true"
-									:transparent="false"
-									:full="true"
-									class="koudoku"
-								/>
-							</div>
+       <MkAvatar :user="page.user" class="avatar" />
+       <div class="name">
+           <MkUserName :user="page.user" style="display: block" /> 
+           <MkAcct :user="page.user" />
+       </div>
+       <MkFollowButton
+           v-if="!me || me.id != page.user.id"
+           :user="page.user"
+           :inline="true"
+           :transparent="false"
+           :full="true"
+           class="koudoku"
+       />
+   </div>
 						</div>
 						<!-- <div class="links">
 						<MkA :to="`/@${username}/pages/${pageName}/view-source`" class="link">{{ i18n.ts._pages.viewSource }}</MkA>
@@ -321,6 +318,8 @@ definePageMetadata(
 			: null,
 	),
 );
+
+console.log('User data:', page.user);
 </script>
 
 <style lang="scss" scoped>
@@ -476,3 +475,4 @@ definePageMetadata(
 	}
 }
 </style>
+
