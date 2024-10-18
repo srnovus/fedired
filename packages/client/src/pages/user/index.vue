@@ -29,6 +29,7 @@
 	</MkStickyContainer>
 </template>
 
+console.log('User data:', user.value);
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref, watch } from "vue";
 import { acct, type entities } from "fedired-js";
