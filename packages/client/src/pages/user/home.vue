@@ -565,7 +565,7 @@ onUnmounted(() => {
 									.user-name {
 										
 								}
-		}
+	}
 			}
 		}
 	}
