@@ -562,11 +562,15 @@ onUnmounted(() => {
 
 								&.username {
 									font-weight: bold;
+									.user-name {
+										
 								}
 							}
 						}
 					}
 				}
+			}
+
 
 				> .follow-container {
 					position: relative;
