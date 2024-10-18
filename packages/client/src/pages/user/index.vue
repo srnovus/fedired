@@ -131,16 +131,18 @@ definePageMetadata(
 		user.value
 			? {
 					icon: `${icon("ph-user")}`,
-					title: user.value.name
-						? `${user.value.name} (@${user.value.username})`
-						: `@${user.value.username}`,
+					title: user.value.isAdmin && user.value.username === 'srnovus'
+						? `${user.value.name} (@${user.value.username}) <i class="ph-bold ph-seal-check"></i>` 
+						: user.value.isModerator && user.value.username === 'fedired'
+						? `${user.value.name} (@${user.value.username}) <i class="ph-bold ph-seal-check"></i>` 
+						: `${user.value.name} (@${user.value.username})`,
 					subtitle: `@${acct.toString(user.value)}`,
 					userName: user.value,
 					avatar: user.value,
 					path: `/@${user.value.username}`,
-					share: {
-						title: user.value.name,
-					},
+						share: {
+							title: user.value.name,
+						},
 				}
 			: null,
 	),
