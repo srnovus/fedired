@@ -11,7 +11,6 @@
 		<div>
 			<transition name="fade" mode="out-in">
 				<div v-if="user">
-				 <UserTitle :user="user" />
 					<XHome
 						v-if="tab === 'home'"
 						:user="user"
@@ -32,7 +31,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref, watch } from "vue";
-import { acct, type entities } from "fedired-js";
+import { acct, type entities } from "firefish-js";
 import * as os from "@/os";
 import { useRouter } from "@/router";
 import { definePageMetadata } from "@/scripts/page-metadata";
@@ -69,7 +68,6 @@ function fetchUser(): void {
 	os.api("users/show", acct.parse(props.acct))
 		.then((u) => {
 			user.value = u;
-			console.log('User data:', user.value); // Verifica los datos del usuario
 		})
 		.catch((err) => {
 			error.value = err;
@@ -133,11 +131,9 @@ definePageMetadata(
 		user.value
 			? {
 					icon: `${icon("ph-user")}`,
-					title: user.value.isAdmin && user.value.username === 'srnovus'
-						? `${user.value.name} (@${user.value.username}) ✔️` // Usar un símbolo de verificación
-						: user.value.isModerator && user.value.username === 'fedired'
-						? `${user.value.name} (@${user.value.username}) ✔️` // Usar un símbolo de verificación
-						: `${user.value.name} (@${user.value.username})`,
+					title: user.value.name
+						? `${user.value.name} (@${user.value.username})`
+						: `@${user.value.username}`,
 					subtitle: `@${acct.toString(user.value)}`,
 					userName: user.value,
 					avatar: user.value,
@@ -149,8 +145,6 @@ definePageMetadata(
 			: null,
 	),
 );
-
-console.log('User data:', user.value);
 </script>
 
 <style lang="scss" scoped>
