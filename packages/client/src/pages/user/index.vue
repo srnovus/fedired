@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, ref, watch } from "vue";
-import { acct, type entities } from "firefish-js";
+import { acct, type entities } from "fedired-js";
 import * as os from "@/os";
 import { useRouter } from "@/router";
 import { definePageMetadata } from "@/scripts/page-metadata";
