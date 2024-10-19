@@ -38,7 +38,6 @@
 							<div class="fade"></div>
 							<div class="title">
 								<div class="nameColumn">
-									<MkUserNameWithVerification :user="user.username" />
 									<MkUserName
 										class="name"
 										:user="user"
@@ -561,14 +560,11 @@ onUnmounted(() => {
 
 								&.username {
 									font-weight: bold;
-									.user-name {
-										
 								}
+							}
 						}
 					}
 				}
-			}
-		}
 
 				> .follow-container {
 					position: relative;
@@ -884,11 +880,5 @@ onUnmounted(() => {
 			margin-inline-start: var(--margin);
 		}
 	}
-}
-
-@media (max-width: 600px) {
-    .icon-verificado {
-        font-size: 1.5em; // Ajusta el tamaño del ícono para pantallas pequeñas
-    }
 }
 </style>
