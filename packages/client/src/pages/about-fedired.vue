@@ -93,12 +93,21 @@
 					<FormSection>
 						<template #label>Hecho por</template>
 						<div class="contributors">
-							<div class="contributor founder" v-for="contributor in contributors" :key="contributor.username">
-								<a :href="contributor.link" target="_blank" class="_contributor">
-									<img :src="contributor.avatar" class="contributorAvatar" />
-									<span class="contributorUsername">{{ contributor.username }}</span>
-									<span class="contributorRole">{{ contributor.role }}</span>
+							<div class="contributor founder">
+								<a :href="contributors[0].link" target="_blank" class="_contributor">
+									<img :src="contributors[0].avatar" class="contributorAvatar" />
+									<span class="contributorUsername">{{ contributors[0].username }}</span>
+									<span class="contributorRole">{{ contributors[0].role }}</span>
 								</a>
+							</div>
+							<div class="contributors-row">
+								<div class="contributor" v-for="contributor in contributors.slice(1)" :key="contributor.username">
+									<a :href="contributor.link" target="_blank" class="_contributor">
+										<img :src="contributor.avatar" class="contributorAvatar" />
+										<span class="contributorUsername">{{ contributor.username }}</span>
+										<span class="contributorRole">{{ contributor.role }}</span>
+									</a>
+								</div>
 							</div>
 						</div>
 					</FormSection>
@@ -287,9 +296,10 @@ const contributors = [
 }
 
 .contributors {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); // Cuadrícula responsiva
-	gap: 16px; // Espaciado entre los cuadros
+	display: flex;
+	flex-direction: column; // Coloca al fundador en la parte superior
+	align-items: center; // Centra los elementos
+	margin-bottom: 16px; // Espaciado inferior
 
 	.contributor {
 		display: flex;
@@ -299,6 +309,7 @@ const contributors = [
 		border-radius: 8px; // Bordes redondeados
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra para el efecto de elevación
 		transition: background 0.3s; // Transición suave
+		width: 100%; // Ancho completo
 
 		&:hover {
 			background: var(--MI_THEME-buttonHoverBg); // Cambio de fondo al pasar el mouse
@@ -311,14 +322,14 @@ const contributors = [
 			color: inherit; // Hereda el color del texto
 
 			img {
-				width: 40px; // Ajusta el tamaño de la imagen
-				height: 40px; // Ajusta el tamaño de la imagen
+				width: 60px; // Ajusta el tamaño de la imagen
+				height: 60px; // Ajusta el tamaño de la imagen
 				border-radius: 50%; // Hace que la imagen sea circular
-				margin-right: 8px; // Espaciado a la derecha de la imagen
+				margin-right: 12px; // Espaciado a la derecha de la imagen
 			}
 
 			span.contributorUsername {
-				font-size: 18px; // Tamaño de fuente para el nombre de usuario (más grande para el fundador)
+				font-size: 20px; // Tamaño de fuente para el nombre de usuario (más grande para el fundador)
 				font-weight: bold; // Negrita para el nombre de usuario
 			}
 
@@ -330,9 +341,14 @@ const contributors = [
 	}
 
 	.founder {
-		span.contributorUsername {
-			font-size: 20px; // Tamaño de fuente más grande para el fundador
-		}
+		margin-bottom: 16px; // Espaciado inferior para separar del resto
+	}
+
+	.contributors-row {
+		display: flex; // Muestra los otros contribuidores en fila
+		justify-content: center; // Centra los elementos
+		gap: 16px; // Espaciado entre los contribuidores
+		width: 100%; // Ancho completo
 	}
 }
 
