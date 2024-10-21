@@ -96,18 +96,22 @@
 							<div class="contributor founder">
 								<a :href="contributors[0].link" target="_blank" class="_contributor">
 									<img :src="contributors[0].avatar" class="contributorAvatar" />
-									<span class="contributorUsername">{{ contributors[0].username }}</span>
-									<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para el fundador -->
-									<span class="contributorRole">{{ contributors[0].role }}</span>
+									<div class="contributorInfo">
+										<span class="contributorUsername">{{ contributors[0].username }}</span>
+										<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para el fundador -->
+										<span class="contributorRole">{{ contributors[0].role }}</span>
+									</div>
 								</a>
 							</div>
 							<div class="contributors-row">
 								<div class="contributor" v-for="contributor in contributors.slice(1)" :key="contributor.username">
 									<a :href="contributor.link" target="_blank" class="_contributor">
 										<img :src="contributor.avatar" class="contributorAvatar" />
-										<span class="contributorUsername">{{ contributor.username }}</span>
-										<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para los otros contribuidores -->
-										<span class="contributorRole">{{ contributor.role }}</span>
+										<div class="contributorInfo">
+											<span class="contributorUsername">{{ contributor.username }}</span>
+											<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para los otros contribuidores -->
+											<span class="contributorRole">{{ contributor.role }}</span>
+										</div>
 									</a>
 								</div>
 							</div>
@@ -331,16 +335,22 @@ const contributors = [
 				margin-right: 12px; // Espaciado a la derecha de la imagen
 			}
 
+			.contributorInfo {
+				display: flex;
+				flex-direction: column; // Coloca el nombre y el rol en columna
+				align-items: center; // Centra los elementos
+			}
+
 			span.contributorUsername {
-				font-size: 20px; // Tamaño de fuente para el nombre de usuario (más grande para el fundador)
+				font-size: 18px; // Tamaño de fuente para el nombre de usuario
 				font-weight: bold; // Negrita para el nombre de usuario
-				margin-bottom: 4px; // Espaciado inferior para separar del rol
+				margin-bottom: 2px; // Espaciado inferior para separar del rol
 			}
 
 			span.icon-check {
-				margin-left: 8px; // Espaciado a la izquierda del ícono
+				margin-left: 4px; // Espaciado a la izquierda del ícono
 				color: green; // Color del ícono de verificación
-				font-size: 20px; // Tamaño del ícono igual al del nombre
+				font-size: 18px; // Tamaño del ícono igual al del nombre
 			}
 
 			span.contributorRole {
