@@ -97,6 +97,7 @@
 								<a :href="contributor.link" target="_blank" class="_contributor">
 									<img :src="contributor.avatar" class="contributorAvatar" />
 									<span class="contributorUsername">{{ contributor.username }}</span>
+									<span class="contributorRole">{{ contributor.role }}</span>
 								</a>
 							</div>
 						</div>
@@ -166,9 +167,9 @@ definePageMetadata({
 	icon: null,
 });
 const contributors = [
-	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4' },
-	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png' },
-	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg' },
+	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4', role: 'Fundador' },
+	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png', role: 'Desarrollador' },
+	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg', role: 'Desarrollador' },
 ];
 </script>
 
@@ -300,5 +301,11 @@ const contributors = [
 }
 .contributorUsername {
 	margin-left: 12px;
+}
+.contributorRole {
+	font-size: 14px; // Tamaño de fuente para el rol
+	color: var(--MI_THEME-textColor); // Color del texto, hereda del tema
+	margin-top: 4px; // Espaciado superior para separar del nombre
+	display: block; // Asegura que el rol esté en una nueva línea
 }
 </style>
