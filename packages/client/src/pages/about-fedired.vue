@@ -304,13 +304,11 @@ const contributors = [
 .contributors {
 	display: flex;
 	flex-direction: column; // Coloca al fundador en la parte superior
-	align-items: center; // Centra los elementos
 	margin-bottom: 16px; // Espaciado inferior
 
 	.contributor {
 		display: flex;
-		flex-direction: column; // Coloca el nombre y el rol en columna
-		align-items: center; // Centra los elementos
+		align-items: center; // Alinea la imagen y la información
 		padding: 12px;
 		background: var(--MI_THEME-buttonBg); // Fondo del cuadro
 		border-radius: 8px; // Bordes redondeados
@@ -329,8 +327,8 @@ const contributors = [
 			color: inherit; // Hereda el color del texto
 
 			img {
-				width: 60px; // Ajusta el tamaño de la imagen
-				height: 60px; // Ajusta el tamaño de la imagen
+				width: 50px; // Ajusta el tamaño de la imagen
+				height: 50px; // Ajusta el tamaño de la imagen
 				border-radius: 50%; // Hace que la imagen sea circular
 				margin-right: 12px; // Espaciado a la derecha de la imagen
 			}
@@ -339,7 +337,7 @@ const contributors = [
 				display: flex;
 				align-items: center; // Alinea el nombre y el ícono en la misma línea
 				flex-direction: column; // Coloca el rol debajo del nombre
-				align-items: center; // Centra los elementos
+				margin-left: 8px; // Espaciado a la izquierda del texto
 			}
 
 			span.contributorUsername {
@@ -355,7 +353,7 @@ const contributors = [
 			}
 
 			span.contributorRole {
-				font-size: 14px; // Tamaño de fuente para el subtítulo
+				font-size: 12px; // Tamaño de fuente para el subtítulo (más pequeño)
 				color: gray; // Color del subtítulo
 			}
 		}
