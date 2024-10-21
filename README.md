@@ -14,6 +14,7 @@
 
 - [Instancia Oficial](https://fedired.com)
 - [Documentacion](https://docs.fedired.com)
+- [Inatalacion en Docker](https://github.com/fedired-dev/fedired-docker/blob/main/dev/docs/container.md)
 - [Repositorio Oficial](https://github.com/fedired-dev/fedired)
 - [Donaciones](https://patreon.com/fedired)
 - [Traduciones](https://crowdin.com/project/fedired)
