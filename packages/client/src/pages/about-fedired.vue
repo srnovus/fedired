@@ -337,12 +337,13 @@ const contributors = [
 
 			.contributorInfo {
 				display: flex;
-				flex-direction: column; // Coloca el nombre y el rol en columna
+				align-items: center; // Alinea el nombre y el ícono en la misma línea
+				flex-direction: column; // Coloca el rol debajo del nombre
 				align-items: center; // Centra los elementos
 			}
 
 			span.contributorUsername {
-				font-size: 18px; // Tamaño de fuente para el nombre de usuario
+				font-size: 16px; // Tamaño de fuente para el nombre de usuario
 				font-weight: bold; // Negrita para el nombre de usuario
 				margin-bottom: 2px; // Espaciado inferior para separar del rol
 			}
@@ -350,7 +351,7 @@ const contributors = [
 			span.icon-check {
 				margin-left: 4px; // Espaciado a la izquierda del ícono
 				color: green; // Color del ícono de verificación
-				font-size: 18px; // Tamaño del ícono igual al del nombre
+				font-size: 16px; // Tamaño del ícono igual al del nombre
 			}
 
 			span.contributorRole {
