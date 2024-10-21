@@ -98,7 +98,6 @@
 									<img :src="contributors[0].avatar" class="contributorAvatar" />
 									<div class="contributorInfo">
 										<span class="contributorUsername">{{ contributors[0].username }}</span>
-										<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para el fundador -->
 										<span class="contributorRole">{{ contributors[0].role }}</span>
 									</div>
 								</a>
@@ -109,7 +108,6 @@
 										<img :src="contributor.avatar" class="contributorAvatar" />
 										<div class="contributorInfo">
 											<span class="contributorUsername">{{ contributor.username }}</span>
-											<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para los otros contribuidores -->
 											<span class="contributorRole">{{ contributor.role }}</span>
 										</div>
 									</a>
@@ -327,33 +325,26 @@ const contributors = [
 			color: inherit; // Hereda el color del texto
 
 			img {
-				width: 50px; // Ajusta el tamaño de la imagen
-				height: 50px; // Ajusta el tamaño de la imagen
+				width: 60px; // Ajusta el tamaño de la imagen
+				height: 60px; // Ajusta el tamaño de la imagen
 				border-radius: 50%; // Hace que la imagen sea circular
 				margin-right: 12px; // Espaciado a la derecha de la imagen
 			}
 
 			.contributorInfo {
 				display: flex;
-				align-items: center; // Alinea el nombre y el ícono en la misma línea
-				flex-direction: column; // Coloca el rol debajo del nombre
-				margin-left: 8px; // Espaciado a la izquierda del texto
+				flex-direction: column; // Coloca el nombre y el rol en columna
+				align-items: flex-start; // Alinea a la izquierda
 			}
 
 			span.contributorUsername {
-				font-size: 16px; // Tamaño de fuente para el nombre de usuario
+				font-size: 18px; // Tamaño de fuente para el nombre de usuario
 				font-weight: bold; // Negrita para el nombre de usuario
 				margin-bottom: 2px; // Espaciado inferior para separar del rol
 			}
 
-			span.icon-check {
-				margin-left: 4px; // Espaciado a la izquierda del ícono
-				color: green; // Color del ícono de verificación
-				font-size: 16px; // Tamaño del ícono igual al del nombre
-			}
-
 			span.contributorRole {
-				font-size: 12px; // Tamaño de fuente para el subtítulo (más pequeño)
+				font-size: 14px; // Tamaño de fuente para el subtítulo
 				color: gray; // Color del subtítulo
 			}
 		}
