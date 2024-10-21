@@ -93,10 +93,11 @@
 					<FormSection>
 						<template #label>Hecho por</template>
 						<div class="contributors">
-							<div class="contributor" v-for="contributor in contributors" :key="contributor.username">
+							<div class="contributor founder" v-for="contributor in contributors" :key="contributor.username">
 								<a :href="contributor.link" target="_blank" class="_contributor">
 									<img :src="contributor.avatar" class="contributorAvatar" />
 									<span class="contributorUsername">{{ contributor.username }}</span>
+									<span class="contributorRole">{{ contributor.role }}</span>
 								</a>
 							</div>
 						</div>
@@ -176,9 +177,9 @@ definePageMetadata({
 });
 
 const contributors = [
-	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4' },
-	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png' },
-	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg' },
+	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4', role: 'Fundador y Desarrollador Principal' },
+	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png', role: 'Coordinador de Comunicaciones' },
+	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg', role: 'Desarrollador Docker y Frontend' },
 ];
 </script>
 
@@ -316,10 +317,21 @@ const contributors = [
 				margin-right: 8px; // Espaciado a la derecha de la imagen
 			}
 
-			span {
-				font-size: 16px; // Tamaño de fuente para el nombre de usuario
+			span.contributorUsername {
+				font-size: 18px; // Tamaño de fuente para el nombre de usuario (más grande para el fundador)
 				font-weight: bold; // Negrita para el nombre de usuario
 			}
+
+			span.contributorRole {
+				font-size: 14px; // Tamaño de fuente para el subtítulo
+				color: gray; // Color del subtítulo
+			}
+		}
+	}
+
+	.founder {
+		span.contributorUsername {
+			font-size: 20px; // Tamaño de fuente más grande para el fundador
 		}
 	}
 }
@@ -333,3 +345,4 @@ const contributors = [
 	margin-left: 12px;
 }
 </style>
+
