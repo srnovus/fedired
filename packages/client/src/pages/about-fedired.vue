@@ -303,9 +303,10 @@ const contributors = [
 	margin-left: 12px;
 }
 .contributorRole {
-	font-size: 14px; // Tamaño de fuente para el rol
-	color: var(--MI_THEME-textColor); // Color del texto, hereda del tema
-	margin-top: 4px; // Espaciado superior para separar del nombre
+	font-size: 12px; // Tamaño de fuente más pequeño para el rol
+	color: #28a745; // Color verde verificado
+	margin-top: 2px; // Espaciado superior reducido para separar del nombre
 	display: block; // Asegura que el rol esté en una nueva línea
 }
 </style>
+
