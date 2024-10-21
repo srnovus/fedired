@@ -97,6 +97,7 @@
 								<a :href="contributors[0].link" target="_blank" class="_contributor">
 									<img :src="contributors[0].avatar" class="contributorAvatar" />
 									<span class="contributorUsername">{{ contributors[0].username }}</span>
+									<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para el fundador -->
 									<span class="contributorRole">{{ contributors[0].role }}</span>
 								</a>
 							</div>
@@ -105,7 +106,7 @@
 									<a :href="contributor.link" target="_blank" class="_contributor">
 										<img :src="contributor.avatar" class="contributorAvatar" />
 										<span class="contributorUsername">{{ contributor.username }}</span>
-										<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación actualizado -->
+										<span class="icon-check"><i class="ph-bold ph-seal-check"></i></span> <!-- Ícono de verificación para los otros contribuidores -->
 										<span class="contributorRole">{{ contributor.role }}</span>
 									</a>
 								</div>
@@ -339,6 +340,7 @@ const contributors = [
 			span.icon-check {
 				margin-left: 8px; // Espaciado a la izquierda del ícono
 				color: green; // Color del ícono de verificación
+				font-size: 20px; // Tamaño del ícono igual al del nombre
 			}
 
 			span.contributorRole {
