@@ -10,7 +10,9 @@ import PrivateIp from "private-ip";
 import { isSafeUrl } from "backend-rs";
 
 export async function downloadUrl(url: string, path: string): Promise<void> {
-	if (!isSafeUrl(url)) {
+	const allowedHostnames = ["example.com", "another-trusted-site.com"];
+	const { hostname } = new URL(url);
+	if (!isSafeUrl(url) || !allowedHostnames.includes(hostname)) {
 		throw new StatusError("Invalid URL", 400);
 	}
 
