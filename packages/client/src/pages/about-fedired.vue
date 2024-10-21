@@ -268,7 +268,8 @@ const contributors = [
 	gap: 16px; // Espaciado entre los cuadros
 	.contributor {
 		display: flex;
-		align-items: center;
+		flex-direction: column; // Cambia a columna para que el rol esté debajo del nombre
+		align-items: center; // Centra los elementos
 		padding: 12px;
 		background: var(--MI_THEME-buttonBg); // Fondo del cuadro
 		border-radius: 8px; // Bordes redondeados
@@ -303,7 +304,7 @@ const contributors = [
 	margin-left: 12px;
 }
 .contributorRole {
-	font-size: 5px; // Tamaño de fuente más pequeño para el rol
+	font-size: 12px; // Tamaño de fuente más pequeño para el rol
 	color: #28a745; // Color verde verificado
 	margin-top: 2px; // Espaciado superior reducido para separar del nombre
 	display: block; // Asegura que el rol esté en una nueva línea
