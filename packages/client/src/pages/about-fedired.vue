@@ -97,7 +97,6 @@
 								<a :href="contributor.link" target="_blank" class="_contributor">
 									<img :src="contributor.avatar" class="contributorAvatar" />
 									<span class="contributorUsername">{{ contributor.username }}</span>
-									<span class="contributorRole">{{ contributor.role }}</span>
 								</a>
 							</div>
 						</div>
@@ -167,9 +166,9 @@ definePageMetadata({
 	icon: null,
 });
 const contributors = [
-	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4', role: 'Fundador' },
-	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png', role: 'Desarrollador' },
-	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg', role: 'Desarrollador' },
+	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4' },
+	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png' },
+	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg' },
 ];
 </script>
 
@@ -268,8 +267,7 @@ const contributors = [
 	gap: 16px; // Espaciado entre los cuadros
 	.contributor {
 		display: flex;
-		flex-direction: column; // Cambia a columna para que el rol esté debajo del nombre
-		align-items: center; // Centra los elementos
+		align-items: center;
 		padding: 12px;
 		background: var(--MI_THEME-buttonBg); // Fondo del cuadro
 		border-radius: 8px; // Bordes redondeados
@@ -303,11 +301,4 @@ const contributors = [
 .contributorUsername {
 	margin-left: 12px;
 }
-.contributorRole {
-	font-size: 12px; // Tamaño de fuente más pequeño para el rol
-	color: #28a745; // Color verde verificado
-	margin-top: 2px; // Espaciado superior reducido para separar del nombre
-	display: block; // Asegura que el rol esté en una nueva línea
-}
 </style>
-
