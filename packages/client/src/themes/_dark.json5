@@ -38,7 +38,7 @@
 		focus: ':alpha<0.3<@accent',
 		navBg: '@panel',
 		navFg: '@fg',
-		panel: ':lighten<3<@bg',
+    panel: '#1d1d27', 
 		popup: ':lighten<3<@panel',
 		accent: '#858AFA',
 		header: ':alpha<0.7<@panel',
