@@ -14,7 +14,7 @@ interface Plugin {
 	ast: unknown[];
 }
 
-import darkTheme from "@/themes/d-future.json5";
+import darkTheme from "@/themes/_dark.json5";
 /**
  * Storage for configuration information that does not need to be constantly loaded into memory (non-reactive)
  */
