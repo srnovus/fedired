@@ -1,7 +1,15 @@
+// Basic Dark theme
+// It just provides the default colors, if
+// no colors are specified, this isn't ever
+// gonna be used directly
 {
-	id: 'nvus-b22r',
-	base: 'dark',
-	name: 'fediredark',
+	id: 'dark',
+
+	name: 'Dark',
+	author: 'Fedired Contributors',
+	desc: 'Default Dark theme',
+	kind: 'Dark',
+
 	props: {
 		X2: ':darken<2<@panel',
 		X3: 'rgba(255, 255, 255, 0.05)',
