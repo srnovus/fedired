@@ -252,7 +252,7 @@ export class AuthHelpers {
 		try {
 			const url = new URL(redirectUri);
 			if (
-				["javascript:", "file:", "data:", "mailto:", "tel:"].includes(
+				["javascript:", "file:", "data:", "mailto:", "tel:", "vbscript:"].includes(
 					url.protocol,
 				)
 			)
