@@ -40,7 +40,7 @@
 		navFg: '@fg',
 		panel: ':lighten<3<@bg',
 		popup: ':lighten<3<@panel',
-		accent: '#6364ff',
+		accent: '#858AFA',
 		header: ':alpha<0.7<@panel',
 		infoBg: '#313244',
 		infoFg: '#a6adc8',
