@@ -5,7 +5,7 @@ const manifest = {
 	short_name: "Fedired",
 	name: "Fedired",
 	description:
-		"An open source, decentralized social media platform that's free forever!",
+		"🌎 Fedired: plataforma de redes sociales descentralizada y de código abierto! 🚀",
 	start_url: "/",
 	scope: "/",
 	display: "standalone",
