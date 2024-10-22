@@ -35,12 +35,12 @@ export const urlPreviewHandler = async (ctx: Koa.Context) => {
 			? await getJson(
 					`${instanceMeta.summalyProxy}?${query({
 						url: url,
-						lang: lang ?? "en-US",
+						lang: lang ?? "es-ES",
 					})}`,
 				)
 			: await summaly.default(url, {
 					followRedirects: false,
-					lang: lang ?? "en-US",
+					lang: lang ?? "es-ES",
 				});
 
 		logger.info(`Got preview of ${url}: ${summary.title}`);
