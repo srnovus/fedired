@@ -45,7 +45,7 @@
 					</div>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
-							href="https://fedired.com/"
+							href="https://about.fedired.com/"
 							target="_blank"
 							class="_link"
 							>{{ i18n.ts.learnMore }}</a
