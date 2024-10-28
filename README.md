@@ -10,6 +10,20 @@
   <img src="./fedired-banner.png" alt="Fedired Banner"/>
 </div>
 
+
+## <span style="color:red;">⚠️ Anuncio Importante</span>  
+> ¡Hola a todos! Queremos informar a nuestra comunidad que actualmente estamos enfrentando algunos problemas con las actualizaciones de Fedired. Agradecemos su paciencia mientras trabajamos para resolver estos inconvenientes.
+>
+> **¿Cómo puedes ayudar?**
+>
+> Si tienes experiencia en desarrollo o administración de sistemas, cualquier apoyo será muy apreciado. **¡El apoyo es completamente voluntario!**
+>
+> Gracias por su comprensión y apoyo continuo.
+>
+> El equipo de Fedired
+
+
+
 ## Navigation
 
 - [Instancia Oficial](https://fedired.com)
