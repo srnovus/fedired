@@ -1,16 +1,59 @@
-url: 'http://fedired.local'
+name: Multi-language Code Validation
 
-setupPassword: example_password_please_change_this_or_you_will_get_hacked
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-port: 61812
+jobs:
+  validate:
+    runs-on: ubuntu-latest
 
-db:
-  host: 127.0.0.1
-  port: 54312
-  db: test-fedired
-  user: postgres
-  pass: 'example_password_please_change_this_or_you_will_get_hacked'
-redis:
-  host: 127.0.0.1
-  port: 56312
-id: aidx
+    strategy:
+      matrix:
+        language: [node, rust]
+
+    steps:
+      # Paso 1: Clonar el repositorio
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # Paso 2: Configuración de Node.js (para TypeScript, Vue, JS, SCSS, Pug)
+      - name: Set up Node.js
+        if: matrix.language == 'node'
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Paso 3: Instalar dependencias de Node.js
+      - name: Install Node.js Dependencies
+        if: matrix.language == 'node'
+        run: npm install
+
+      # Paso 4: Ejecutar linters y validaciones de Node.js
+      - name: Run Linters for TypeScript, Vue, JS, SCSS, Pug
+        if: matrix.language == 'node'
+        run: |
+          npm run lint # Asegúrate de que `lint` esté configurado en package.json para TypeScript, Vue, JS, etc.
+          npm run lint:scss # Si tienes scripts separados para SCSS
+          npm run lint:pug # Si tienes scripts separados para Pug
+
+      # Paso 5: Configuración de Rust
+      - name: Set up Rust
+        if: matrix.language == 'rust'
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      # Paso 6: Instalar dependencias de Rust
+      - name: Install Rust Dependencies
+        if: matrix.language == 'rust'
+        run: cargo build
+
+      # Paso 7: Ejecutar comprobaciones de Rust
+      - name: Run Rust Checks
+        if: matrix.language == 'rust'
+        run: cargo check
