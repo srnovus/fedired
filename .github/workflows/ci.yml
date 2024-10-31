@@ -17,16 +17,16 @@ jobs:
         language: [node, rust]
 
     steps:
-      # Paso 1: Clonar el repositorio
-      - name: Checkout Code
-        uses: actions/checkout@v3
+  - name: Checkout repository
+    uses: actions/checkout@v3
 
-      # Paso 2: Configuración de Node.js (para TypeScript, Vue, JS, SCSS, Pug)
-      - name: Set up Node.js
-        if: matrix.language == 'node'
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
+  - name: Setup Node.js
+    uses: actions/setup-node@v3
+    with:
+      node-version: '20'
+
+  - name: Install dependencies
+    run: npm install --ignore-scripts
 
       # Paso 3: Instalar dependencias de Node.js
       - name: Install Node.js Dependencies
