@@ -94,6 +94,7 @@ import {
 	provideMetadataReceiver,
 } from "@/scripts/page-metadata";
 import icon from "@/scripts/icon";
+import Integrations from './integrations.vue' // Importa el componente de integración
 
 const isEmpty = (x: string | null) => x == null || x === "";
 const el = ref<HTMLElement | null>(null);
