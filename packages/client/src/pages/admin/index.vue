@@ -56,7 +56,6 @@
 							>Reciber Soporte</a
 						></MkInfo
 					>
-
 					<MkSuperMenu :def="menuDef" :grid="narrow"></MkSuperMenu>
 				</div>
 			</MkSpacer>
@@ -221,6 +220,12 @@ const menuDef = computed(() => [
 				text: i18n.ts.abuseReports,
 				to: "/admin/abuses",
 				active: currentPage.value?.route.name === "abuses",
+			},
+			{
+				icon: `${icon("ph-plug ph-bold ph-lg")}`,
+				text: i18n.ts.integrations,
+				to: "/admin/integrations",
+				active: currentPage.value?.route.name === "integrations",
 			},
 		],
 	},
