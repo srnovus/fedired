@@ -26,12 +26,12 @@ jobs:
       node-version: '20'
 
   - name: Install dependencies
-    run: npm install --ignore-scripts
+    run: pnpm install --ignore-scripts
 
       # Paso 3: Instalar dependencias de Node.js
       - name: Install Node.js Dependencies
         if: matrix.language == 'node'
-        run: npm install
+        run: pnpm install
 
       # Paso 4: Ejecutar linters y validaciones de Node.js
       - name: Run Linters for TypeScript, Vue, JS, SCSS, Pug
