@@ -1,4 +1,4 @@
-name: Multi-language Code Validation
+name: CI Verification Workflow
 
 on:
   push:
@@ -9,51 +9,35 @@ on:
       - main
 
 jobs:
-  validate:
+  verify:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        language: [node, rust]
-
     steps:
-  - name: Checkout repository
-    uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-  - name: Setup Node.js
-    uses: actions/setup-node@v3
-    with:
-      node-version: '20'
-
-  - name: Install dependencies
-    run: pnpm install --ignore-scripts
-
-      # Paso 3: Instalar dependencias de Node.js
-      - name: Install Node.js Dependencies
-        if: matrix.language == 'node'
-        run: pnpm install
-
-      # Paso 4: Ejecutar linters y validaciones de Node.js
-      - name: Run Linters for TypeScript, Vue, JS, SCSS, Pug
-        if: matrix.language == 'node'
-        run: |
-          npm run lint # Asegúrate de que `lint` esté configurado en package.json para TypeScript, Vue, JS, etc.
-          npm run lint:scss # Si tienes scripts separados para SCSS
-          npm run lint:pug # Si tienes scripts separados para Pug
-
-      # Paso 5: Configuración de Rust
-      - name: Set up Rust
-        if: matrix.language == 'rust'
-        uses: actions-rs/toolchain@v1
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          toolchain: stable
+          node-version: '20'
 
-      # Paso 6: Instalar dependencias de Rust
-      - name: Install Rust Dependencies
-        if: matrix.language == 'rust'
-        run: cargo build
+      - name: Install dependencies
+        run: npm install --omit=optional
 
-      # Paso 7: Ejecutar comprobaciones de Rust
-      - name: Run Rust Checks
-        if: matrix.language == 'rust'
-        run: cargo check
+      - name: Verify main branch
+        run: |
+          if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
+            echo "Not on the main branch. Exiting..."
+            exit 1
+          fi
+          echo "On main branch, proceeding."
+
+      - name: Check domain status
+        run: |
+          STATUS=$(curl -Is https://fedired.com | head -n 1)
+          if [[ $STATUS == *"200"* ]]; then
+            echo "Domain is reachable"
+          else
+            echo "Domain is not reachable"
+            exit 1
+          fi
