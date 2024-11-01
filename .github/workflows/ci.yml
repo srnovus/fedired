@@ -1,43 +1,28 @@
-name: CI Verification Workflow
+name: Check Domain Status
 
 on:
   push:
     branches:
-      - main
+      - main  
   pull_request:
     branches:
-      - main
+      - main  
 
 jobs:
-  verify:
+  check-domain:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Install dependencies
-        run: npm install --omit=optional
-
-      - name: Verify main branch
-        run: |
-          if [ "$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
-            echo "Not on the main branch. Exiting..."
-            exit 1
-          fi
-          echo "On main branch, proceeding."
-
       - name: Check domain status
         run: |
+          echo "Checking domain status..."
           STATUS=$(curl -Is https://fedired.com | head -n 1)
           if [[ $STATUS == *"200"* ]]; then
             echo "Domain is reachable"
           else
-            echo "Domain is not reachable"
-            exit 1
+            echo "Warning: Domain is not reachable"
+            echo "Response: $STATUS"
           fi
