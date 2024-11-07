@@ -87,6 +87,20 @@
 							<div v-for="patron in patronsWithIcon" :class="$style.patronWithIcon">
 								<img :src="patron.icon" :class="$style.patronIcon">
 								<span :class="$style.patronName">{{ patron.name }}</span>
+
+							</div>
+						</div>
+						<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-gap: 12px;">
+							<div v-for="patron in patrons" :key="patron">{{ patron }}</div>
+						</div>
+						<p>{{ i18n.ts._aboutFedired.morePatrons }}</p>
+					</FormSection>
+					<FormSection>
+						<template #label><Mfm text="$[jelly ❤]"/> {{ i18n.ts._aboutFedired.patrons }}</template>
+						<div :class="$style.patronsWithIcon">
+							<div v-for="patron in patronsWithIcon" :class="$style.patronWithIcon">
+								<img :src="patron.icon" :class="$style.patronIcon">
+								<span :class="$style.patronName">{{ patron.name }}</span>
 							</div>
 						</div>
 						<div style="margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-gap: 12px;">
@@ -101,20 +115,18 @@
 	</template>
 	
 	<script lang="ts" setup>
-	import { nextTick, onBeforeUnmount, ref, shallowRef, computed } from 'vue';
-	import { version } from '@@/js/config.js';
-	import FormLink from '@/components/form/link.vue';
-	import FormSection from '@/components/form/section.vue';
-	import MkButton from '@/components/MkButton.vue';
-	import MkInfo from '@/components/MkInfo.vue';
-	import { physics } from '@/scripts/physics.js';
-	import { i18n } from '@/i18n.js';
-	import { instance } from '@/instance.js';
-	import { defaultStore } from '@/store.js';
-	import * as os from '@/os.js';
-	import { definePageMetadata } from '@/scripts/page-metadata.js';
-	import { claimAchievement, claimedAchievements } from '@/scripts/achievements.js';
-	import { $i } from '@/account.js';
+import { computed, nextTick, onBeforeUnmount, ref } from "vue";
+import { version } from "@/config";
+import FormLink from "@/components/form/link.vue";
+import FormSection from "@/components/form/section.vue";
+import MkButton from "@/components/MkButton.vue";
+import { physics } from "@/scripts/physics";
+import { i18n } from "@/i18n";
+import { defaultReactions, defaultStore } from "@/store";
+import * as os from "@/os";
+import { definePageMetadata } from "@/scripts/page-metadata";
+import icon from "@/scripts/icon";
+import { getInstanceInfo } from "@/instance";
 	
 	const patronsWithIcon = [{
 		name: 'iBootech',
@@ -278,6 +290,7 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 		grid-gap: 12px;
+
 	}
 	
 	.contributor {
@@ -329,5 +342,6 @@
 	.patronName {
 		margin-left: 12px;
 	}
+
 	</style>
 	
