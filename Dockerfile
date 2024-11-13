@@ -1,49 +1,51 @@
-# Usa una imagen de Node como base
-FROM node:20 AS base
-
-# Instala dependencias de sistema
-RUN apt-get update && \
-    apt-get install -y build-essential python3 curl wget git lsb-release postgresql-client && \
-    apt-get install -y ffmpeg redis-server
-
-# Instala PostgreSQL y PGroonga
-RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
-    echo "deb https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list && \
-    apt-get update && \
-    apt-get install -y postgresql-16 && \
-    apt-get install -y build-essential postgresql-server-dev-16 libgroonga-dev && \
-    git clone --recursive https://github.com/pgroonga/pgroonga.git && \
-    cd pgroonga && make && make install
-
-# Instala pnpm y Rust
-RUN corepack enable && corepack prepare pnpm@latest --activate
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    . "$HOME/.cargo/env"
-
-# Clona el repositorio de Fedired
-RUN git clone --branch=main https://github.com/fedired-dev/fedired.git /fedired
+# Install dev and compilation dependencies, build files
+FROM docker.io/node:20-alpine AS build
 WORKDIR /fedired
 
-# Instala dependencias de Fedired
-RUN pnpm install --no-frozen-lockfile
+# Install build tools and work around the linker name issue
+RUN apk update && apk add --no-cache build-base linux-headers curl ca-certificates python3 perl
+RUN ln -s $(which gcc) /usr/bin/aarch64-linux-musl-gcc
 
-# Copia y edita el archivo de configuración (esto se personaliza en tu entorno)
-COPY .config/example.yml .config/default.yml
-RUN sed -i 's|url: https://your-server-domain.example.com|url: http://localhost:3000|g' .config/default.yml
-RUN sed -i 's|db:.*|db:\n  host: postgres\n  port: 5432\n  db: fedired_db\n  user: fedired\n  pass: your-database-password|g' .config/default.yml
+# Install Rust toolchain
+RUN curl --proto '=https' --tlsv1.2 --silent --show-error --fail https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
 
-# Ejecuta migraciones de base de datos
-RUN pnpm run migrate
+# Configure pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Construye la aplicación para producción
-RUN NODE_ENV=production NODE_OPTIONS='--max-old-space-size=3072' pnpm run build
+# Build
+COPY . ./
+RUN pnpm install --frozen-lockfile
+RUN NODE_ENV='production' NODE_OPTIONS='--max_old_space_size=3072' pnpm run build
 
-# Configura el servidor
+# Trim down the dependencies to only those for production
+RUN find . -path '*/node_modules/*' -delete && pnpm install --prod --frozen-lockfile
+
+# Runtime container
+FROM docker.io/node:20-alpine
+WORKDIR /fedired
+
+# Install runtime dependencies
+RUN apk update && apk add --no-cache zip unzip tini ffmpeg curl
+
+COPY . ./
+
+# Copy node modules
+COPY --from=build /fedired/node_modules /fedired/node_modules
+COPY --from=build /fedired/packages/backend/node_modules /fedired/packages/backend/node_modules
+# COPY --from=build /fedired/packages/sw/node_modules /fedired/packages/sw/node_modules
+# COPY --from=build /fedired/packages/client/node_modules /fedired/packages/client/node_modules
+COPY --from=build /fedired/packages/fedired-js/node_modules /fedired/packages/fedired-js/node_modules
+
+# Copy the build artifacts
+COPY --from=build /fedired/built /fedired/built
+COPY --from=build /fedired/packages/backend/built /fedired/packages/backend/built
+COPY --from=build /fedired/packages/backend/assets/instance.css /fedired/packages/backend/assets/instance.css
+COPY --from=build /fedired/packages/backend-rs/built /fedired/packages/backend-rs/built
+COPY --from=build /fedired/packages/fedired-js/built /fedired/packages/fedired-js/built
+
+RUN corepack enable && corepack prepare pnpm@latest --activate
 ENV NODE_ENV=production
-ENV PORT=3000
-
-# Expone el puerto de la aplicación
-EXPOSE 3000
-
-# Comando de inicio de Fedired
-CMD ["pnpm", "run", "start"]
+VOLUME "/fedired/files"
+ENTRYPOINT [ "/sbin/tini", "--" ]
+CMD [ "pnpm", "run", "start:container" ]
