@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     # Usar imagen directamente desde Docker Hub bajo el usuario 'fedired'
-    image: fedired/fedired  # Imagen publicada en Docker Hub bajo el usuario 'fedired'
+    image: docker.io/fedired/fedired:latest  # Imagen publicada en Docker Hub bajo el usuario 'fedired'
     container_name: fedired_web
     restart: unless-stopped
     depends_on:
