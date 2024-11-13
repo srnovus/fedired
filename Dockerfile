@@ -1,51 +1,63 @@
-# Install dev and compilation dependencies, build files
+# Fase de construcción
 FROM docker.io/node:20-alpine AS build
 WORKDIR /fedired
 
-# Install build tools and work around the linker name issue
+# Instalar herramientas necesarias para la compilación
 RUN apk update && apk add --no-cache build-base linux-headers curl ca-certificates python3 perl
 RUN ln -s $(which gcc) /usr/bin/aarch64-linux-musl-gcc
 
-# Install Rust toolchain
+# Instalar Rust toolchain
 RUN curl --proto '=https' --tlsv1.2 --silent --show-error --fail https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
-# Configure pnpm
+# Configurar pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
 
-# Build
+# Copiar los archivos del proyecto y realizar la instalación de dependencias
 COPY . ./
-RUN pnpm install --frozen-lockfile
+
+# Instalar dependencias de desarrollo (sin congelar el lockfile para CI)
+RUN pnpm install --no-frozen-lockfile
+
+# Construir el proyecto para producción
 RUN NODE_ENV='production' NODE_OPTIONS='--max_old_space_size=3072' pnpm run build
 
-# Trim down the dependencies to only those for production
+# Eliminar las dependencias de desarrollo y dejar solo las de producción
 RUN find . -path '*/node_modules/*' -delete && pnpm install --prod --frozen-lockfile
 
-# Runtime container
+# Fase de ejecución (runtime)
 FROM docker.io/node:20-alpine
 WORKDIR /fedired
 
-# Install runtime dependencies
+# Instalar dependencias necesarias para la ejecución
 RUN apk update && apk add --no-cache zip unzip tini ffmpeg curl
 
+# Copiar el código del proyecto
 COPY . ./
 
-# Copy node modules
+# Copiar los node_modules desde la fase de construcción
 COPY --from=build /fedired/node_modules /fedired/node_modules
 COPY --from=build /fedired/packages/backend/node_modules /fedired/packages/backend/node_modules
-# COPY --from=build /fedired/packages/sw/node_modules /fedired/packages/sw/node_modules
-# COPY --from=build /fedired/packages/client/node_modules /fedired/packages/client/node_modules
 COPY --from=build /fedired/packages/fedired-js/node_modules /fedired/packages/fedired-js/node_modules
 
-# Copy the build artifacts
+# Copiar los archivos construidos
 COPY --from=build /fedired/built /fedired/built
 COPY --from=build /fedired/packages/backend/built /fedired/packages/backend/built
 COPY --from=build /fedired/packages/backend/assets/instance.css /fedired/packages/backend/assets/instance.css
 COPY --from=build /fedired/packages/backend-rs/built /fedired/packages/backend-rs/built
 COPY --from=build /fedired/packages/fedired-js/built /fedired/packages/fedired-js/built
 
+# Rehabilitar pnpm en el entorno de producción
 RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Establecer el entorno de producción
 ENV NODE_ENV=production
+
+# Definir el volumen para los archivos persistentes
 VOLUME "/fedired/files"
+
+# Usar Tini para la inicialización del contenedor
 ENTRYPOINT [ "/sbin/tini", "--" ]
+
+# Comando por defecto al arrancar el contenedor
 CMD [ "pnpm", "run", "start:container" ]
