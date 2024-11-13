@@ -36,14 +36,14 @@ jobs:
 
     # Construir la imagen Docker (usando la fase de construcción)
     - name: Build Docker image
-      run: docker build --file Dockerfile --target build --tag my-image-build .
+      run: docker build --file Dockerfile --target build --tag fedired .
 
     # Crear la imagen de producción (usando la fase de producción)
     - name: Build production Docker image
-      run: docker build --file Dockerfile --target production --tag my-image-prod .
+      run: docker build --file Dockerfile --target production --tag fedired .
 
     # (Opcional) Subir la imagen Docker a un registry, como DockerHub o GitHub Container Registry
     - name: Push Docker image to registry
       run: |
         echo ${{ secrets.DOCKER_USERNAME }} | docker login --username ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker push my-image-prod
+        docker push fedired
