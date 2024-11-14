@@ -170,7 +170,7 @@ mod unit_test {
                 .unwrap()
                 .software
                 .name,
-            "fedired"
+            "Fedired"
         );
     }
 }
