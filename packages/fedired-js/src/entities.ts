@@ -370,7 +370,6 @@ export type LiteInstanceMetadata = {
 	swPublickey: string | null;
 	maxNoteTextLength: number;
 	enableEmail: boolean;
-	enableGithubIntegration: boolean;
 	enableServiceWorker: boolean;
 	markLocalFilesNsfwByDefault: boolean;
 	emojis: CustomEmoji[];
