@@ -16,7 +16,17 @@ export const paramDef = {
 } as const;
 
 export default define(meta, paramDef, async () => {
-	return {
-		latest_version: await latestVersion(),
-	};
+	try {
+		// Intenta obtener la última versión
+		const version = await latestVersion();
+		return {
+			latest_version: version,
+		};
+	} catch (error) {
+		// Manejo de errores detallado
+		console.error("Error al obtener la última versión:", error);
+		return {
+			error: "Failed to retrieve the latest version. Please try again later.",
+		};
+	}
 });
