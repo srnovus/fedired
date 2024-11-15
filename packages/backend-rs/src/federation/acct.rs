@@ -74,7 +74,7 @@ mod unit_test {
             host: Some("example.com".to_owned()),
         };
         let local_acct = Acct {
-            username: "MisakaMikoto".to_owned(),
+            username: "JavierCaceres".to_owned(),
             host: None,
         };
 
@@ -100,7 +100,7 @@ mod unit_test {
             remote_acct
         );
         assert_eq!(Acct::from_str("@fedired@example.com").unwrap(), remote_acct);
-        assert_eq!(Acct::from_str("@JavierCaceres").unwrap(), local_acct);
+        assert_eq!(Acct::from_str("@srnovus").unwrap(), local_acct);
         assert_eq!(Acct::from_str("JavierCaceres").unwrap(), local_acct);
     }
 }
