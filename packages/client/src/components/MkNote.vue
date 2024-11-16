@@ -612,7 +612,7 @@ defineExpose({
 }
 
 .muted {
-	padding: auto;
+	padding: 8px;
 	text-align: center;
 	opacity: 0.7;
 	inline-size: 100%;
