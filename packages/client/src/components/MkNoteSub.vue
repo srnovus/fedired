@@ -329,7 +329,7 @@ function noteClick(e: MouseEvent) {
 				> :deep(.button) {
 					position: relative;
 					margin: 0;
-					padding: 8px;
+					padding: auto;
 					opacity: 0.7;
 
 					flex-grow: 1;
