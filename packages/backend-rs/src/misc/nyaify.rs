@@ -12,7 +12,7 @@ use regex::{Captures, Regex};
 /// # Arguments
 ///
 /// * `text` : original text
-/// * `lang` : language code (e.g., `Some("en")`, `Some("en-US")`, `Some("uk-UA")`, `None`)
+/// * `lang` : language code (e.g., `Some("en")`, `Some("es-ES")`, `Some("uk-UA")`, `None`)
 ///
 /// # Example
 ///

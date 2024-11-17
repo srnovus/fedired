@@ -76,10 +76,10 @@ export default Object.entries(locales).reduce(
 	(a, [k, v]) => (
 		(a[k] = (() => {
 			const [lang] = k.split("-");
-			return k === "en-US"
+			return k === "es-ES"
 				? v
 				: merge(
-						locales["en-US"],
+						locales["es-ES"],
 						locales[`${lang}-${primaries[lang]}`] || {},
 						v,
 					);

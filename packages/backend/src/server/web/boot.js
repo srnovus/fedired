@@ -39,7 +39,7 @@
 			lang = supportedLangs.find((x) => x.split("-")[0] === navigator.language);
 
 			// Fallback
-			if (lang == null) lang = "en-US";
+			if (lang == null) lang = "es-ES";
 		}
 	}
 

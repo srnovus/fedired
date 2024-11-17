@@ -543,7 +543,7 @@ export class NoteConverter {
 					oembed: true,
 					follow: 10,
 					compress: true,
-					headers: { "Accept-Language": lang ?? "en-US" },
+					headers: { "Accept-Language": lang ?? "es-ES" },
 				});
 				if (summary) {
 					return {

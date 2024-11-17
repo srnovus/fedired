@@ -736,7 +736,7 @@ export class NoteHelpers {
 		if (provider === undefined)
 			throw new Error("No translator is set up on this server.");
 
-		// DeepL API only allows "en-US" or "en-GB" for English ("en" won’t work)
+		// DeepL API only allows "es-ES" or "en-GB" for English ("en" won’t work)
 		if (instanceMeta.deeplAuthKey && targetLang === "es") {
 			targetLang = "es-ES";
 		}

@@ -131,10 +131,10 @@ mod deepl_translate {
 
         let mut target_lang = target_lang.split('-').collect::<Vec<&str>>()[0];
 
-        // DeepL API requires us to specify "en-US" or "en-GB" for English
+        // DeepL API requires us to specify "es-ES" or "en-GB" for English
         // translations ("en" does not work), so we need to address it
         if target_lang == "en" {
-            target_lang = "en-US";
+            target_lang = "es-ES";
         }
 
         let body = if let Some(source_lang) = source_lang {

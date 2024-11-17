@@ -9,10 +9,10 @@ export class AnnouncementConverter {
 	public static async encode(
 		announcement: Announcement,
 		isRead: boolean,
-		lang = "en-US",
+		lang = "es-ES",
 		ctx: MastoContext,
 	): Promise<MastodonEntity.Announcement> {
-		const locale = locales[lang] || locales["en-US"];
+		const locale = locales[lang] || locales["es-ES"];
 		const i18n = new I18n(locale);
 
 		return {

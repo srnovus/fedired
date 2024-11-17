@@ -371,6 +371,7 @@ defineExpose({
 <style lang="scss" scoped>
 .tkcbzcuz {
 	position: relative;
+	padding: auto;
 	transition: box-shadow 0.1s ease;
 	font-size: 1.05em;
 	overflow: clip;

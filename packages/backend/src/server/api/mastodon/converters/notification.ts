@@ -183,9 +183,9 @@ export class NotificationConverter {
 
 	public static async encodePushNotificationPayloadForRust(
 		body: Packed<"Notification">,
-		lang = "en-US",
+		lang = "es-ES",
 	): Promise<Partial<MastodonEntity.NotificationPayload>> {
-		const locale = locales[lang] || locales["en-US"];
+		const locale = locales[lang] || locales["es-ES"];
 		const i18n = new I18n(locale);
 
 		let preferred_locale = lang;
