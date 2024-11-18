@@ -288,7 +288,7 @@ export async function createNote(
 			} catch (e) {
 				return {
 					status:
-						e instanceof StatusError && e.isClientError
+						e instanceof StatusError && !e.isRetryable
 							? "permerror"
 							: "temperror",
 				};

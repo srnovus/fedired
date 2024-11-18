@@ -112,7 +112,7 @@ export default async function (ctx: Koa.Context) {
 				serverLogger.warn(`failed to fetch/convert ${file.uri}`);
 				serverLogger.debug(inspect(e));
 
-				if (e instanceof StatusError && e.isClientError) {
+				if (e instanceof StatusError && !e.isRetryable) {
 					ctx.status = e.statusCode;
 					ctx.set("Cache-Control", "max-age=86400");
 				} else {

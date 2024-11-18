@@ -51,7 +51,7 @@ export default async (job: Bull.Job<WebhookDeliverJobData>) => {
 
 		if (res instanceof StatusError) {
 			// 4xx
-			if (res.isClientError) {
+			if (!res.isRetryable) {
 				return `${res.statusCode} ${res.statusMessage}`;
 			}
 
