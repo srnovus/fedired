@@ -1,5 +1,5 @@
 import { LessThan, IsNull } from "typeorm";
-import config from "@/config/index.js";
+import { config } from "@/config.js";
 import * as url from "@/prelude/url.js";
 import { renderActivity } from "@/remote/activitypub/renderer/index.js";
 import renderOrderedCollection from "@/remote/activitypub/renderer/ordered-collection.js";
@@ -8,7 +8,7 @@ import renderFollowUser from "@/remote/activitypub/renderer/follow-user.js";
 import { Users, Followings, UserProfiles } from "@/models/index.js";
 import type { Following } from "@/models/entities/following.js";
 import { checkFetch } from "@/remote/activitypub/check-fetch.js";
-import { fetchMeta } from "@/misc/fetch-meta.js";
+import { fetchMeta } from "backend-rs";
 import { setResponseType } from "../activitypub.js";
 import type { FindOptionsWhere } from "typeorm";
 import type Router from "@koa/router";
@@ -94,7 +94,7 @@ export default async (ctx: Router.RouterContext) => {
 				? `${partOf}?${url.query({
 						page: "true",
 						cursor: followings[followings.length - 1].id,
-				  })}`
+					})}`
 				: undefined,
 		);
 
@@ -110,8 +110,8 @@ export default async (ctx: Router.RouterContext) => {
 		ctx.body = renderActivity(rendered);
 		setResponseType(ctx);
 	}
-	const meta = await fetchMeta();
-	if (meta.secureMode || meta.privateMode) {
+	const instanceMeta = await fetchMeta();
+	if (instanceMeta.secureMode || instanceMeta.privateMode) {
 		ctx.set("Cache-Control", "private, max-age=0, must-revalidate");
 	} else {
 		ctx.set("Cache-Control", "public, max-age=180");
