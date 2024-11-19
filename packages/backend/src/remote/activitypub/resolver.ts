@@ -1,5 +1,7 @@
-import { config } from "@/config.js";
-import type { ILocalUser } from "@/models/entities/user.js";
+import { config } from "@/config.js"; // Configuración general del sistema
+import type { ILocalUser } from "@/models/entities/user.js"; // Tipo definido para usuarios locales
+
+// Importación de utilidades necesarias
 import {
 	extractHost,
 	getInstanceActor,
@@ -8,49 +10,58 @@ import {
 	isSelfHost,
 	renderFollow,
 	renderLike,
-} from "backend-rs";
-import { apGet } from "./request.js";
-import type { IObject, ICollection, IOrderedCollection } from "./type.js";
-import { isCollectionOrOrderedCollection, getApId } from "./type.js";
+} from "backend-rs"; // Utilidades externas relacionadas con backend
+
+import { apGet } from "./request.js"; // Función para realizar peticiones
+import type { IObject, ICollection, IOrderedCollection } from "./type.js"; // Tipos para ActivityPub
+import { isCollectionOrOrderedCollection, getApId } from "./type.js"; // Funciones auxiliares para tipos
+
+// Modelos y funciones relacionadas con datos y renderización
 import {
 	FollowRequests,
 	Notes,
 	NoteReactions,
 	Polls,
 	Users,
-} from "@/models/index.js";
-import { parseUri } from "./db-resolver.js";
-import renderNote from "@/remote/activitypub/renderer/note.js";
-import { renderPerson } from "@/remote/activitypub/renderer/person.js";
-import renderQuestion from "@/remote/activitypub/renderer/question.js";
-import renderCreate from "@/remote/activitypub/renderer/create.js";
-import { renderActivity } from "@/remote/activitypub/renderer/index.js";
-import { apLogger } from "@/remote/activitypub/logger.js";
-import { IsNull, Not } from "typeorm";
+} from "@/models/index.js"; // Modelos de datos
+import { parseUri } from "./db-resolver.js"; // Utilidad para resolver URIs locales
+import renderNote from "@/remote/activitypub/renderer/note.js"; // Renderizado de notas
+import { renderPerson } from "@/remote/activitypub/renderer/person.js"; // Renderizado de personas
+import renderQuestion from "@/remote/activitypub/renderer/question.js"; // Renderizado de preguntas
+import renderCreate from "@/remote/activitypub/renderer/create.js"; // Renderizado de creación
+import { renderActivity } from "@/remote/activitypub/renderer/index.js"; // Renderizado de actividades
+import { apLogger } from "@/remote/activitypub/logger.js"; // Logger para actividades AP
+import { IsNull, Not } from "typeorm"; // Funciones de consulta de TypeORM
 
+// Clase principal para la resolución de objetos
 export default class Resolver {
-	private history: Set<string>;
-	private user?: ILocalUser;
-	private recursionLimit?: number;
+	private history: Set<string>; // Historial de resoluciones para evitar duplicados
+	private user?: ILocalUser; // Usuario autenticado actual
+	private recursionLimit?: number; // Límite para evitar loops infinitos
 
+	// Constructor para inicializar el resolver
 	constructor(recursionLimit = 100) {
 		this.history = new Set();
 		this.recursionLimit = recursionLimit;
 	}
 
+	// Método para configurar el usuario
 	public setUser(user) {
 		this.user = user;
 	}
 
+	// Restablece el historial del resolver
 	public reset(): Resolver {
 		this.history = new Set();
 		return this;
 	}
 
+	// Obtiene el historial en forma de arreglo
 	public getHistory(): string[] {
 		return Array.from(this.history);
 	}
 
+	// Resuelve una colección de ActivityPub
 	public async resolveCollection(
 		value: string | IObject,
 	): Promise<ICollection | IOrderedCollection> {
@@ -63,6 +74,7 @@ export default class Resolver {
 		}
 	}
 
+	// Resuelve cualquier objeto de ActivityPub
 	public async resolve(value: string | IObject): Promise<IObject> {
 		if (value == null) {
 			throw new Error("resolvee is null (or undefined)");
@@ -84,9 +96,6 @@ export default class Resolver {
 		apLogger.info(`Resolving: ${value}`);
 
 		if (value.includes("#")) {
-			// URLs with fragment parts cannot be resolved correctly because
-			// the fragment part does not get transmitted over HTTP(S).
-			// Avoid strange behaviour by not trying to resolve these at all.
 			throw new Error(`cannot resolve URL with fragment: ${value}`);
 		}
 
@@ -122,13 +131,14 @@ export default class Resolver {
 
 		const { finalUrl, content: object } = await apGet(value, this.user);
 
+		// Validaciones de contenido de la respuesta
 		if (
 			object == null ||
 			(Array.isArray(object["@context"])
-			? !(object["@context"] as unknown[]).includes(
-				"https://www.w3.org/ns/activitystreams",
-			)
-		: object["@context"] !== "https://www.w3.org/ns/activitystreams")
+				? !(object["@context"] as unknown[]).includes(
+					"https://www.w3.org/ns/activitystreams",
+				  )
+				: object["@context"] !== "https://www.w3.org/ns/activitystreams")
 		) {
 			throw new Error("invalid response");
 		}
@@ -137,15 +147,16 @@ export default class Resolver {
 			throw new Error("Object has no ID");
 		}
 
+		// Validaciones adicionales de la URL y el ID
 		const finalUrl_ = new URL(finalUrl);
 		const objectId_ = new URL(object.id);
 
-		// Canonicalizar las URLs antes de compararlas
 		if (finalUrl_.href === objectId_.href) return object;
 
 		if (finalUrl_.host !== objectId_.host) {
 			throw new Error("Object ID host doesn't match final url host");
-			}
+		}
+
 		const finalRes = await apGet(object.id, this.user);
 
 		if (new URL(finalRes.finalUrl).href !== new URL(finalRes.content.id).href)
@@ -156,6 +167,7 @@ export default class Resolver {
 		return finalRes.content;
 	}
 
+	// Resuelve un objeto localmente según el tipo
 	private async resolveLocal(url: string): Promise<IObject> {
 		const parsed = parseUri(url);
 		if (!parsed.local) throw new Error("resolveLocal: not local");
@@ -164,7 +176,6 @@ export default class Resolver {
 			case "notes": {
 				const note = await Notes.findOneByOrFail({ id: parsed.id });
 				if (parsed.rest === "activity") {
-					// this refers to the create activity and not the note itself
 					return renderActivity(renderCreate(renderNote(note), note));
 				} else {
 					return renderNote(note);
@@ -175,7 +186,6 @@ export default class Resolver {
 				return await renderPerson(user as ILocalUser);
 			}
 			case "questions": {
-				// Polls are indexed by the note they are attached to.
 				const [pollNote, poll] = await Promise.all([
 					Notes.findOneByOrFail({ id: parsed.id }),
 					Polls.findOneByOrFail({ noteId: parsed.id }),
@@ -187,7 +197,6 @@ export default class Resolver {
 				return renderActivity(await renderLike(reaction));
 			}
 			case "follows": {
-				// if rest is a <followee id>
 				if (parsed.rest != null && /^\w+$/.test(parsed.rest)) {
 					const [follower, followee] = await Promise.all(
 						[parsed.id, parsed.rest].map((id) => Users.findOneByOrFail({ id })),
@@ -195,7 +204,6 @@ export default class Resolver {
 					return renderActivity(renderFollow(follower, followee, url));
 				}
 
-				// Another situation is there is only requestId, then obtained object from database.
 				const followRequest = await FollowRequests.findOneBy({
 					id: parsed.id,
 				});
