@@ -5,8 +5,6 @@ import { apLogger } from "../logger.js";
 import { Notes, Polls } from "@/models/index.js";
 import type { IPoll } from "@/models/entities/poll.js";
 import { isSameOrigin } from "backend-rs";
-import { extractDbHost, toPuny } from "@/misc/convert-host.js";
-
 
 export async function extractPollFromQuestion(
 	source: string | IObject,
@@ -59,7 +57,7 @@ export async function updateQuestion(
 	const uri = typeof value === "string" ? value : getApId(value);
 
 	// Skip if URI points to this server
-	if (extractDbHost(uri) === toPuny(config.host)) throw new Error("uri points local");
+	if (isSameOrigin(uri)) throw new Error("uri points local");
 
 	//#region Already registered with this server?
 	const note = await Notes.findOneBy({ uri });

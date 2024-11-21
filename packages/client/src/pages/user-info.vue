@@ -169,11 +169,7 @@
 							{{ i18n.ts.updateRemoteUser }}</FormButton
 						>
 
-						<FormFolder class="_formBlock" v-if="iAmAdmin">
-							
-						</FormFolder>
-
-						</FormFolder>
+						<FormFolder class="_formBlock">
 							<template #label>Raw</template>
 
 							<MkObjectView v-if="ap" tall :value="ap">

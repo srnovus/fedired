@@ -18,7 +18,6 @@ import { uriPersonCache, userByIdCache } from "@/services/user-cache.js";
 import type { IObject } from "./type.js";
 import { getApId } from "./type.js";
 import { resolvePerson, updatePerson } from "./models/person.js";
-import { extractDbHost, toPuny } from "@/misc/convert-host.js";
 
 const publicKeyCache = new Cache<UserPublickey | null>("publicKey", 60 * 30);
 const publicKeyByUserIdCache = new Cache<UserPublickey | null>(
@@ -47,13 +46,14 @@ export type UriParseResult =
 export function parseUri(value: string | IObject): UriParseResult {
 	const uri = getApId(value);
 
-	if (toPuny(parsed.host) === toPuny(config.host)) {
-		const localRegex = new RegExp(`^.*?/(\\w+)/(\\w+)(?:/(.+))?`);
-		const matchLocal = uri.match(localRegex);
-		if (matchLocal == null) {
-			throw new Error(`Failed to parse local URI: ${uri}`);
-		}
+	// the host part of a URL is case insensitive, so use the 'i' flag.
+	const localRegex = new RegExp(
+		`^${escapeRegexp(config.url)}/(\\w+)/(\\w+)(?:/(.+))?`,
+		"i",
+	);
+	const matchLocal = uri.match(localRegex);
 
+	if (matchLocal) {
 		return {
 			local: true,
 			type: matchLocal[1],

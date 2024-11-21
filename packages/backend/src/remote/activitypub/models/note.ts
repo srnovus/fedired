@@ -448,7 +448,7 @@ export async function resolveNote(
 		}
 		//#endregion
 
-		if (extractDbHost(uri) === toPuny(config.host)) {
+		if (isSameOrigin(uri)) {
 			throw new StatusError(
 				"cannot resolve local note",
 				400,
@@ -570,7 +570,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	if (!uri) throw new Error("Missing note uri");
 
 	// Skip if URI points to this server
-	if (extractDbHost(uri) === toPuny(config.host)) throw new Error("uri points local");
+	if (isSameOrigin(uri)) throw new Error("uri points local");
 
 	// A new resolver is created if not specified
 	if (resolver == null) resolver = new Resolver();
