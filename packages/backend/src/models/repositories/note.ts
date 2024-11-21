@@ -12,6 +12,7 @@ import {
 	Channels,
 	UserProfiles,
 	Notes,
+	Blockings,
 } from "../index.js";
 import type { Packed } from "@/misc/schema.js";
 import {
@@ -100,6 +101,20 @@ async function populateMyReaction(
 
 export const NoteRepository = db.getRepository(Note).extend({
 	async isVisibleForMe(note: Note, meId: User["id"] | null): Promise<boolean> {
+		if (meId != null && meId !== note.userId) {
+			const blocked = await Blockings.count({
+				where: {
+					blockeeId: meId,
+					blockerId: note.userId
+				},
+				take: 1
+			});
+
+			if (blocked !== 0) {
+				return false;
+			}
+		}
+
 		// This code must always be synchronized with the checks in generateVisibilityQuery.
 		// visibility が specified かつ自分が指定されていなかったら非表示
 		if (note.visibility === "specified") {
