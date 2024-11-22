@@ -1,52 +1,13 @@
-### Instalar en sistemas que no sean Linux
+
+# Instalar en sistemas que no sean Linux
 
 No probamos Fedired en sistemas que no sean Linux, por lo que te recomendamos que instales Fedired en un entorno de este tipo **solo si puedes solucionar los problemas tú mismo**. No hay ningún tipo de soporte. Dicho esto, es posible instalar Fedired en algunos sistemas que no sean Linux.
 
-<details>
 
-<summary>Posible configuración en FreeBSD (a partir de la versión<code>20240725</code>)</summary>
+> [!WARNING]
+> 
+>  Posible [configuración en Docker](https://github.com/fedired-dev/ordo/pkgs/container/ordo%2Fordo) esta forma de instalacion aun esta en Beta y puede no funcionar como se espera.
 
-Puede instalar Fedired en FreeBSD agregando estos pasos adicionales a las instrucciones estándar:
-
-1. Instalar el paquete `vips`
-2. Añade el siguiente bloque a [`package.json`](../package.json)
-    ```json
-      "pnpm": {
-        "overrides": {
-          "rollup": "npm:@rollup/wasm-node
-        }
-      }
-    ```
-3. Crear un script rc para Fedired
-    ```sh
-    #!/bin/sh
-
-    # PROVIDE: fedired
-    # REQUIRE: DAEMON redis caddy postgresql
-    # KEYWORD: shutdown
-
-    . /etc/rc.subr
-
-    name=fedired
-    rcvar=fedired_enable
-
-    desc="Fedired daemon"
-
-    load_rc_config ${name}
-
-    : ${fedired_chdir:="/path/to/fedired/local/repository"}
-    : ${fedired_env:="npm_config_cache=/tmp NODE_ENV=production NODE_OPTIONS=--max-old-space-size=3072"}
-
-    pidfile="/var/run/${name}.pid"
-    command=/usr/sbin/daemon
-    command_args="-f -S -u fedired -P ${pidfile} /usr/local/bin/pnpm run start"
-
-    run_rc_command "$1"
-    ```
-
-</details>
-
-Por favor, háganos saber si ha implementado Fedired en un entorno curioso :smile:
 
 
 ## 1. Instalar dependencias en Linux (Ubuntu Server)
@@ -101,15 +62,22 @@ psql --version
 Las instrucciones de instalación de PGroonga se pueden encontrar en [esta pagina](https://pgroonga.github.io/install/).
 
 ```sh
-wget "https://apache.jfrog.io/artifactory/arrow/$(lsb_release --id --short | tr 'A-Z' 'a-z')/apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb"
-sudo apt install "./apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb"
-wget "https://packages.groonga.org/debian/groonga-apt-source-latest-$(lsb_release --codename --short).deb"
-sudo apt install "./groonga-apt-source-latest-$(lsb_release --codename --short).deb"
 sudo apt update
-sudo apt install postgresql-16-pgdg-pgroonga
+sudo apt install -y build-essential postgresql-server-dev-16 libgroonga-dev
+git clone --recursive https://github.com/pgroonga/pgroonga.git
+sudo add-apt-repository ppa:groonga/ppa
+sudo apt update
+sudo apt install groonga
+sudo apt install libgroonga-dev
 
-rm "apache-arrow-apt-source-latest-$(lsb_release --codename --short).deb" "groonga-apt-source-latest-$(lsb_release --codename --short).deb"
+cd ~/pgroonga
+make
+sudo make install
+exit
+ls /usr/share/postgresql/16/extension/
+
 ```
+Deberías ver un archivo llamado pgroonga.control entre otros archivos de extensión.
 
 ### Redis
 
@@ -154,6 +122,7 @@ sudo apt install ffmpeg
 1. Crear un usuario para Fedired y cambiar de usuario
    ```sh
    sudo useradd --create-home --user-group --shell /bin/bash fedired
+   sudo passwd fedired
    sudo su --login fedired
    
    # check the current working directory
@@ -198,6 +167,7 @@ sudo apt install ffmpeg
 
 1. Construir
     ```sh
+    pnpm install --no-frozen-lockfile
     pnpm install --frozen-lockfile
     NODE_ENV=production NODE_OPTIONS='--max-old-space-size=3072' pnpm run build
     ```
@@ -327,107 +297,12 @@ En esta instrucción, usamos [Caddy](https://caddyserver.com/) para que el servi
     sudo systemctl enable --now fedired
     ```
 
-## Rotar registros
+# 🎉 ¡Felicidades! 🎉
 
-A medida que el servidor se ejecuta durante más tiempo, el tamaño de los archivos de registro aumenta y llena el espacio del disco. Para evitarlo, debe configurar una rotación de registros (eliminación automática de registros antiguos).
+¡Disfruta de tu nuevo servidor de Fedired! 🎈
 
-Puede editar el valor `SystemMaxUse` en la sección `[journal]` de `/etc/systemd/journald.conf` para hacerlo:
+Tu experiencia de hosting está ahora optimizada para ofrecerte un rendimiento excepcional. Aprovecha todas las características que hemos preparado para ti y no dudes en contactarnos si necesitas asistencia.
 
-```conf
-[journal]
-... (omitted)
-SystemMaxUse=500M
-...
-```
+¡Bienvenido a la comunidad de Fedired! 🚀
 
-Asegúrese de eliminar el `#` inicial para descomentar la línea. Después de editar el archivo de configuración, debe reiniciar el servicio `systemd-journald`.
-
-```sh
-sudo systemctl restart systemd-journald
-```
-
-También se recomienda cambiar el [nivel de registro de PGroonga](https://pgroonga.github.io/reference/parameters/log-level.html). El nivel predeterminado es `notice`, pero es demasiado detallado para el uso diario.
-
-Para controlar el nivel de registro, agregue esta línea a su `postgresql.conf`:
-
-```conf
-pgroonga.log_level = error
-```
-
-Puede comprobar la ubicación de `postgresql.conf` con este comando:
-
-```sh
-sudo --user=postgres psql --command='SHOW config_file'
-```
-
-El archivo de registro de PGroonga (`pgroonga.log`) se encuentra en este directorio:
-
-```sh
-sudo --user=postgres psql --command='SHOW data_directory'
-```
-
-## Ajustar la configuración de la base de datos
-
-La configuración predeterminada de PostgreSQL no es adecuada para ejecutar un servidor Fedired. Por lo tanto, se recomienda encarecidamente que utilice [PGTune](https://pgtune.leopard.in.ua/) para modificar la configuración.
-
-A continuación se muestra un conjunto de ejemplos de parámetros que puede proporcionar a PGTune:
-
-|             Parámetro | Valor                                                  |
-|----------------------:|---------------------------------------------------------|
-|            DB version | 16 (your PostgreSQL major version)                      |
-|               OS Type | Linux                                                   |
-|               DB Type | Data warehouse                                          |
-|          Total Memory | [total physical memory] minus 700 MB                    |
-|        Number of CPUs | number of CPU threads (or lower value if you have many) |
-| Number of connections | 200                                                     |
-|          Data storage | SSD storage                                             |
-
-Dado que un servidor Fedired no es un servidor de base de datos dedicado, asegúrese de dejar algo de espacio en la memoria para otro software como Fedired, Redis y proxy inverso.
-
-Una vez que haya ingresado los valores apropiados para su entorno, haga clic en el botón "Generar" para generar una configuración y reemplazar los valores en `postgresql.conf` con los valores sugeridos.
-
-Después de eso, debes reiniciar el servicio PostgreSQL.
-
-```sh
-sudo systemctl stop fedired
-sudo systemctl restart postgresql
-sudo systemctl start fedired
-```
-
-## Vacíe su base de datos
-
-Si la base de datos se ejecuta durante mucho tiempo, la "basura" acumulada puede degradar su rendimiento o causar problemas. Para evitarlo, debe "VACÍAR" su base de datos con regularidad.
-
-```sh
-sudo systemctl stop fedired
-sudo --user=postgres psql --dbname=fedired_db --command='VACUUM FULL VERBOSE ANALYZE'
-sudo systemctl start fedired
-```
-
-Tenga en cuenta que esta operación tarda algún tiempo.
-
-## Personalizar
-
-- Para agregar CSS personalizado para todos los usuarios, edite `./custom/assets/instance.css`.
-- Para agregar recursos estáticos (como imágenes para la pantalla de inicio), colóquelos en el directorio `./custom/assets/`. Luego estarán disponibles en `https://yourserver.tld/static-assets/filename.ext`.
-- Para agregar configuraciones regionales personalizadas, colóquelas en el directorio `./custom/locales/`. Si nombra su configuración regional personalizada con el mismo nombre que una configuración regional existente, la sobrescribirá. Si le da un nombre único, se agregará a la lista. Asegúrese también de que la primera parte del nombre del archivo coincida con la configuración regional en la que la está basando. (Ejemplo: `en-FOO.yml`)
-- Para agregar imágenes de error personalizadas, colóquelas en el directorio `./custom/assets/badges`, reemplazando los archivos que ya están allí.
-- Para agregar sonidos personalizados, coloque solo archivos mp3 en el directorio `./custom/assets/sounds`.
-- Para actualizar los recursos personalizados sin volver a generarlos, simplemente ejecute `pnpm run build:assets`.
-- Para evitar que ChatGPT, CommonCrawl u otros rastreadores indexen su instancia, descomente las reglas respectivas en `./custom/robots.txt`.
-
-## Consejos y trucos
-
-- Al editar el archivo de configuración, no complete los ajustes en la parte inferior. Están diseñados *solo* para hospedaje administrado, no para hospedaje propio. Es mucho mejor configurar esos ajustes en el panel de control de Fedired.
-- El puerto 3000 (usado en la configuración predeterminada) podría ya estar en uso en su servidor para otra cosa. Para encontrar un puerto abierto para Fedired, ejecute `for p in {3000..4000}; do ss -tlnH | tr -s ' ' | cut -d" " -sf4 | grep -q "${p}$" || echo "${p}"; done | head -n 1`. Reemplace 3000 con el puerto mínimo y 4000 con el puerto máximo si lo necesita.
-- Le recomendamos que use un S3 Bucket/CDN para Object Storage, especialmente si usa contenedores.
-- Al utilizar el almacenamiento de objetos, se recomienda encarecidamente configurar un encabezado de respuesta `Access-Control-Allow-Origin` adecuado.
-- Recomendamos no utilizar CloudFlare, pero si lo hace, asegúrese de desactivar la minimización de código.
-- Para las notificaciones push, ejecute `npx web-push generate-vapid-keys`, luego coloque las claves pública y privada en Panel de control > General > ServiceWorker.
-- Para las traducciones, cree una cuenta [DeepL](https://deepl.com) y genere una clave API, luego colóquela en Panel de control > General > DeepL Translation.
-- Para agregar otra cuenta de administrador:
-- Vaya a la página del usuario > 3 puntos > Acerca de > Moderación > active "Moderador"
-- Vuelva a Descripción general > haga clic en el ícono del portapapeles junto al ID
-- Ejecute `psql -d fedired` (o el nombre que sea el de la base de datos)
-- Ejecute `UPDATE "user" SET "isAdmin" = true WHERE id='999999';` (reemplace `999999` con el ID copiado)
-- Reinicie su servidor Fedired
+**Recuerda:** La privacidad y seguridad son nuestras prioridades.
