@@ -56,18 +56,6 @@
 							>I <Mfm text="$[jelly ❤]" /> #Fedired</MkButton
 						>
 					</div>
-					<FormSection>
-						<div class="_formLinks">
-							<FormLink
-								to="https://github.com/fedired-dev/fedired"
-								external
-							>
-								<template #icon
-									><i :class="icon('ph-code')"></i
-								></template>
-								{{ i18n.ts._aboutFedired.source }}
-								<template #suffix>Source Code</template>
-							</FormLink>
 							<FormLink
 								to="https://crowdin.com/project/fedired/"
 								external
