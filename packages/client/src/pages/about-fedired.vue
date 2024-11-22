@@ -43,6 +43,18 @@
 							/>
 						</span>
 					</div>
+					<FormSection>
+						<div class="_formLinks">
+							<FormLink
+								to="https://fedired.com/@fedired"
+								external
+							>
+								<template #icon
+									><i :class="icon('ph-bug')"></i
+								></template>
+								{{ i18n.ts._aboutFedired.source }}
+								<template #suffix>Reportar Error</template>
+							</FormLink>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
 							href="https://about.fedired.com/"
@@ -77,6 +89,7 @@
 								<template #suffix>Donation</template>
 							</FormLink>
 						</div>
+					</FormSection>
 					<FormSection>
 						<template #label>Hecho por</template>
 						<div class="contributors">
