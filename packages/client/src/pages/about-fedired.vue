@@ -77,7 +77,6 @@
 								<template #suffix>Donation</template>
 							</FormLink>
 						</div>
-					</FormSection>
 					<FormSection>
 						<template #label>Hecho por</template>
 						<div class="contributors">
