@@ -983,7 +983,7 @@ _registry:
   domain: "Domena"
   createKey: "Utwórz klucz"
 _aboutFedired:
-  about: "fedired jest forkiem Misskey utworzonym przez ThatOneCalculator, rozwijanym
+  about: "fedired jest forkiem Fedired utworzonym przez ThatOneCalculator, rozwijanym
     od 2022."
   contributors: "Główni twórcy"
   allContributors: "Wszyscy twórcy"

@@ -39,7 +39,7 @@ export const paramDef = {
 			maxItems: 32,
 			items: {
 				type: "string",
-				format: "misskey:id",
+				format: "fedired:id",
 			},
 		},
 		isSensitive: { type: "boolean", default: false },

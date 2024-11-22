@@ -992,12 +992,12 @@ export function post(
 		// NOTE: ただ、dynamic importしない場合、MkPostFormDialogインスタンスが使いまわされ、
 		//       Vueが渡されたコンポーネントに内部的に__propsというプロパティを生やす影響で、
 		//       複数のpost formを開いたときに場合によってはエラーになる
-		//       もちろん複数のpost formを開けること自体Misskeyサイドのバグなのだが
+		//       もちろん複数のpost formを開けること自体Fediredサイドのバグなのだが
 		// NOTE: Text area cannot be auto-focused on iOS when dynamically importing MkPostFormDialog
 		// NOTE: However, if you do not dynamically import, the MkPostFormDialog instance will be reused,
 		// Due to the effect that Vue internally creates a property called __props on the passed component,
 		// Sometimes an error occurs when opening multiple post forms
-		// Of course, opening multiple post forms is itself a bug on Misskey's side.
+		// Of course, opening multiple post forms is itself a bug on Fedired's side.
 		let dispose: () => void;
 		popup(MkPostFormDialog, props, {
 			closed: () => {

@@ -1,7 +1,7 @@
 {
 	id: '3cdfd635-4d5e-4d06-9ba3-20f123f0999b',
 	base: 'dark',
-	desc: 'Soho vibes for Misskey',
+	desc: 'Soho vibes for Fedired',
 	name: 'Rosé Pine',
 	props: {
 		X2: ':darken<2<@panel',

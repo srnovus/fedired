@@ -41,8 +41,8 @@ export const paramDef = {
 	type: "object",
 	properties: {
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "misskey:id" },
-		untilId: { type: "string", format: "misskey:id" },
+		sinceId: { type: "string", format: "fedired:id" },
+		untilId: { type: "string", format: "fedired:id" },
 		following: { type: "boolean", default: false },
 		unreadOnly: { type: "boolean", default: false },
 		markAsRead: { type: "boolean", default: true },

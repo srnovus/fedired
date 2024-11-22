@@ -105,7 +105,7 @@ export const paramDef = {
 		enableRecaptcha: { type: "boolean" },
 		recaptchaSiteKey: { type: "string", nullable: true },
 		recaptchaSecretKey: { type: "string", nullable: true },
-		proxyAccountId: { type: "string", format: "misskey:id", nullable: true },
+		proxyAccountId: { type: "string", format: "fedired:id", nullable: true },
 		maintainerName: { type: "string", nullable: true },
 		maintainerEmail: { type: "string", nullable: true },
 		pinnedPages: {
@@ -114,7 +114,7 @@ export const paramDef = {
 				type: "string",
 			},
 		},
-		pinnedClipId: { type: "string", format: "misskey:id", nullable: true },
+		pinnedClipId: { type: "string", format: "fedired:id", nullable: true },
 		langs: {
 			type: "array",
 			items: {

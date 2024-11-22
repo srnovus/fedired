@@ -93,8 +93,8 @@ export const paramDef = {
 		location: { ...Users.locationSchema, nullable: true },
 		birthday: { ...Users.birthdaySchema, nullable: true },
 		lang: { type: "string", nullable: true },
-		avatarId: { type: "string", format: "misskey:id", nullable: true },
-		bannerId: { type: "string", format: "misskey:id", nullable: true },
+		avatarId: { type: "string", format: "fedired:id", nullable: true },
+		bannerId: { type: "string", format: "fedired:id", nullable: true },
 		fields: {
 			type: "array",
 			minItems: 0,
@@ -125,7 +125,7 @@ export const paramDef = {
 		receiveAnnouncementEmail: { type: "boolean" },
 		alwaysMarkNsfw: { type: "boolean" },
 		ffVisibility: { type: "string", enum: ["public", "followers", "private"] },
-		pinnedPageId: { type: "string", format: "misskey:id", nullable: true },
+		pinnedPageId: { type: "string", format: "fedired:id", nullable: true },
 		mutedWords: { type: "array" },
 		mutedPatterns: { type: "array", items: { type: "string" } },
 		mutedInstances: {

@@ -551,12 +551,12 @@ export const WellKnownContext = {
 			// Fedired
 			fedired: "https://fedired.com/ns#",
 			speakAsCat: "fedired:speakAsCat",
-			// Misskey
-			misskey: "https://misskey-hub.net/ns#",
-			_misskey_talk: "misskey:_misskey_talk",
-			_misskey_votes: "misskey:_misskey_votes",
-			_misskey_summary: "misskey:_misskey_summary",
-			isCat: "misskey:isCat",
+			// fedired
+			fedired: "https://joinfedired.org/ns#",
+			_fedired_talk: "fedired:_fedired_talk",
+			_fedired_votes: "fedired:_fedired_votes",
+			_fedired_summary: "fedired:_fedired_summary",
+			isCat: "fedired:isCat",
 			// Fedibird
 			fedibird: "http://fedibird.com/ns#",
 			// vcard

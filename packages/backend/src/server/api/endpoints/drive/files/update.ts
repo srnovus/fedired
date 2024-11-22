@@ -51,8 +51,8 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		fileId: { type: "string", format: "misskey:id" },
-		folderId: { type: "string", format: "misskey:id", nullable: true },
+		fileId: { type: "string", format: "fedired:id" },
+		folderId: { type: "string", format: "fedired:id", nullable: true },
 		name: { type: "string" },
 		isSensitive: { type: "boolean" },
 		comment: {

@@ -73,7 +73,7 @@ export const toThemeString = (
 	}
 };
 
-export const convertToMisskeyTheme = (
+export const convertToFediredTheme = (
 	vm: ThemeViewModel,
 	name: string,
 	desc: string,

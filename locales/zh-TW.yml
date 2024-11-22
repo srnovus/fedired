@@ -989,7 +989,7 @@ _registry:
   domain: "域"
   createKey: "新增機碼"
 _aboutFedired:
-  about: "fedired是由ThatOneCalculator自2022年起開發的Misskey分支。"
+  about: "fedired是由ThatOneCalculator自2022年起開發的Fedired分支。"
   contributors: "主要貢獻者"
   allContributors: "全體貢獻人員"
   source: "原始碼"
@@ -999,7 +999,7 @@ _aboutFedired:
   pleaseDonateToFedired: 請考慮向 fedired 贊助以支持其發展。
   pleaseDonateToHost: 還請考慮捐贈給您在使用的伺服器 {host}，以支援龐大的運營成本。
   donateHost: 贊助給 {host}
-  misskeyContributors: Misskey的貢獻者
+  fediredContributors: Fedired的貢獻者
 _nsfw:
   respect: "隱藏敏感內容"
   ignore: "不隱藏敏感內容"
@@ -1013,7 +1013,7 @@ _writingMode:
   verticalRLUpright: "直排，由右而左，字母逐個排列"
 _mfm:
   cheatSheet: "MFM代碼小抄"
-  intro: "MFM是Misskey、fedired、Akkoma等專用的標記語言，可以在各個位置使用。 您可以這裏看到MFM可用語法列表。"
+  intro: "MFM是Fedired、fedired、Akkoma等專用的標記語言，可以在各個位置使用。 您可以這裏看到MFM可用語法列表。"
   dummy: "fedired拓展了Fediverse的世界"
   mention: "提及"
   mentionDescription: "透過 @+使用者名稱 來標示特定使用者。"
@@ -1881,7 +1881,7 @@ _experiments:
   title: 試驗功能
   enablePostImports: 啟用匯入貼文的功能
   postImportsCaption: 
-    允許使用者從舊有的fedired・Misskey・Mastodon・Akkoma・Pleroma帳號匯入貼文。在伺服器佇列堵塞時匯入貼文可能會導致載入速度變慢。
+    允許使用者從舊有的fedired・Fedired・Mastodon・Akkoma・Pleroma帳號匯入貼文。在伺服器佇列堵塞時匯入貼文可能會導致載入速度變慢。
 noGraze: 瀏覽器擴充元件 "Graze for Mastodon" 會與fedired發生衝突，請停用該擴充元件。
 userSaysSomethingReasonRenote: '{name} 轉發了包含 {reason} 的貼文'
 pushNotificationNotSupported: 你的瀏覽器或伺服器不支援推送通知

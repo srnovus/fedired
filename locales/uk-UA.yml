@@ -818,7 +818,7 @@ _registry:
   createKey: "Створити ключ"
   scope: Область
 _aboutFedired:
-  about: "fedired - це форк Misskey з відкритим кодом, яке розробляє ThatOneCalculator
+  about: "fedired - це форк Fedired з відкритим кодом, яке розробляє ThatOneCalculator
     з 2022 року."
   contributors: "Головні помічники"
   allContributors: "Всі помічники"
@@ -830,7 +830,7 @@ _aboutFedired:
   pleaseDonateToHost: Також не забудьте підтримати ваш домашній сервер {host}, щоб
     допомогти з його операційними витратами.
   donateHost: Зробити внесок на рахунок {host}
-  misskeyContributors: Контрибутори Misskey
+  fediredContributors: Контрибутори Fedired
 _nsfw:
   respect: "Приховувати NSFW медіа"
   ignore: "Не приховувати NSFW медіа"
@@ -1848,7 +1848,7 @@ _experiments:
   enablePostImports: Ввімкнути імпорт записів
   title: Експерименти
   postImportsCaption: Дозволяє користувачам імпортувати свої записи з минулих облікових
-    записів fedired, Misskey, Mastodon, Akkoma і Pleroma. Це може спричинити зниження
+    записів fedired, Fedired, Mastodon, Akkoma і Pleroma. Це може спричинити зниження
     швидкості під час завантаження, якщо ваша черга перевантажена.
 _dialog:
   charactersExceeded: 'Перевищено максимальну кількість символів! Обмеження: {current}/{max}'

@@ -14,9 +14,9 @@ pub struct DecodedReaction {
 
 #[macros::export]
 pub fn decode_reaction(reaction: &str) -> DecodedReaction {
-    // Misskey allows you to include "+" and "-" in emoji shortcodes
+    // Fedired allows you to include "+" and "-" in emoji shortcodes
     // MFM spec: https://github.com/misskey-dev/mfm.js/blob/6aaf68089023c6adebe44123eebbc4dcd75955e0/docs/syntax.md?plain=1#L583
-    // Misskey's implementation: https://github.com/misskey-dev/misskey/blob/bba3097765317cbf95d09627961b5b5dce16a972/packages/backend/src/core/ReactionService.ts#L68
+    // Fedired's implementation: https://github.com/misskey-dev/misskey/blob/bba3097765317cbf95d09627961b5b5dce16a972/packages/backend/src/core/ReactionService.ts#L68
     static RE: Lazy<Regex> =
         Lazy::new(|| Regex::new(r"^:([0-9A-Za-z_+-]+)(?:@([0-9A-Za-z_.-]+))?:$").unwrap());
 

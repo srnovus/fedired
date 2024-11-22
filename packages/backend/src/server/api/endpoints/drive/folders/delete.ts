@@ -28,7 +28,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		folderId: { type: "string", format: "misskey:id" },
+		folderId: { type: "string", format: "fedired:id" },
 	},
 	required: ["folderId"],
 } as const;

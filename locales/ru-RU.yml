@@ -991,14 +991,14 @@ _aboutFedired:
   pleaseDonateToHost: Также не забудьте поддержать ваш домашний сервер {host}, чтобы
     помочь с его операционными расходами.
   donateHost: Пожертвовать на {host}
-  misskeyContributors: Контрибьюторы Misskey
+  fediredContributors: Контрибьюторы Fedired
 _nsfw:
   respect: "Скрывать содержимое не для всех"
   ignore: "Показывать содержимое не для всех"
   force: "Скрывать вообще все файлы"
 _mfm:
   cheatSheet: "Подсказка по разметке MFM"
-  intro: "MFM — язык оформления текста, используемый в Misskey, fedired, Akkoma,
+  intro: "MFM — язык оформления текста, используемый в Fedired, fedired, Akkoma,
     который можно использовать во многих местах. На этой странице собраны и кратко
     изложены способы его использовать."
   dummy: "fedired расширяет границы Федиверса"
@@ -2049,7 +2049,7 @@ xl: Очень крупно
 _experiments:
   enablePostImports: Включить импорт постов
   postImportsCaption: Позволяет пользователям импортировать свои посты из прошлых
-    учетных записей fedired, Misskey, Mastodon, Akkoma и Pleroma. Это может вызвать
+    учетных записей fedired, Fedired, Mastodon, Akkoma и Pleroma. Это может вызвать
     снижение скорости при загрузке, если ваша очередь перегружена.
   title: Эксперименты
 _skinTones:

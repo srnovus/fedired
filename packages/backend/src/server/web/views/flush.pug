@@ -37,7 +37,7 @@ html
 					localStorage.clear();
 					message('localStorage cleared.');
 
-					//- Removed 'MisskeyClient' due to seemingly being never referenced
+					//- Removed 'FediredClient' due to seemingly being never referenced
 					const idbPromises = ['keyval-store'].map((name, i, arr) => new Promise((res, rej) => {
 						const delidb = indexedDB.deleteDatabase(name);
 						delidb.onsuccess = () => res(message(`indexedDB "${name}" cleared. (${i + 1}/${arr.length})`));

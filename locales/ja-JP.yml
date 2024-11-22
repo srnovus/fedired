@@ -1106,10 +1106,10 @@ _registry:
   domain: "ドメイン"
   createKey: "キーを作成"
 _aboutFedired:
-  about: "fediredは、2022年に生まれたThatOneCalculatorによるMisskeyのforkです。"
+  about: "fediredは、2022年に生まれたThatOneCalculatorによるFediredのforkです。"
   contributors: "主なコントリビューター"
   allContributors: "全てのコントリビューター"
-  misskeyContributors: "フォーク元のMisskeyの主なコントリビューター"
+  fediredContributors: "フォーク元のFediredの主なコントリビューター"
   source: "ソースコード"
   translation: "fediredを翻訳"
   donate: "fediredに寄付"
@@ -1130,7 +1130,7 @@ _writingMode:
   verticalRLUpright: "縦組み、右から左、英数字1字ずつ配置"
 _mfm:
   cheatSheet: "MFMチートシート"
-  intro: "MFMは、Misskeyやfedired、Akkomaなどの様々な場所で使用できるマークアップ言語です。ここでは、MFMで使用可能な構文一覧が確認できます。"
+  intro: "MFMは、Fediredやfedired、Akkomaなどの様々な場所で使用できるマークアップ言語です。ここでは、MFMで使用可能な構文一覧が確認できます。"
   dummy: "fediredでFediverseの世界が広がります"
   mention: "メンション"
   mentionDescription: "アットマーク + ユーザー名で、特定のユーザーを示せます。"
@@ -1954,7 +1954,7 @@ apps: "アプリ"
 _experiments:
   title: 試験的な機能
   postImportsCaption: 
-    ユーザーが過去の投稿をfedired・Misskey・Mastodon・Akkoma・Pleromaからインポートすることを許可します。キューが溜まっているときにインポートするとサーバーに負荷がかかる可能性があります。
+    ユーザーが過去の投稿をfedired・Fedired・Mastodon・Akkoma・Pleromaからインポートすることを許可します。キューが溜まっているときにインポートするとサーバーに負荷がかかる可能性があります。
   enablePostImports: 投稿のインポートを有効にする
 sendModMail: モデレーション通知を送る
 deleted: 削除済み

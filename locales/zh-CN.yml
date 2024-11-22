@@ -997,7 +997,7 @@ _registry:
   domain: "域"
   createKey: "创建键"
 _aboutFedired:
-  about: "fedired 是由 ThatOneCalculator 创建的 Misskey 的一个分支，自 2022 年开始开发。"
+  about: "fedired 是由 ThatOneCalculator 创建的 Fedired 的一个分支，自 2022 年开始开发。"
   contributors: "主要贡献者"
   allContributors: "全体贡献者"
   source: "源代码"
@@ -1007,7 +1007,7 @@ _aboutFedired:
   pleaseDonateToFedired: 请考虑赞助 fedired 以支持其开发。
   pleaseDonateToHost: 也请考虑赞助您的主服务器 {host}，以帮助支持其运营成本。
   donateHost: 赞助 {host}
-  misskeyContributors: Misskey 贡献者
+  fediredContributors: Fedired 贡献者
 _nsfw:
   respect: "隐藏敏感内容"
   ignore: "不隐藏敏感内容"
@@ -1021,7 +1021,7 @@ _writingMode:
   verticalRLUpright: "直排，由右向左，字母逐个排列"
 _mfm:
   cheatSheet: "MFM 代码速查表"
-  intro: "MFM 是一种在 Misskey、fedired、Akkoma 中使用的标记语言，可以在很多地方使用。您可以在此处查看所有可用的 MFM 语法的列表。"
+  intro: "MFM 是一种在 Fedired、fedired、Akkoma 中使用的标记语言，可以在很多地方使用。您可以在此处查看所有可用的 MFM 语法的列表。"
   dummy: "通过 fedired 扩展联邦宇宙的世界"
   mention: "提及"
   mentionDescription: "可以使用 @+用户名 来指示特定用户。"
@@ -1852,7 +1852,7 @@ _messaging:
 migration: 迁移
 _experiments:
   title: 实验性功能
-  postImportsCaption: 允许用户从过去的 fedired、Misskey、Mastodon、Akkoma 和 Pleroma 账号导入帖子。如果您的队列出现拥堵，则可能会导致加载速度减慢。
+  postImportsCaption: 允许用户从过去的 fedired、Fedired、Mastodon、Akkoma 和 Pleroma 账号导入帖子。如果您的队列出现拥堵，则可能会导致加载速度减慢。
   enablePostImports: 启用帖子导入
 license: 许可证
 flagSpeakAsCatDescription: 在猫模式下您的帖子会喵化

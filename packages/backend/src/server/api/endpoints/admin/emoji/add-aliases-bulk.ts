@@ -26,7 +26,7 @@ export const paramDef = {
 			type: "array",
 			items: {
 				type: "string",
-				format: "misskey:id",
+				format: "fedired:id",
 			},
 		},
 		aliases: {

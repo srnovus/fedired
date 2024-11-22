@@ -45,7 +45,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		pageId: { type: "string", format: "misskey:id" },
+		pageId: { type: "string", format: "fedired:id" },
 		title: { type: "string" },
 		name: { type: "string", minLength: 1 },
 		summary: { type: "string", nullable: true },
@@ -66,7 +66,7 @@ export const paramDef = {
 		script: { type: "string" },
 		eyeCatchingImageId: {
 			type: "string",
-			format: "misskey:id",
+			format: "fedired:id",
 			nullable: true,
 		},
 		font: { type: "string", enum: ["serif", "sans-serif"] },

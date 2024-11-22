@@ -61,7 +61,7 @@ export const paramDef = {
 		script: { type: "string" },
 		eyeCatchingImageId: {
 			type: "string",
-			format: "misskey:id",
+			format: "fedired:id",
 			nullable: true,
 		},
 		font: {

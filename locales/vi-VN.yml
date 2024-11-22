@@ -400,7 +400,7 @@ exploreFediverse: "Khám phá Fediverse"
 popularTags: "Hashtag thông dụng"
 userList: "Danh sách"
 about: "Giới thiệu"
-aboutFedired: "Về Misskey"
+aboutFedired: "Về Fedired"
 administrator: "Quản trị viên"
 token: "Token"
 twoStepAuthentication: "Xác minh 2 bước"
@@ -1044,7 +1044,7 @@ _registry:
   domain: "Tên miền"
   createKey: "Tạo mã"
 _aboutFedired:
-  about: "Misskey là phần mềm mã nguồn mở được phát triển bởi syuilo từ năm 2014."
+  about: "Fedired là phần mềm mã nguồn mở được phát triển bởi syuilo từ năm 2014."
   contributors: "Những người đóng góp nổi bật"
   allContributors: "Toàn bộ người đóng góp"
   source: "Mã nguồn"
@@ -1054,7 +1054,7 @@ _aboutFedired:
   pleaseDonateToFedired: Hãy cân nhắc ủng hộ fedired phát triển.
   donateHost: Ủng hộ {host}
   pleaseDonateToHost: Cũng như ủng hộ chi phí vận hành máy chủ {host} của bạn.
-  misskeyContributors: Người đóng góp Misskey
+  fediredContributors: Người đóng góp Fedired
 _nsfw:
   respect: "Ẩn nội dung NSFW"
   ignore: "Hiện nội dung NSFW"
@@ -1927,7 +1927,7 @@ noGraze: Vui lòng tắt tiện ích mở rộng trình duyệt "Graze for Masto
 addRe: Thêm "re:" vào đầu bình luận để trả lời tút có cảnh báo nội dung
 _experiments:
   postImportsCaption: Cho phép người dùng nhập các bài đăng của họ từ các tài khoản
-    fedired, Misskey, Mastodon, Akkoma và Pleroma trước đây. Nó có thể gây chậm trong
+    fedired, Fedired, Mastodon, Akkoma và Pleroma trước đây. Nó có thể gây chậm trong
     quá trình tải nếu hàng đợi của bạn bị tắc nghẽn.
   title: Thử nghiệm
   enablePostImports: Bật nhập tút

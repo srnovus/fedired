@@ -1328,7 +1328,7 @@ _aboutFedired:
   about: "Decentralized social platform powered by Fedired technology."
   contributors: "Main contributors"
   allContributors: "All contributors"
-  misskeyContributors: "Misskey contributors"
+  fediredContributors: "Fedired contributors"
   source: "Source code"
   translation: "Translate fedired"
   donate: "Donate to fedired"
@@ -1354,7 +1354,7 @@ _mfm:
   warn: "MFM may contain rapidly moving or flashy animations"
   alwaysPlay: "Always autoplay all animated MFM"
   cheatSheet: "MFM Cheatsheet"
-  intro: "MFM is a markup language used on Misskey, fedired, Akkoma, and more that
+  intro: "MFM is a markup language used on Fedired, fedired, Akkoma, and more that
     can be used in many places. Here you can view a list of all available MFM syntax."
   dummy: "fedired expands the world of the Fediverse"
   advanced: "Advanced MFM"
@@ -2220,7 +2220,7 @@ _deck:
 _experiments:
   title: "Experiments"
   enablePostImports: "Enable post imports"
-  postImportsCaption: "Allows users to import their posts from past fedired, Misskey,
+  postImportsCaption: "Allows users to import their posts from past fedired, Fedired,
     Mastodon, Akkoma, and Pleroma accounts. It may cause slowdowns during load if
     your queue is bottlenecked."
 _dialog:

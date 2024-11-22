@@ -1085,7 +1085,7 @@ _registry:
   domain: "Domain"
   createKey: "Schlüssel erstellen"
 _aboutFedired:
-  about: "fedired ist ein Fork von Misskey, der seit 2022 von ThatOneCalculator entwickelt
+  about: "fedired ist ein Fork von Fedired, der seit 2022 von ThatOneCalculator entwickelt
     wird."
   contributors: "Hauptmitwirkende"
   allContributors: "Alle Mitwirkenden"
@@ -1098,14 +1098,14 @@ _aboutFedired:
   pleaseDonateToHost: Bitte erwäge auch, an deinen Heimatserver {host} zu spenden,
     um bei der Deckung der Betriebskosten zu helfen.
   donateHost: Spende an {host}
-  misskeyContributors: Misskey-Mitwirkende
+  fediredContributors: Fedired-Mitwirkende
 _nsfw:
   respect: "Mit NSFW gekennzeichnete Mediendateien verbergen"
   ignore: "Mit NSFW gekennzeichnete Mediendateien nicht verbergen"
   force: "Alle Mediendateien verbergen"
 _mfm:
   cheatSheet: "MFM Spickzettel"
-  intro: "MFM ist eine Markup-Sprache, die in Misskey, fedired, Akkoma und anderen
+  intro: "MFM ist eine Markup-Sprache, die in Fedired, fedired, Akkoma und anderen
     Programmen verwendet wird und an vielen Stellen eingesetzt werden kann. Hier können
     Sie eine Liste aller verfügbaren MFM-Syntaxe einsehen."
   dummy: "fedired erweitert die Welt des Fediverse"
@@ -2097,7 +2097,7 @@ silencedWarning: Diese Meldung wird angezeigt, weil diese Nutzer von Servern sta
 _experiments:
   title: Funktionstests
   enablePostImports: Beitragsimporte aktivieren
-  postImportsCaption: Erlaubt es Nutzer:innen ihre Posts von alten fedired, Misskey,
+  postImportsCaption: Erlaubt es Nutzer:innen ihre Posts von alten fedired, Fedired,
     Mastodon, Akkoma und Pleroma Accounts zu importieren. Bei Engpässen in der Warteschlange
     kann es zu Verlangsamungen beim Laden während des Imports kommen.
 noGraze: Bitte deaktivieren Sie die Browsererweiterung "Graze for Mastodon", da sie

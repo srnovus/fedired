@@ -139,7 +139,7 @@ export interface IPost extends IObject {
 	};
 	quoteUrl?: string;
 	quoteUri?: string;
-	_misskey_talk: boolean;
+	_fedired_talk: boolean;
 }
 
 export interface IQuestion extends IObject {
@@ -161,7 +161,7 @@ export const isQuestion = (object: IObject): object is IQuestion =>
 interface IQuestionChoice {
 	name?: string;
 	replies?: ICollection;
-	_misskey_votes?: number;
+	_fedired_votes?: number;
 }
 export interface ITombstone extends IObject {
 	type: "Tombstone";
@@ -207,7 +207,7 @@ export interface IActor extends IObject {
 	};
 	"vcard:bday"?: string;
 	"vcard:Address"?: string;
-	_misskey_summary?: string;
+	_fedired_summary?: string;
 }
 
 export const isCollection = (object: IObject): object is ICollection =>

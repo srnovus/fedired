@@ -38,7 +38,7 @@ export const paramDef = {
 	properties: {
 		fileId: {
 			type: "string",
-			format: "misskey:id",
+			format: "fedired:id",
 			nullable: false,
 		},
 		name: {

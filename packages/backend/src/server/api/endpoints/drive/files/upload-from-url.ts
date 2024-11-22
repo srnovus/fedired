@@ -27,7 +27,7 @@ export const paramDef = {
 		name: { type: "string" },
 		folderId: {
 			type: "string",
-			format: "misskey:id",
+			format: "fedired:id",
 			nullable: true,
 			default: null,
 		},

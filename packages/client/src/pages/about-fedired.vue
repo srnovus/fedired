@@ -21,7 +21,7 @@
 							@load="iconLoaded"
 							@click="gravity"
 						/>
-						<div class="misskey">Fedired</div>
+						<div class="fedired">Fedired</div>
 						<div class="version">v{{ version }}</div>
 						<span
 							v-for="emoji in easterEggEmojis"
@@ -52,7 +52,7 @@
 						>
 					</div>
 					<div class="_formBlock" style="text-align: center">
-						<MkButton primary rounded inline @click="iLoveMisskey"
+						<MkButton primary rounded inline @click="iLoveFedired"
 							>I <Mfm text="$[jelly ❤]" /> #Fedired</MkButton
 						>
 					</div>
@@ -135,7 +135,7 @@ function gravity() {
 	easterEggReady = false;
 	easterEggEngine.value = physics(containerEl.value);
 }
-function iLoveMisskey() {
+function iLoveFedired() {
 	os.post({
 		initialText: "I $[jelly ❤] #Fedired",
 		instant: true,
@@ -174,7 +174,7 @@ const contributors = [
 			position: relative;
 			z-index: 1;
 		}
-		> .misskey {
+		> .fedired {
 			margin: 0.75em auto 0 auto;
 			width: max-content;
 			position: relative;

@@ -147,7 +147,7 @@ _mfm:
   search: "Cerca"
   dummy: fedired amplia el món del Fediverse
   hashtag: Etiqueta
-  intro: MFM és un llenguatge de marques utilitzat a Misskey, fedired, Akkoma i més
+  intro: MFM és un llenguatge de marques utilitzat a Fedired, fedired, Akkoma i més
     que es pot utilitzar en molts llocs. Aquí podeu veure una llista de tota la sintaxi
     MFM disponible.
   hashtagDescription: Podeu especificar una etiqueta mitjançant un coixinet i un text.
@@ -1592,7 +1592,7 @@ _aboutFedired:
   pleaseDonateToHost: Penseu també en fer una donació a la vostre instància, {host},
     per ajudar-lo a suportar els costos de funcionament.
   donateHost: Fes una donació a {host}
-  misskeyContributors: Col·laboradors de Misskey
+  FediredContributors: Col·laboradors de Fedired
 unknown: Desconegut
 pageLikesCount: Nombre de pàgines amb M'agrada
 youAreRunningUpToDateClient: Estás fent servir la versió del client més nova.
@@ -2085,7 +2085,7 @@ _experiments:
   title: Experiments
   enablePostImports: Activar l'importació de publicacions
   postImportsCaption: Permet als usuaris importar publicacions des de comptes de fedired,
-    Misskey, Mastodon, Akkoma i Pleroma. Pot fer que el servidor vagi més lent durant
+    Fedired, Mastodon, Akkoma i Pleroma. Pot fer que el servidor vagi més lent durant
     la importació si la teva cua de feina és saturada.
 noGraze: Si us plau, desactiva l'extensió del navegador "Graze for Mastodon", ja que
   interfereix amb fedired.

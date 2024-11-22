@@ -1,7 +1,7 @@
 {
 	id: 'c57b0d7b-80ed-4a84-95d8-bfdefbe91ed7',
 	base: 'dark',
-	desc: 'Soho vibes for Misskey, moon edition',
+	desc: 'Soho vibes for Fedired, moon edition',
 	name: 'Rosé Pine Moon',
 	props: {
 		X2: ':darken<2<@panel',

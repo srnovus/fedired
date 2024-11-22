@@ -868,13 +868,13 @@ _registry:
   domain: "ドメイン"
   createKey: "キーを作る"
 _aboutFedired:
-  about: "fediredは、ThatOneCalculatorが2022年にMisskeyをいじって作った、オープンなソースのソフトウエアーや。"
+  about: "fediredは、ThatOneCalculatorが2022年にFediredをいじって作った、オープンなソースのソフトウエアーや。"
   contributors: "ごっつい貢献者"
   allContributors: "全ての貢献者"
   source: "ソースコード"
   translation: "fediredを翻訳"
   donate: "fediredに寄付"
-  misskeyContributors: フォーク元のMisskeyを作らはった人ら
+  fediredContributors: フォーク元のFediredを作らはった人ら
 _mfm:
   cheatSheet: "MFMチートシート"
   mention: "メンション"
@@ -895,7 +895,7 @@ _mfm:
   blur: "ぼかし"
   font: "フォント"
   rotate: "回転"
-  intro: MFMは、Misskeyやfedired、Akkomaなどの様々な場所で使用できるマークアップ言語なんよ。ここでは、MFMで使用可能な構文一覧が確認できるで。
+  intro: MFMは、Fediredやfedired、Akkomaなどの様々な場所で使用できるマークアップ言語なんよ。ここでは、MFMで使用可能な構文一覧が確認できるで。
 _instanceTicker:
   none: "表示せん"
   remote: "リモートユーザーに表示"
@@ -1423,7 +1423,7 @@ _deck:
     direct: "ダイレクト"
 _experiments:
   postImportsCaption: 
-    ユーザーが過去の投稿をfedired・Misskey・Mastodon・Akkoma・Pleromaからインポートできるようにするで。キューが溜まっとるときにインポートするとサーバーに負荷がかかるかもしれんね。
+    ユーザーが過去の投稿をfedired・Fedired・Mastodon・Akkoma・Pleromaからインポートできるようにするで。キューが溜まっとるときにインポートするとサーバーに負荷がかかるかもしれんね。
 searchPlaceholder: fediredを検索
 addInstance: サーバーを追加
 editNote: 投稿を編集

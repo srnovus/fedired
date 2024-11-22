@@ -927,14 +927,14 @@ _registry:
   createKey: "Crea chiave"
   scope: Ambito
 _aboutFedired:
-  about: "fedired è un fork di Misskey creato da ThatOneCalculator, che è in sviluppo
+  about: "fedired è un fork di Fedired creato da ThatOneCalculator, che è in sviluppo
     dal 2022."
   contributors: "Principali collaboratori"
   allContributors: "Tutti i collaboratori"
   source: "Codice sorgente"
   translation: "Traduzione di fedired"
   donate: "Sostieni fedired"
-  misskeyContributors: Contributori di Misskey
+  fediredContributors: Contributori di Fedired
   donateTitle: Ti piace fedired?
   pleaseDonateToFedired: Con una donazione puoi supportare lo sviluppo di fedired.
   pleaseDonateToHost: Considera anche una donazione al server che ti ospita, {host},
@@ -1872,7 +1872,7 @@ removeMember: Rimuovi membro
 reactionPickerSkinTone: Tono della pelle preferito negli emoji
 _experiments:
   postImportsCaption: Permette agli utenti di importare i post da vecchi account fedired,
-    Misskey, Mastodon, Akkoma e Pleroma. Potrebbe causare rallentamenti durante il
+    Fedired, Mastodon, Akkoma e Pleroma. Potrebbe causare rallentamenti durante il
     caricamento.
   enablePostImports: Abilita l'importazione di post
   title: Esperimenti

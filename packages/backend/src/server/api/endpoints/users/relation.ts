@@ -139,10 +139,10 @@ export const paramDef = {
 	properties: {
 		userId: {
 			anyOf: [
-				{ type: "string", format: "misskey:id" },
+				{ type: "string", format: "fedired:id" },
 				{
 					type: "array",
-					items: { type: "string", format: "misskey:id" },
+					items: { type: "string", format: "fedired:id" },
 				},
 			],
 		},

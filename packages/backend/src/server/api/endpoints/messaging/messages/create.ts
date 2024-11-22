@@ -75,18 +75,18 @@ export const paramDef = {
 	type: "object",
 	properties: {
 		text: { type: "string", nullable: true, maxLength: 3000 },
-		fileId: { type: "string", format: "misskey:id" },
+		fileId: { type: "string", format: "fedired:id" },
 	},
 	anyOf: [
 		{
 			properties: {
-				userId: { type: "string", format: "misskey:id" },
+				userId: { type: "string", format: "fedired:id" },
 			},
 			required: ["userId"],
 		},
 		{
 			properties: {
-				groupId: { type: "string", format: "misskey:id" },
+				groupId: { type: "string", format: "fedired:id" },
 			},
 			required: ["groupId"],
 		},

@@ -37,7 +37,7 @@ export const paramDef = {
 	properties: {
 		noteId: {
 			type: "string",
-			format: "misskey:id",
+			format: "fedired:id",
 			description: "Should be a reply",
 		},
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },

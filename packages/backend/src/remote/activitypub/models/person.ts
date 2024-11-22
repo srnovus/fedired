@@ -402,8 +402,8 @@ export async function createPerson(
 			await transactionalEntityManager.save(
 				new UserProfile({
 					userId: user.id,
-					description: person._misskey_summary
-						? truncate(person._misskey_summary, summaryLength)
+					description: person._fedired_summary
+						? truncate(person._fedired_summary, summaryLength)
 						: person.summary
 							? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 							: null,
@@ -697,8 +697,8 @@ export async function updatePerson(
 		{
 			url: url,
 			fields,
-			description: person._misskey_summary
-				? truncate(person._misskey_summary, summaryLength)
+			description: person._fedired_summary
+				? truncate(person._fedired_summary, summaryLength)
 				: person.summary
 					? htmlToMfm(truncate(person.summary, summaryLength), person.tag)
 					: null,

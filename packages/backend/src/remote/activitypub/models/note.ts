@@ -197,7 +197,7 @@ export async function createNote(
 	}
 
 	let isTalk =
-		(note.type === "ChatMessage" || note._misskey_talk) &&
+		(note.type === "ChatMessage" || note._fedired_talk) &&
 		visibility === "specified";
 
 	const apMentions = await extractApMentions(note.tag);
@@ -319,7 +319,7 @@ export async function createNote(
 	let text: string | null = null;
 	let lang: string | null = null;
 	if (
-		note.source?.mediaType === "text/x.misskeymarkdown" &&
+		note.source?.mediaType === "text/x.fediredmarkdown" &&
 		typeof note.source?.content === "string"
 	) {
 		text = note.source.content;
@@ -596,7 +596,7 @@ export async function updateNote(value: string | IObject, resolver?: Resolver) {
 	let text: string | null = null;
 	let lang: string | null = null;
 	if (
-		post.source?.mediaType === "text/x.misskeymarkdown" &&
+		post.source?.mediaType === "text/x.fediredmarkdown" &&
 		typeof post.source?.content === "string"
 	) {
 		text = post.source.content;
