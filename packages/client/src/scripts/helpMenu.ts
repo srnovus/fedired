@@ -52,6 +52,12 @@ export function openHelpMenu_(ev: MouseEvent) {
 				icon: `${icon("ph-lightbulb")}`,
 				to: "/about-fedired",
 			},
+			{
+				type: "link",
+				text: "Centro de Ayuda",
+				icon: `${icon("ph-lifebuoy")}`,
+				to: "https://help.fedired.com/",
+			},
 			...(instanceSpecificItems.length >= 2 ? [null] : []),
 			...instanceSpecificItems,
 			null,

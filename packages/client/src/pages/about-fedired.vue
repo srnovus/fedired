@@ -59,14 +59,14 @@
 					<FormSection>
 						<div class="_formLinks">
 							<FormLink
-								to="https://crowdin.com/project/fedired/"
+								to="https://help.fedired.com"
 								external
 							>
 								<template #icon
-									><i :class="icon('ph-translate')"></i
+									><i :class="icon('ph-code')"></i
 								></template>
-								{{ i18n.ts._aboutFedired.translation }}
-								<template #suffix>Translate</template>
+								{{ i18n.ts._aboutFedired.source }}
+								<template #suffix>Codigo Fuente</template>
 							</FormLink>
 							<FormLink
 								to="https://patreon.com/fedired/"
