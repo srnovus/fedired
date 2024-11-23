@@ -31,7 +31,7 @@ export const paramDef = {
 	anyOf: [
 		{
 			properties: {
-				pageId: { type: "string", format: "fedired:id" },
+				pageId: { type: "string", format: "misskey:id" },
 			},
 			required: ["pageId"],
 		},

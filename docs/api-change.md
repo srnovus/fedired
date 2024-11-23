@@ -14,8 +14,8 @@ Breaking changes are indicated by the :warning: icon.
 ## v20240714
 
 - The old Mastodon API has been replaced with a new implementation based on Iceshrimp’s.
-  - :warning: The new API uses a new format to manage Mastodon sessions in the database, whereas old implementation uses Fedired sessions. All previous client app and token registrations will not work with the new API. All clients need to be re-registered and all users need to re-authenticate.
-  - :warning: All IDs (of statuses/notes, notifications, users, etc.) will be using the alphanumerical format, aligning with the Fedired/Fedired API. The old numerical IDs will not work when queried against the new API.
+  - :warning: The new API uses a new format to manage Mastodon sessions in the database, whereas old implementation uses Misskey sessions. All previous client app and token registrations will not work with the new API. All clients need to be re-registered and all users need to re-authenticate.
+  - :warning: All IDs (of statuses/notes, notifications, users, etc.) will be using the alphanumerical format, aligning with the Fedired/Misskey API. The old numerical IDs will not work when queried against the new API.
 
 <details>
 

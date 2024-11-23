@@ -62,7 +62,7 @@
 					</I18n>
 				</div>
 			</div>
-			<img src="/client-assets/fedired.svg" class="fedired" />
+			<img src="/client-assets/misskey.svg" class="misskey" />
 		</div>
 	</div>
 </template>
@@ -168,7 +168,7 @@ export default defineComponent({
 						text: i18n.ts.help,
 						icon: `${icon("ph-question")}`,
 						action: () => {
-							window.open(`https://docs.fedired.com/help.md`, "_blank");
+							window.open(`https://misskey-hub.net/help.md`, "_blank");
 						},
 					},
 				],
@@ -230,7 +230,7 @@ export default defineComponent({
 			clip-path: polygon(0% 0%, 40% 0%, 22% 100%, 0% 100%);
 		}
 
-		> .fedired {
+		> .misskey {
 			position: absolute;
 			inset-block-end: 64px;
 			inset-inline-start: 64px;

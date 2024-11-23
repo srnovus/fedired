@@ -30,7 +30,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		userId: { type: "string", format: "fedired:id" },
+		userId: { type: "string", format: "misskey:id" },
 		comment: { type: "string", minLength: 1, maxLength: 2048 },
 	},
 	required: ["userId", "comment"],

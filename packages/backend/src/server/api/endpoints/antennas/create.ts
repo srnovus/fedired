@@ -57,8 +57,8 @@ export const paramDef = {
 			type: "string",
 			enum: ["home", "all", "users", "list", "group", "instances"],
 		},
-		userListId: { type: "string", format: "fedired:id", nullable: true },
-		userGroupId: { type: "string", format: "fedired:id", nullable: true },
+		userListId: { type: "string", format: "misskey:id", nullable: true },
+		userGroupId: { type: "string", format: "misskey:id", nullable: true },
 		keywords: {
 			type: "array",
 			items: {

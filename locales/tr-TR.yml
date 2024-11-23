@@ -53,7 +53,7 @@ _mfm:
   play: MFM'i çal
   stop: MFM'i durdur
   cheatSheet: MFM Kopya Kağıdı
-  intro: MFM, Fedired, fedired, Akkoma ve daha pek çok yerde kullanılabilen bir biçimlendirme
+  intro: MFM, Misskey, fedired, Akkoma ve daha pek çok yerde kullanılabilen bir biçimlendirme
     dilidir. Burada mevcut tüm MFM sözdiziminin bir listesini görüntüleyebilirsiniz.
   link: Link
   boldDescription: Harfleri kalınlaştırarak vurgular.
@@ -1842,7 +1842,7 @@ _notification:
   youGotMessagingMessageFromUser: '{name} sana bir sohbet mesajı gönderdi'
 _experiments:
   title: Deneyler
-  postImportsCaption: Kullanıcıların geçmiş fedired, Fedired, Mastodon, Akkoma ve
+  postImportsCaption: Kullanıcıların geçmiş fedired, Misskey, Mastodon, Akkoma ve
     Pleroma hesaplarından gönderilerini içe aktarmalarına izin verir. Kuyruğunuz tıkanırsa
     yükleme sırasında yavaşlamalara neden olabilir.
   enablePostImports: Gönderi içeri aktarmasını aktif et
@@ -1911,7 +1911,7 @@ _preferencesBackups:
   cannotLoad: Yüklenemedi
 _aboutFedired:
   about: fedired, 2022'den beri geliştirilmekte olan ThatOneCalculator tarafından
-    yapılan bir Fedired çatalıdır.
+    yapılan bir Misskey çatalıdır.
   allContributors: Tüm katkıda bulunanlar
   donate: fedired'e bağışta bulunun
   contributors: Ana katkıda bulunanlar
@@ -1923,7 +1923,7 @@ _aboutFedired:
   pleaseDonateToHost: İşletme maliyetlerini desteklemek için lütfen ev sunucunuz {host}'a
     bağış yapmayı da düşünün.
   donateHost: '{ev sahibi} için bağış yapın'
-  fediredContributors: Fedired'e katkıda bulunanlar
+  misskeyContributors: Misskey'e katkıda bulunanlar
 _weekday:
   saturday: Cumartesi
   sunday: Pazar

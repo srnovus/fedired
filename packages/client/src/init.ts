@@ -171,7 +171,7 @@ function checkForSplash() {
 			}
 		}
 
-		history.replaceState({ fedired: "loginId" }, "", target);
+		history.replaceState({ misskey: "loginId" }, "", target);
 	}
 
 	// #endregion
@@ -237,7 +237,7 @@ function checkForSplash() {
 
 	checkForSplash();
 
-
+	// https://github.com/misskey-dev/misskey/pull/8575#issuecomment-1114239210
 	// なぜかinit.tsの内容が2回実行されることがあるため、mountするdivを1つに制限する
 	const rootEl = (() => {
 		const MISSKEY_MOUNT_DIV_ID = "fedired_app";
@@ -559,7 +559,7 @@ function checkForSplash() {
 		});
 
 		// トークンが再生成されたとき
-		// このままではFediredが利用できないので強制的にサインアウトさせる
+		// このままではMisskeyが利用できないので強制的にサインアウトさせる
 		main.on("myTokenRegenerated", () => {
 			signOut();
 		});

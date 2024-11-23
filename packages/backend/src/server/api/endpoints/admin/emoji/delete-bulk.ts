@@ -27,7 +27,7 @@ export const paramDef = {
 			type: "array",
 			items: {
 				type: "string",
-				format: "fedired:id",
+				format: "misskey:id",
 			},
 		},
 	},

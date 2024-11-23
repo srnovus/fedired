@@ -157,14 +157,14 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		editId: { type: "string", format: "fedired:id" },
+		editId: { type: "string", format: "misskey:id" },
 		visibility: { type: "string", enum: noteVisibilities, default: "public" },
 		visibleUserIds: {
 			type: "array",
 			uniqueItems: true,
 			items: {
 				type: "string",
-				format: "fedired:id",
+				format: "misskey:id",
 			},
 		},
 		text: { type: "string", maxLength: config.maxNoteLength, nullable: true },
@@ -183,7 +183,7 @@ export const paramDef = {
 			uniqueItems: true,
 			minItems: 1,
 			maxItems: 16,
-			items: { type: "string", format: "fedired:id" },
+			items: { type: "string", format: "misskey:id" },
 		},
 		mediaIds: {
 			deprecated: true,
@@ -193,11 +193,11 @@ export const paramDef = {
 			uniqueItems: true,
 			minItems: 1,
 			maxItems: 16,
-			items: { type: "string", format: "fedired:id" },
+			items: { type: "string", format: "misskey:id" },
 		},
-		replyId: { type: "string", format: "fedired:id", nullable: true },
-		renoteId: { type: "string", format: "fedired:id", nullable: true },
-		channelId: { type: "string", format: "fedired:id", nullable: true },
+		replyId: { type: "string", format: "misskey:id", nullable: true },
+		renoteId: { type: "string", format: "misskey:id", nullable: true },
+		channelId: { type: "string", format: "misskey:id", nullable: true },
 		poll: {
 			type: "object",
 			nullable: true,

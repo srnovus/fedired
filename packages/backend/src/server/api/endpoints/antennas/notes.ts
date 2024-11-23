@@ -40,10 +40,10 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		antennaId: { type: "string", format: "fedired:id" },
+		antennaId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "fedired:id" },
-		untilId: { type: "string", format: "fedired:id" },
+		sinceId: { type: "string", format: "misskey:id" },
+		untilId: { type: "string", format: "misskey:id" },
 		sinceDate: { type: "integer" },
 		untilDate: { type: "integer" },
 	},

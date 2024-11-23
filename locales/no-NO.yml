@@ -771,7 +771,7 @@ _mfm:
   warn: Markeringsspråket (MFM) kan inneholde bevegelige eller blinkende animasjoner
   alwaysPlay: Alltid spill av animert tekstmarkering (MFM)
   play: Spill animert markeringsspråk (MFM)
-  intro: MFM er et markeringsspråk som burkes av Fedired, fedired, Akkoma og andre.
+  intro: MFM er et markeringsspråk som burkes av Misskey, fedired, Akkoma og andre.
     Her kan du se en liste over tilgjengelig MFM-syntaks.
   sparkle: Gnistrende
   dummy: fedired utvider Allheimen
@@ -990,10 +990,10 @@ _aboutFedired:
   contributors: Hovedutviklere
   source: Kildekode
   allContributors: Alle bidragsytere
-  fediredContributors: Fedireds bidragsytere
+  misskeyContributors: Misskeys bidragsytere
   pleaseDonateToHost: Du kan også vurdere å donere til hjemme-tjeneren din, {host},
     for å hjelpe dem med driftskostnadene for tjenesten.
-  about: fedired ble opprettet av ThatOneCalculator i 2022, basert på Fedired.
+  about: fedired ble opprettet av ThatOneCalculator i 2022, basert på Misskey.
 isBot: Denne kontoen er en bot
 _nsfw:
   respect: Skjul NSFW-merket media
@@ -1898,7 +1898,7 @@ deck: Kolonner
 _experiments:
   title: Eksperimenter
   enablePostImports: Slå på post-importer
-  postImportsCaption: Lar brukere importere poster fra kontoer på fedired, Fedired,
+  postImportsCaption: Lar brukere importere poster fra kontoer på fedired, Misskey,
     Mastodon, Akkoma eller Pleroma. Den ekstra lasten kan forårsake tregere tjeneste.
 _dialog:
   charactersBelow: 'Ikke nok tagn! Skrevet: {current}/Grense: {min}'

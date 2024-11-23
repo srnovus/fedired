@@ -182,7 +182,7 @@ export const paramDef = {
 	anyOf: [
 		{
 			properties: {
-				fileId: { type: "string", format: "fedired:id" },
+				fileId: { type: "string", format: "misskey:id" },
 			},
 			required: ["fileId"],
 		},

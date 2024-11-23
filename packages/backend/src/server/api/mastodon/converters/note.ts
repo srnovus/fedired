@@ -303,7 +303,7 @@ export class NoteConverter {
 			in_reply_to_account_id: note.replyUserId,
 			reblog: reblog.then((reblog) => (!isQuote(note) ? reblog : null)),
 			content: content,
-			content_type: "text/x.fediredmarkdown",
+			content_type: "text/x.misskeymarkdown",
 			text: text,
 			created_at: note.createdAt.toISOString(),
 			emojis: noteEmoji,

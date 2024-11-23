@@ -28,7 +28,7 @@ export const paramDef = {
 		name: { type: "string" },
 		parentId: {
 			type: "string",
-			format: "fedired:id",
+			format: "misskey:id",
 			nullable: true,
 			default: null,
 		},

@@ -1079,7 +1079,7 @@ _aboutFedired:
   donateTitle: ¿Te gusta Fedired?
   pleaseDonateToHost: También considera donar a tu propio servidor , {host}, para
     ayudar con los costos de operación.
-  fediredContributors: Contribuidores de Fedired
+  misskeyContributors: Contribuidores de Misskey
 _nsfw:
   respect: "Ocultar medios NSFW"
   ignore: "No esconder medios NSFW "
@@ -2071,7 +2071,7 @@ _experiments:
   enablePostImports: Habilitar importación de publicaciones
   title: Experimentos
   postImportsCaption: Permite a los usuarios importar sus publicaciones desde Fedired,
-    Fedired, Mastodon, Akkoma y Pleroma. Puede causar una bajada en el rendimiento
+    Misskey, Mastodon, Akkoma y Pleroma. Puede causar una bajada en el rendimiento
     del servidor si la cola de trabajos está atascada.
 showUpdates: Mostrar una notificación emergente cuando Fedired se actualice
 recommendedInstancesDescription: Servidores recomendados separador por saltos de línea

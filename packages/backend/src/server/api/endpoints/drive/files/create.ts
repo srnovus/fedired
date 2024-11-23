@@ -60,7 +60,7 @@ export const paramDef = {
 	properties: {
 		folderId: {
 			type: "string",
-			format: "fedired:id",
+			format: "misskey:id",
 			nullable: true,
 			default: null,
 		},

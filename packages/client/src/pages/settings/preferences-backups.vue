@@ -156,7 +156,7 @@ const profileProps = [
 	"name",
 	"createdAt",
 	"updatedAt",
-	"fediredVersion",
+	"misskeyVersion",
 	"settings",
 ];
 
@@ -164,7 +164,7 @@ interface Profile {
 	name: string;
 	createdAt: string;
 	updatedAt: string | null;
-	fediredVersion: string;
+	misskeyVersion: string;
 	host: string;
 	settings: {
 		hot: Record<keyof typeof defaultStoreSaveKeys, unknown>;
@@ -256,7 +256,7 @@ async function saveNew(): Promise<void> {
 		name,
 		createdAt: new Date().toISOString(),
 		updatedAt: null,
-		fediredVersion: version,
+		misskeyVersion: version,
 		host,
 		settings: getSettings(),
 	};
@@ -305,12 +305,12 @@ function loadFile(): void {
 		});
 
 		// 一応廃棄
-		window.__fedired_input_ref__ = null;
+		window.__misskey_input_ref__ = null;
 	};
 
 	// https://qiita.com/fukasawah/items/b9dc732d95d99551013d
 	// iOS Safari で正常に動かす為のおまじない
-	window.__fedired_input_ref__ = input;
+	window.__misskey_input_ref__ = input;
 
 	input.click();
 }
@@ -407,7 +407,7 @@ async function save(id: string): Promise<void> {
 		name,
 		createdAt,
 		updatedAt: new Date().toISOString(),
-		fediredVersion: version,
+		misskeyVersion: version,
 		host,
 		settings: getSettings(),
 	};

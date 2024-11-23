@@ -25,7 +25,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		messageId: { type: "string", format: "fedired:id" },
+		messageId: { type: "string", format: "misskey:id" },
 	},
 	required: ["messageId"],
 } as const;

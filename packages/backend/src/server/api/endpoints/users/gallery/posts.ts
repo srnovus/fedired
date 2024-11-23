@@ -24,10 +24,10 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		userId: { type: "string", format: "fedired:id" },
+		userId: { type: "string", format: "misskey:id" },
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "fedired:id" },
-		untilId: { type: "string", format: "fedired:id" },
+		sinceId: { type: "string", format: "misskey:id" },
+		untilId: { type: "string", format: "misskey:id" },
 	},
 	required: ["userId"],
 } as const;

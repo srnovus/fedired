@@ -12,7 +12,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		antennaId: { type: "string", format: "fedired:id" },
+		antennaId: { type: "string", format: "misskey:id" },
 	},
 	required: ["antennaId"],
 } as const;

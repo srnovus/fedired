@@ -28,7 +28,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		postId: { type: "string", format: "fedired:id" },
+		postId: { type: "string", format: "misskey:id" },
 		title: { type: "string", minLength: 1 },
 		description: { type: "string", nullable: true },
 		fileIds: {
@@ -38,7 +38,7 @@ export const paramDef = {
 			maxItems: 32,
 			items: {
 				type: "string",
-				format: "fedired:id",
+				format: "misskey:id",
 			},
 		},
 		isSensitive: { type: "boolean", default: false },

@@ -45,12 +45,12 @@ function select<Multiple extends boolean>(
 					});
 
 				// 一応廃棄
-				window.__fedired_input_ref__ = null;
+				window.__misskey_input_ref__ = null;
 			};
 
 			// https://qiita.com/fukasawah/items/b9dc732d95d99551013d
 			// iOS Safari で正常に動かす為のおまじない
-			window.__fedired_input_ref__ = input;
+			window.__misskey_input_ref__ = input;
 
 			input.click();
 		};

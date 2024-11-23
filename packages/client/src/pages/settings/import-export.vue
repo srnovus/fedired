@@ -22,7 +22,7 @@
 					><i :class="icon('ph-upload-simple')"></i
 				></template>
 				<FormRadios v-model="importType" class="_formBlock">
-					<option value="fedired">Fedired/Fedired</option>
+					<option value="fedired">Fedired/Misskey</option>
 					<option value="mastodon">Mastodon/Akkoma/Pleroma</option>
 				</FormRadios>
 				<MkButton

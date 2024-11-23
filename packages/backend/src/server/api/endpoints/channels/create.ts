@@ -37,7 +37,7 @@ export const paramDef = {
 			minLength: 1,
 			maxLength: 2048,
 		},
-		bannerId: { type: "string", format: "fedired:id", nullable: true },
+		bannerId: { type: "string", format: "misskey:id", nullable: true },
 	},
 	required: ["name"],
 } as const;

@@ -11,7 +11,7 @@
 				<MkEmoji :normal="true" :no-style="true" emoji="🍮" />
 			</div>
 			<div class="main">
-				<img src="/client-assets/fedired.svg" class="fedired" />
+				<img src="/client-assets/misskey.svg" class="misskey" />
 				<div class="form _panel">
 					<div class="bg">
 						<div class="fade"></div>
@@ -243,7 +243,7 @@ export default defineComponent({
 			inline-size: min(460px, 100%);
 			margin: auto;
 
-			> .fedired {
+			> .misskey {
 				inline-size: 150px;
 				margin-block-end: 16px;
 

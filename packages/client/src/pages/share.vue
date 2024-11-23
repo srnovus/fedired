@@ -32,7 +32,7 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 
-
+// SPECIFICATION: https://misskey-hub.net/docs/features/share-form.html
 import type { entities } from "fedired-js";
 import { acct } from "fedired-js";
 import MkButton from "@/components/MkButton.vue";

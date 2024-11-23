@@ -37,7 +37,7 @@ export const paramDef = {
 	properties: {
 		noteId: {
 			type: "string",
-			format: "fedired:id",
+			format: "misskey:id",
 		},
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
 		offset: { type: "integer", default: 0 },

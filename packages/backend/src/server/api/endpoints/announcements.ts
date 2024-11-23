@@ -76,8 +76,8 @@ export const paramDef = {
 	properties: {
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
 		withUnreads: { type: "boolean", default: false },
-		sinceId: { type: "string", format: "fedired:id" },
-		untilId: { type: "string", format: "fedired:id" },
+		sinceId: { type: "string", format: "misskey:id" },
+		untilId: { type: "string", format: "misskey:id" },
 	},
 	required: [],
 } as const;

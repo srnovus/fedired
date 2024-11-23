@@ -20,7 +20,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		id: { type: "string", format: "fedired:id" },
+		id: { type: "string", format: "misskey:id" },
 		memo: { type: "string" },
 		url: { type: "string", minLength: 1 },
 		imageUrl: { type: "string", minLength: 1 },

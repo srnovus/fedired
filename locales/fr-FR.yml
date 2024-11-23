@@ -991,7 +991,7 @@ _registry:
   domain: "Domaine"
   createKey: "Créer une clé"
 _aboutFedired:
-  about: "fedired est une fourche de Fedired, un logiciel libre et ouvert, développé
+  about: "fedired est une fourche de Misskey, un logiciel libre et ouvert, développé
     depuis 2022."
   contributors: "Principaux contributeurs"
   allContributors: "Tous les contributeurs"
@@ -1004,7 +1004,7 @@ _aboutFedired:
   pleaseDonateToHost: Également, veuillez envisager de faire un don à votre serveur
     d'accueil, {host}, pour contribuer à couvrir ses frais de fonctionnement.
   donateHost: Faire un don à {host}
-  fediredContributors: Contributeurs Fedired
+  misskeyContributors: Contributeurs Misskey
 _nsfw:
   respect: "Cacher les médias marqués comme contenu sensible (NSFW)"
   ignore: "Afficher les médias sensibles (NSFW)"
@@ -2083,7 +2083,7 @@ _experiments:
   enablePostImports: Autoriser l'importation de publications
   title: Expérimentations
   postImportsCaption: Permet aux utilisateurs d'importer leurs publications à partir
-    de leurs anciens comptes fedired, Fedired, Mastodon, Akkoma et Pleroma. Cela
+    de leurs anciens comptes fedired, Misskey, Mastodon, Akkoma et Pleroma. Cela
     peut entraîner des ralentissements lors du chargement si votre file d'attente
     est congestionnée.
 userSaysSomethingReasonQuote: '{name} a cité une publication contenant {reason}'

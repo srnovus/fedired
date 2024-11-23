@@ -987,7 +987,7 @@ _registry:
   domain: "도메인"
   createKey: "키 생성"
 _aboutFedired:
-  about: "fedired는 ThatOneCalculator에 의해서 2022년부터 개발되어 온 Fedired의 포크 소프트웨어 입니다."
+  about: "fedired는 ThatOneCalculator에 의해서 2022년부터 개발되어 온 Misskey의 포크 소프트웨어 입니다."
   contributors: "주요 기여자"
   allContributors: "모든 기여자"
   source: "소스 코드"
@@ -997,14 +997,14 @@ _aboutFedired:
   pleaseDonateToFedired: fedired의 개발에 후원하는 것을 검토하여 주십시오.
   donateHost: '{host} 에게 기부하기'
   donateTitle: fedired가 마음에 드시나요?
-  fediredContributors: 오리지널 Fedired 기여자
+  misskeyContributors: 오리지널 Misskey 기여자
 _nsfw:
   respect: "열람주의로 설정된 미디어 숨기기"
   ignore: "열람 주의 미디어 항상 표시"
   force: "미디어 항상 숨기기"
 _mfm:
   cheatSheet: "MFM 도움말"
-  intro: "MFM는 Fedired나 fedired, Akkoma 외의 다양한 곳에서 사용할 수 있는 전용 마크업 언어입니다. 여기에서는 MFM에서
+  intro: "MFM는 Misskey나 fedired, Akkoma 외의 다양한 곳에서 사용할 수 있는 전용 마크업 언어입니다. 여기에서는 MFM에서
     사용할 수 있는 구문을 확인할 수 있습니다."
   dummy: "fedired로 연합우주의 세계가 펼쳐집니다"
   mention: "멘션"
@@ -1937,7 +1937,7 @@ silencedWarning: 관리자가 사일런스한 서버에 속한 유저이며, 스
 isModerator: 모더레이터
 isPatron: fedired 후원자
 _experiments:
-  postImportsCaption: 유저가 과거에 작성한 게시물을 fedired, Fedired, Mastodon, Akkoma, Pleroma
+  postImportsCaption: 유저가 과거에 작성한 게시물을 fedired, Misskey, Mastodon, Akkoma, Pleroma
     등에서 가져올 수 있게 합니다. 작업 대기열의 처리 속도가 느릴 경우 서비스에 영향이 갈 수 있습니다.
   enablePostImports: 게시물 가져오기를 활성화
   title: 실험실

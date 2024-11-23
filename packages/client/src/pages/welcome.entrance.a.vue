@@ -5,7 +5,7 @@
 			<XTimeline class="tl" />
 			<div class="shape1"></div>
 			<div class="shape2"></div>
-			<img src="/client-assets/fedired.svg" class="fedired" />
+			<img src="/client-assets/misskey.svg" class="misskey" />
 			<div class="emojis">
 				<MkEmoji
 					v-for="reaction in defaultReactions"
@@ -265,7 +265,7 @@ function showMenu(ev) {
 			opacity: 0.5;
 		}
 
-		> .fedired {
+		> .misskey {
 			position: absolute;
 			inset-block-start: 42px;
 			inset-inline-start: 42px;

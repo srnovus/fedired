@@ -292,7 +292,7 @@ export class NoteHelpers {
 			id: note.id,
 			text: note.text ?? "",
 			spoiler_text: note.cw ?? "",
-			content_type: "text/x.fediredmarkdown",
+			content_type: "text/x.misskeymarkdown",
 		};
 	}
 

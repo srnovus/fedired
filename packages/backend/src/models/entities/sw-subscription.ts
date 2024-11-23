@@ -61,7 +61,7 @@ export class SwSubscription {
 
 	/**
 	 * Type of subscription, used for Mastodon API notifications.
-	 * Empty for Fedired notifications.
+	 * Empty for Misskey notifications.
 	 */
 	@Column({
 		type: "enum",

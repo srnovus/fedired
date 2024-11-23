@@ -1030,7 +1030,7 @@ _registry:
   domain: "Doména"
   createKey: "Vytvoriť kľúč"
 _aboutFedired:
-  about: "Fedired je open-source softvér, ktorý vyvíja syuilo od 2014."
+  about: "Misskey je open-source softvér, ktorý vyvíja syuilo od 2014."
   contributors: "Hlavní prispievatelia"
   allContributors: "Všetci prispievatelia"
   source: "Zdrojový kód"

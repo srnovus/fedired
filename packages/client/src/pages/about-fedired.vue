@@ -21,7 +21,7 @@
 							@load="iconLoaded"
 							@click="gravity"
 						/>
-						<div class="fedired">Fedired</div>
+						<div class="misskey">Fedired</div>
 						<div class="version">v{{ version }}</div>
 						<span
 							v-for="emoji in easterEggEmojis"
@@ -43,18 +43,6 @@
 							/>
 						</span>
 					</div>
-					<FormSection>
-						<div class="_formLinks">
-							<FormLink
-								to="https://fedired.com/@fedired"
-								external
-							>
-								<template #icon
-									><i :class="icon('ph-bug')"></i
-								></template>
-								{{ i18n.ts._aboutFedired.source }}
-								<template #suffix>Reportar Error</template>
-							</FormLink>
 					<div class="_formBlock" style="text-align: center">
 						{{ i18n.ts._aboutFedired.about }}<br /><a
 							href="https://about.fedired.com/"
@@ -64,10 +52,12 @@
 						>
 					</div>
 					<div class="_formBlock" style="text-align: center">
-						<MkButton primary rounded inline @click="iLoveFedired"
+						<MkButton primary rounded inline @click="iLoveMisskey"
 							>I <Mfm text="$[jelly ❤]" /> #Fedired</MkButton
 						>
 					</div>
+					<FormSection>
+						<div class="_formLinks">
 							<FormLink
 								to="https://crowdin.com/project/fedired/"
 								external
@@ -148,7 +138,7 @@ function gravity() {
 	easterEggReady = false;
 	easterEggEngine.value = physics(containerEl.value);
 }
-function iLoveFedired() {
+function iLoveMisskey() {
 	os.post({
 		initialText: "I $[jelly ❤] #Fedired",
 		instant: true,
@@ -187,7 +177,7 @@ const contributors = [
 			position: relative;
 			z-index: 1;
 		}
-		> .fedired {
+		> .misskey {
 			margin: 0.75em auto 0 auto;
 			width: max-content;
 			position: relative;

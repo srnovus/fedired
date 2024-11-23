@@ -403,7 +403,7 @@ export default abstract class Chart<T extends Schema> {
 			data = this.getNewLog(this.convertRawRecord(latest));
 		} else {
 			// ログが存在しなかったら
-			// (Fediredインスタンスを建てて初めてのチャート更新時など)
+			// (Misskeyインスタンスを建てて初めてのチャート更新時など)
 
 			// 初期ログデータを作成
 			data = this.getNewLog(null);

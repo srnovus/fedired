@@ -146,7 +146,7 @@ export default async function renderNote(
 
 	const asTalk = isTalk
 		? {
-				_fedired_talk: true,
+				_misskey_talk: true,
 			}
 		: {};
 
@@ -159,7 +159,7 @@ export default async function renderNote(
 		contentMap,
 		source: {
 			content: text,
-			mediaType: "text/x.fediredmarkdown",
+			mediaType: "text/x.misskeymarkdown",
 		},
 		quoteUri: quote,
 		quoteUrl: quote,

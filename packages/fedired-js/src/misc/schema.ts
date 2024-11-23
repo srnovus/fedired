@@ -153,6 +153,7 @@ type RequiredPropertyNames<s extends Obj> = {
 
 export type Obj = Record<string, Schema>;
 
+// https://github.com/misskey-dev/misskey/issues/8535
 // To avoid excessive stack depth error,
 // deceive TypeScript with UnionToIntersection (or more precisely, `infer` expression within it).
 export type ObjType<
@@ -183,6 +184,7 @@ type UnionToIntersection<U> = (
 	? I
 	: never;
 
+// https://github.com/misskey-dev/misskey/pull/8144#discussion_r785287552
 // To get union, we use `Foo extends ExplicitlyUsedAny ? Hoge<Foo> : never`
 type UnionSchemaType<
 	a extends readonly ExplicitlyUsedAny[],

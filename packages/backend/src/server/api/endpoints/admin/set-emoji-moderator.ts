@@ -13,7 +13,7 @@ export const meta = {
 export const paramDef = {
 	type: "object",
 	properties: {
-		userId: { type: "string", format: "fedired:id" },
+		userId: { type: "string", format: "misskey:id" },
 		emojiModPerm: { type: "string" },
 	},
 	required: ["userId", "emojiModPerm"],

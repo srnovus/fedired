@@ -26,11 +26,11 @@ export const paramDef = {
 	type: "object",
 	properties: {
 		limit: { type: "integer", minimum: 1, maximum: 100, default: 10 },
-		sinceId: { type: "string", format: "fedired:id" },
-		untilId: { type: "string", format: "fedired:id" },
+		sinceId: { type: "string", format: "misskey:id" },
+		untilId: { type: "string", format: "misskey:id" },
 		folderId: {
 			type: "string",
-			format: "fedired:id",
+			format: "misskey:id",
 			nullable: true,
 			default: null,
 		},

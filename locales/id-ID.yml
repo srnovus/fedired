@@ -991,7 +991,7 @@ _aboutFedired:
   pleaseDonateToHost: Silakan pertimbangkan juga berdonasi ke server rumah kamu, {host},
     untuk membantu dengan biaya operasi.
   donateHost: Berdonasi ke {host}
-  fediredContributors: Kontributor Fedired
+  misskeyContributors: Kontributor Misskey
 _nsfw:
   respect: "Sembunyikan media NSFW"
   ignore: "Jangan sembunyikan media NSFW"
@@ -2116,7 +2116,7 @@ _experiments:
   title: Eksperimen
   enablePostImports: Aktifkan impor postingan
   postImportsCaption: Izinkan pengguna mengimpor postingan mereka dari akun fedired
-    sebelumnya, Fedired, Mastodon, Akkoma, dan Pleroma. Ini mungkin menyebabkan perlambatan
+    sebelumnya, Misskey, Mastodon, Akkoma, dan Pleroma. Ini mungkin menyebabkan perlambatan
     saat memuat jika antreanmu bottleneck.
 _dialog:
   charactersExceeded: 'Karakter maksimal terlampaui! Kini: {current}/Batas: {max}'
