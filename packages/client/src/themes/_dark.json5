@@ -4,9 +4,9 @@
 // gonna be used directly
 {
 	id: 'dark',
-
+  base: 'dark',
 	name: 'Dark',
-	author: 'Fedired Contributors',
+	author: 'srnovus',
 	desc: 'Default Dark theme',
 	kind: 'Dark',
 
