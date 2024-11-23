@@ -52,13 +52,15 @@ export function openHelpMenu_(ev: MouseEvent) {
 				icon: `${icon("ph-lightbulb")}`,
 				to: "/about-fedired",
 			},
-			{
-				type: "link",
-				text: "Centro de Ayuda",
-				icon: `${icon("ph-lifebuoy")}`,
-				href: "https://help.fedired.com/",
-				target: "_blank"
-			},
+      {
+        type: "button",
+        text: "Centro de Ayuda", 
+        icon: `${icon("ph-lifebuoy")}`, 
+        action: () => {
+          // Aquí abres el enlace al centro de ayuda
+          window.open("https://help.fedired.com", "_blank"); 
+        },
+      },
 			...(instanceSpecificItems.length >= 2 ? [null] : []),
 			...instanceSpecificItems,
 			null,
