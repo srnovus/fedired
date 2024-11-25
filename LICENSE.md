@@ -1,70 +1,81 @@
-# **Fedired Public License (FPL) - Version 1.0**
 
-**Copyright © 2024 Fedired**
+# Licencia
 
-Esta licencia cubre el uso, modificación y distribución del software **Fedired**, un proyecto de red social descentralizada. Al utilizar, modificar o distribuir el software, aceptas los siguientes términos:
+A menos que se indique lo contrario, todo el contenido de este repositorio está sujeto a lo siguiente:
 
----
+Copyright (c) 2024 Fedired contribuyentes
 
-## 1. **Derechos de Uso**
-
-- Puedes usar el software de **Fedired** de manera gratuita para fines personales, educativos o no comerciales.
-- Para cualquier uso comercial del software, debes obtener una licencia comercial de **Fedired**.
+Y se distribuye bajo la **GNU Affero General Public License, versión 3**. Deberías haber recibido una copia del archivo de licencia llamado LICENSE junto con este código. Si no, puedes consultar el sitio web oficial para obtener más detalles: https://www.gnu.org/licenses/agpl-3.0.html.
 
 ---
 
-## 2. **Modificación y Distribución**
+El directorio **packages/firefish-js** y su contenido están sujetos a lo siguiente:  
+Copyright (c) 2021-2022 syuilo y colaboradores  
+Copyright (c) 2022-2023 Kainoa Kanter y colaboradores  
+Copyright (c) 2024 Firefish contribuyentes
 
-- **Modificaciones Permitidas**: Puedes modificar el software y crear obras derivadas, pero cualquier modificación debe cumplir con los estándares de la federación mediante **ActivityPub** y mantener la compatibilidad con la red de Fedired.
-- **Distribución de Modificaciones**: Si distribuyes versiones modificadas de **Fedired**, debes hacer públicas esas modificaciones bajo los mismos términos de esta licencia y proporcionar un enlace visible a la instancia original de **Fedired** en la interfaz de usuario.
-
----
-
-## 3. **Federación Obligatoria**
-
-- Todas las versiones modificadas o derivadas de **Fedired** deben mantener la capacidad de federarse con otras instancias que utilicen el protocolo **ActivityPub**. Esto asegura que el software pueda comunicarse y compartir contenido con otras plataformas dentro del **Fediverse**.
-- Si se encuentra que una instancia no está federada sin razón técnica, esta licencia será revocada.
+Y se distribuyen bajo la **MIT License**.  
+Consulta el archivo **packages/firefish-js/LICENSE** para más detalles.
 
 ---
 
-## 4. **Política de Privacidad y Protección de Datos**
+El directorio **packages/macro-rs** y su contenido están sujetos a lo siguiente:  
+Copyright (c) 2024 Firefish contribuyentes
 
-- Las instancias que utilicen el software de **Fedired** deben implementar políticas claras y transparentes sobre el manejo de los datos de los usuarios.
-- Queda prohibido el uso comercial de datos de los usuarios sin su consentimiento explícito.
-- El incumplimiento de estas políticas resultará en la revocación de la licencia para la instancia infractora.
+Y se distribuyen bajo cualquiera de las siguientes licencias a tu elección:
 
----
+- **Apache License, Version 2.0**
+- **MIT License**
 
-## 5. **Atribución**
-
-- Se debe dar crédito a **Fedired** en todas las versiones modificadas y en cualquier instancia que utilice el software.
-- Todas las instancias deben incluir un enlace visible al proyecto oficial de **Fedired** (https://fedired.com).
+Consulta los archivos **packages/macro-rs/LICENSE-MIT** y **packages/macro-rs/LICENSE-APACHE** para más detalles.
 
 ---
 
-## 6. **Prohibición de Venta de Datos**
+Estos directorios de configuración específicos:
 
-- Está terminantemente prohibido vender datos de los usuarios o participar en cualquier actividad de monetización no aprobada que comprometa la privacidad de los usuarios.
-- El software tiene el objetivo de promover la privacidad y seguridad de los datos; cualquier violación de esto resultará en la revocación automática de la licencia.
+- .config/
+- custom/
 
----
+Y su contenido están sujetos a lo siguiente:  
+Copyright (c) 2022-2023 Kainoa Kanter y colaboradores  
+Copyright (c) 2024 Firefish contribuyentes
 
-## 7. **No Responsabilidad**
-
-- **Fedired** no es responsable de ningún daño directo, indirecto, incidental o especial que pueda surgir del uso del software. El software se proporciona "tal cual" sin garantía de ningún tipo.
-
----
-
-## 8. **Contribuciones**
-
-- Las contribuciones a **Fedired** serán aceptadas bajo los términos de esta licencia. Al contribuir al proyecto, otorgas a **Fedired** el derecho de usar, modificar y distribuir tus contribuciones como parte del proyecto.
+Y se distribuyen bajo la **Apache License, Version 2.0**.  
+Deberías haber recibido una copia del archivo de licencia llamado LICENSE dentro de cada directorio especificado.
 
 ---
 
-## 9. **Versiones Futuras**
+Fedired incluye varios softwares y bibliotecas de código abierto de terceros:
 
-- **Fedired** se reserva el derecho de actualizar esta licencia. Las versiones futuras estarán disponibles en https://license.fedired.com/. Las versiones anteriores seguirán aplicando a cualquier software distribuido bajo su versión correspondiente.
+- **RsaSignature2017** implementado por Transmute Industries Inc  
+  Licencia: MIT  
+  [Enlace a la licencia](https://github.com/transmute-industries/RsaSignature2017/blob/master/LICENSE)
+
+- **Chiptune2.js** de Simon Gündling  
+  Licencia: MIT  
+  [Enlace a la licencia](https://github.com/deskjet/chiptune2.js#license)
+
+- **bb8-redis** de Kyle Huey  
+  Licencia: MIT  
+  [Enlace a la licencia](https://github.com/djc/bb8/blob/62597aa45ac1746780b08cb6a68cf7d65452a23a/LICENSE)
+
+Las licencias para todos los softwares y bibliotecas instalados a través del gestor de paquetes Node ("npm") pueden encontrarse ejecutando el siguiente comando en el directorio raíz de este repositorio:
+
+```bash
+pnpm licenses list
+```
 
 ---
 
-**Fin de la Licencia**
+**Exención de responsabilidad**: El software proporcionado por Fedired se distribuye con la esperanza de que sea útil, pero SIN GARANTÍA DE NINGÚN TIPO, expresada o implícita, incluida pero no limitada a las garantías de COMERCIABILIDAD o ADECUACIÓN PARA UN PROPÓSITO PARTICULAR. Consulta la **GNU Affero General Public License** para obtener más detalles.
+
+---
+
+## Agradecimientos
+
+Fedired es un **fork de Firefish**, que a su vez es un **fork del antiguo Misskey**. Este proyecto no sería posible sin las contribuciones de los desarrolladores y la comunidad que han hecho posible la existencia de estas plataformas. Agradecemos especialmente a los siguientes proyectos que han sido fundamentales para el desarrollo de Fedired:
+
+- **Misskey**: El proyecto original que inspiró a Firefish y, por ende, a Fedired.  
+- **Firefish**: El fork que dio vida a Fedired, con su código base, infraestructura y principios de diseño.
+
+Fedired continúa evolucionando gracias a la comunidad de código abierto, y estamos comprometidos en seguir ofreciendo una plataforma que respete la privacidad y seguridad de sus usuarios.
