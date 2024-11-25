@@ -72,13 +72,13 @@ export const meta = {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://github.com/fedired-dev/fedired-project",
+				default: "https://github.com/fedired-dev/fedired",
 			},
 			feedbackUrl: {
 				type: "string",
 				optional: false,
 				nullable: false,
-				default: "https://github.com/fedired-dev/fedired-project/issues",
+				default: "https://github.com/fedired-dev/fedired/issues",
 			},
 			defaultDarkTheme: {
 				type: "string",

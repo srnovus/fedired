@@ -19,7 +19,7 @@
 					<small
 						>Powered by
 						<a
-							href="https://github.com/fedired-dev/fedired-project"
+							href="https://github.com/fedired-dev/fedired"
 							target="_blank"
 							>Fedired</a
 						></small
