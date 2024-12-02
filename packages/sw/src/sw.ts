@@ -58,7 +58,7 @@ function offlineContentHTML(): string {
     <h1>¡Parece que estás desconectado!</h1>
     <button class="button-big" onclick="location.reload()"><span class="button-label-big">Recargar</span></button>
     <p class="dont-worry">Parece que Fedired no pudo conectarse al servidor, probablemente porque tu dispositivo no está conectado a internet o a la red.</p>
-    <p>El Service Worker instalado es la versión <code>${_VERSION_}</code></p>
+    <p>El Servidor Fedired instalado es la versión <code>${_VERSION_}</code></p>
   </body>
 </html>
   `;
