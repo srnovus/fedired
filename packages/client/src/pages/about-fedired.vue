@@ -84,18 +84,15 @@
             </div>
           </FormSection>
 
-          <!-- New Section: Developer Principal -->
-<!-- New Section: Developer Principal -->
+
 <FormSection>
   <template #label>Desarrollador Principal</template>
   <div class="_formBlock" style="text-align: center; margin-top: 20px;">
-    <!-- Foto del Desarrollador -->
     <img 
       src="https://avatars.githubusercontent.com/u/81489497?v=4" 
       alt="Foto de @srnovus" 
       style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; margin-bottom: 15px;"
     />
-    <!-- Nombre y Resumen -->
     <p style="font-size: 1.2em; font-weight: bold; margin: 10px 0;">@srnovus</p>
     <p style="max-width: 600px; margin: 0 auto; font-size: 0.9em;">
       Javier Caceres, conocido como @srnovus, es un apasionado desarrollador con experiencia en hosting, 
@@ -106,7 +103,6 @@
 </FormSection>
 
 
-              <!-- New Section: Contribuyentes -->
           <FormSection>
             <template #label>Contribuyentes</template>
             <div class="contributors">
@@ -123,7 +119,6 @@
             </div>
           </FormSection>
 
-          <!-- New Section: Donadores -->
           <FormSection>
             <template #label>Donadores</template>
             <div class="_formBlock" style="text-align: ">
@@ -137,7 +132,6 @@
             </div>
           </FormSection>
 
-          <!-- New Section: Agradecimientos -->
           <FormSection>
             <template #label>Agradecimientos</template>
             <div class="_formBlock" style="text-align: ">
@@ -321,8 +315,11 @@ const contributors = [
 
 .contributors {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+	flex-wrap: nowrap;
+	align-content: space-around;
+	justify-content: space-around;
 
   .contributor {
     margin-bottom: 10px;
