@@ -106,7 +106,7 @@
 </FormSection>
 
 
-          <!-- New Section: Contributors -->
+              <!-- New Section: Contribuyentes -->
           <FormSection>
             <template #label>Contribuyentes</template>
             <div class="contributors">
@@ -123,7 +123,7 @@
             </div>
           </FormSection>
 
-          <!-- New Section: Donors -->
+          <!-- New Section: Donadores -->
           <FormSection>
             <template #label>Donadores</template>
             <div class="_formBlock" style="text-align: ">
@@ -137,18 +137,21 @@
             </div>
           </FormSection>
 
-          <!-- New Section: Acknowledgments -->
+          <!-- New Section: Agradecimientos -->
           <FormSection>
             <template #label>Agradecimientos</template>
             <div class="_formBlock" style="text-align: ">
               <p>
-								@ale@mastodon.manalejandro.com
-								Edgar Argueta
-								Joshua
-                Queremos agradecer a todas las personas que han aportado a Fedired, ya sea con código, ideas, pruebas o recursos. Sin su ayuda, esto no sería posible.
+                Agradecemos a todos los colaboradores, desde los desarrolladores hasta los usuarios que contribuyen activamente. Sin su apoyo, Fedired no sería posible.
               </p>
+              <ul>
+                <li><strong>@ale@mastodon.manalejandro.com</strong></li>
+                <li><strong>Edgar Argueta</strong></li>
+                <li><strong>Joshua</strong></li>
+              </ul>
             </div>
           </FormSection>
+
         </div>
       </MkSpacer>
     </div>
@@ -226,8 +229,12 @@ const contributors = [
     link: 'https://fedired.com/@srnovus',
     avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4',
   },
+  {
+    username: '@joshua',
+    link: 'https://github.com/Developerfullstack5451',
+    avatar: 'https://avatars.githubusercontent.com/u/170076457?v=4', 
+  }
 ];
-
 </script>
 
 <style lang="scss" scoped>
@@ -300,7 +307,7 @@ const contributors = [
   flex-direction: column;
   align-items: center;
   margin-top: 16px;
-  
+
   a {
     display: flex;
     align-items: center;
@@ -309,56 +316,31 @@ const contributors = [
     background: var(--MI_THEME-buttonBg);
     border-radius: 8px;
     padding: 12px;
-    margin: 8px 0;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 12px;
-    }
-
-    span {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--MI_THEME-textColor);
-    }
   }
 }
 
 .contributors {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
   .contributor {
-    display: flex;
-    align-items: center;
-    padding: 12px;
-    background: var(--MI_THEME-buttonBg);
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    text-align: center;
 
     .contributorAvatar {
       width: 50px;
       height: 50px;
       border-radius: 50%;
-      margin-right: 12px;
     }
 
     .contributorUsername {
-      font-size: 18px;
+      display: block;
+      margin-top: 8px;
       font-weight: bold;
-      color: var(--MI_THEME-textColor);
+      font-size: 1em;
     }
   }
 }
+
 </style>
