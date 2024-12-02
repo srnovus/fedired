@@ -87,20 +87,26 @@
 
 <FormSection>
   <template #label>Desarrollador Principal</template>
-  <div class="_formBlock" style="text-align: center; margin-top: 20px;">
+  <div class="_formBlock" style="text-align: center; margin-top: 20px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
+    <!-- Foto del Desarrollador -->
     <img 
       src="https://avatars.githubusercontent.com/u/81489497?v=4" 
       alt="Foto de @srnovus" 
       style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; margin-bottom: 15px;"
     />
-    <p style="font-size: 1.2em; font-weight: bold; margin: 10px 0;">@srnovus</p>
-    <p style="max-width: 600px; margin: 0 auto; font-size: 0.9em;">
-      Javier Caceres, conocido como @srnovus, es un apasionado desarrollador con experiencia en hosting, 
-      desarrollo web y seguridad informática. Su enfoque está en la privacidad y la optimización de infraestructura tecnológica. 
-      Ha liderado el desarrollo de Fedired, transformándola en una plataforma federada innovadora y accesible para todos.
+    <!-- Nombre y Resumen -->
+    <p style="font-size: 1.4em; font-weight: bold; margin: 10px 0; color: #333;">@srnovus</p>
+    <p style="max-width: 600px; margin: 0 auto; font-size: 1em; color: #666;">
+      Desarrollando Fedired y Ordo Server
     </p>
+
+    <!-- Enlaces o botones adicionales -->
+    <a href="https://github.com/srnovus" target="_blank" style="display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #6c63ff; color: white; text-decoration: none; border-radius: 5px;">
+      Ver en GitHub
+    </a>
   </div>
 </FormSection>
+
 
 
           <FormSection>
@@ -224,6 +230,10 @@ const contributors = [
     avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4',
   },
   {
+    username: '@syuilo',
+    link: 'https://github.com/syuilo',
+    avatar: 'https://avatars.githubusercontent.com/u/4439005?v=4', 
+  },  {
     username: '@joshua',
     link: 'https://github.com/Developerfullstack5451',
     avatar: 'https://avatars.githubusercontent.com/u/170076457?v=4', 
