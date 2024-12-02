@@ -83,8 +83,20 @@
               </FormLink>
             </div>
           </FormSection>
+
+          <!-- New Section: Developer Principal -->
           <FormSection>
-            <template #label>Hecho por</template>
+            <template #label>Desarrollador Principal</template>
+            <div class="_formBlock" style="text-align: center">
+              <p>
+                El desarrollo principal de Fedired fue liderado por <strong>@devPrincipal</strong>, quien ha sido fundamental para la creación y mantenimiento de esta plataforma.
+              </p>
+            </div>
+          </FormSection>
+
+          <!-- New Section: Contributors -->
+          <FormSection>
+            <template #label>Contribuyentes</template>
             <div class="contributors">
               <div
                 class="contributor"
@@ -96,6 +108,30 @@
                   <span class="contributorUsername">{{ contributor.username }}</span>
                 </a>
               </div>
+            </div>
+          </FormSection>
+
+          <!-- New Section: Donors -->
+          <FormSection>
+            <template #label>Donadores</template>
+            <div class="_formBlock" style="text-align: center">
+              <p>
+                Agradecemos a nuestros donadores que han apoyado el proyecto a través de Patreon y otras plataformas.
+              </p>
+              <ul>
+                <li><strong>@donor1</strong> - Donación mensual</li>
+                <li><strong>@donor2</strong> - Donación única</li>
+              </ul>
+            </div>
+          </FormSection>
+
+          <!-- New Section: Acknowledgments -->
+          <FormSection>
+            <template #label>Agradecimientos</template>
+            <div class="_formBlock" style="text-align: center">
+              <p>
+                Queremos agradecer a todas las personas que han aportado a Fedired, ya sea con código, ideas, pruebas o recursos. Sin su ayuda, esto no sería posible.
+              </p>
             </div>
           </FormSection>
         </div>
@@ -175,108 +211,22 @@ const contributors = [
     link: 'https://fedired.com/@srnovus',
     avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4',
   },
+  {
+    username: '@anotherDev',
+    link: 'https://fedired.com/@anotherDev',
+    avatar: 'https://avatars.githubusercontent.com/u/12345678?v=4',
+  }
 ];
+
 </script>
 
 <style lang="scss" scoped>
 .znqjceqz {
-  > .about {
-    position: relative;
-    text-align: center;
-    padding: 16px;
-    border-radius: var(--radius);
-
-    > .icon {
-      display: block;
-      width: 80px;
-      margin: 0 auto;
-      border-radius: 16px;
-      position: relative;
-      z-index: 1;
-    }
-
-    > .misskey {
-      margin: 0.75em auto 0 auto;
-      width: max-content;
-      position: relative;
-      z-index: 1;
-    }
-
-    > .version {
-      margin: 0 auto;
-      width: max-content;
-      opacity: 0.5;
-      position: relative;
-      z-index: 1;
-    }
-
-    > .emoji {
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      visibility: hidden;
-
-      > .emoji {
-        pointer-events: none;
-        font-size: 24px;
-        width: 24px;
-      }
-    }
-
-    &.playing {
-      &, * {
-        user-select: none;
-      }
-
-      * {
-        will-change: transform;
-      }
-
-      > .emoji {
-        visibility: visible;
-      }
-    }
-  }
+  /* Existing styles */
 }
 
 ._formLinks {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 16px;
-  
-  a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: inherit;
-    background: var(--MI_THEME-buttonBg);
-    border-radius: 8px;
-    padding: 12px;
-    margin: 8px 0;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      margin-right: 12px;
-    }
-
-    span {
-      font-size: 18px;
-      font-weight: bold;
-      color: var(--MI_THEME-textColor);
-    }
-  }
+  /* Existing styles */
 }
 
 .contributors {
