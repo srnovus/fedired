@@ -330,7 +330,7 @@ const contributors = [
   display: flex;
   flex-direction: row;
   align-items: center;
-	flex-wrap: nowrap;
+	flex-wrap: wrap;
 	align-content: space-around;
 	justify-content: space-around;
 
