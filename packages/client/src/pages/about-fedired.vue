@@ -222,11 +222,106 @@ const contributors = [
 
 <style lang="scss" scoped>
 .znqjceqz {
-  /* Existing styles */
+  > .about {
+    position: relative;
+    text-align: center;
+    padding: 16px;
+    border-radius: var(--radius);
+
+    > .icon {
+      display: block;
+      width: 80px;
+      margin: 0 auto;
+      border-radius: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    > .misskey {
+      margin: 0.75em auto 0 auto;
+      width: max-content;
+      position: relative;
+      z-index: 1;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
+
+    > .version {
+      margin: 0 auto;
+      width: max-content;
+      opacity: 0.7;
+      position: relative;
+      z-index: 1;
+      font-style: italic;
+    }
+
+    > .emoji {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      visibility: hidden;
+
+      > .emoji {
+        pointer-events: none;
+        font-size: 24px;
+        width: 24px;
+      }
+    }
+
+    &.playing {
+      &, * {
+        user-select: none;
+      }
+
+      * {
+        will-change: transform;
+      }
+
+      > .emoji {
+        visibility: visible;
+      }
+    }
+  }
 }
 
 ._formLinks {
-  /* Existing styles */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  
+  a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    background: var(--MI_THEME-buttonBg);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 8px 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-right: 12px;
+    }
+
+    span {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--MI_THEME-textColor);
+    }
+  }
 }
 
 .contributors {
