@@ -93,8 +93,8 @@
       alt="Foto de @srnovus" 
       style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; margin-bottom: 15px;"
     />
-    <p style="font-size: 1.4em; font-weight: bold; margin: 10px 0; color: #333;">@srnovus</p>
-    <p style="max-width: 600px; margin: 0 auto; font-size: 1em; color: #666;">
+    <p style="font-size: 1.4em; font-weight: bold; margin: 10px 0; scrollbar-color: var(--scrollbarHandle) transparent;">@srnovus</p>
+    <p style="max-width: 600px; margin: 0 auto; font-size: 1em; scrollbar-color: var(--scrollbarHandle) transparent;">
       Desarrollando Fedired y Ordo Server
     </p>
 
