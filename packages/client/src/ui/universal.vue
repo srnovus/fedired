@@ -95,16 +95,6 @@
 				</div>
 			</button>
 			<button
-				v-if="replaceChatButtonWithAccountButton"
-				:aria-label="i18n.ts.accounts"
-				class="button messaging _button"
-				@click="openAccountMenu"
-			>
-				<div class="button-wrapper">
-					<i :class="icon('ph-users')"></i>
-				</div>
-			</button>
-			<button
 				v-else
 				v-vibrate="5"
 				:aria-label="i18n.ts.messaging"
