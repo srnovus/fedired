@@ -85,14 +85,26 @@
           </FormSection>
 
           <!-- New Section: Developer Principal -->
-          <FormSection>
-            <template #label>Desarrollador Principal</template>
-            <div class="_formBlock" style="text-align: center">
-              <p>
-                El desarrollo principal de Fedired fue liderado por <strong>@srnovus</strong>, quien ha sido fundamental para la creación y mantenimiento de esta plataforma.
-              </p>
-            </div>
-          </FormSection>
+<!-- New Section: Developer Principal -->
+<FormSection>
+  <template #label>Desarrollador Principal</template>
+  <div class="_formBlock" style="text-align: center; margin-top: 20px;">
+    <!-- Foto del Desarrollador -->
+    <img 
+      src="https://avatars.githubusercontent.com/u/81489497?v=4" 
+      alt="Foto de @srnovus" 
+      style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; margin-bottom: 15px;"
+    />
+    <!-- Nombre y Resumen -->
+    <p style="font-size: 1.2em; font-weight: bold; margin: 10px 0;">@srnovus</p>
+    <p style="max-width: 600px; margin: 0 auto; font-size: 0.9em;">
+      Javier Caceres, conocido como @srnovus, es un apasionado desarrollador con experiencia en hosting, 
+      desarrollo web y seguridad informática. Su enfoque está en la privacidad y la optimización de infraestructura tecnológica. 
+      Ha liderado el desarrollo de Fedired, transformándola en una plataforma federada innovadora y accesible para todos.
+    </p>
+  </div>
+</FormSection>
+
 
           <!-- New Section: Contributors -->
           <FormSection>
