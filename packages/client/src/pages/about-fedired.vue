@@ -126,7 +126,7 @@
           <!-- New Section: Donors -->
           <FormSection>
             <template #label>Donadores</template>
-            <div class="_formBlock" style="text-align: center">
+            <div class="_formBlock" style="text-align: ">
               <p>
                 Agradecemos a nuestros donadores que han apoyado el proyecto a través de Patreon y otras plataformas.
               </p>
@@ -140,8 +140,11 @@
           <!-- New Section: Acknowledgments -->
           <FormSection>
             <template #label>Agradecimientos</template>
-            <div class="_formBlock" style="text-align: center">
+            <div class="_formBlock" style="text-align: ">
               <p>
+								@ale@mastodon.manalejandro.com
+								Edgar Argueta
+								Joshua
                 Queremos agradecer a todas las personas que han aportado a Fedired, ya sea con código, ideas, pruebas o recursos. Sin su ayuda, esto no sería posible.
               </p>
             </div>
