@@ -89,7 +89,7 @@
             <template #label>Desarrollador Principal</template>
             <div class="_formBlock" style="text-align: center">
               <p>
-                El desarrollo principal de Fedired fue liderado por <strong>@devPrincipal</strong>, quien ha sido fundamental para la creación y mantenimiento de esta plataforma.
+                El desarrollo principal de Fedired fue liderado por <strong>@srnovus</strong>, quien ha sido fundamental para la creación y mantenimiento de esta plataforma.
               </p>
             </div>
           </FormSection>
@@ -119,8 +119,8 @@
                 Agradecemos a nuestros donadores que han apoyado el proyecto a través de Patreon y otras plataformas.
               </p>
               <ul>
-                <li><strong>@donor1</strong> - Donación mensual</li>
-                <li><strong>@donor2</strong> - Donación única</li>
+                <li><strong>@ibootech</strong> - Donación mensual</li>
+                <li><strong>@j-rec</strong> - Donación única</li>
               </ul>
             </div>
           </FormSection>
@@ -211,11 +211,6 @@ const contributors = [
     link: 'https://fedired.com/@srnovus',
     avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4',
   },
-  {
-    username: '@anotherDev',
-    link: 'https://fedired.com/@anotherDev',
-    avatar: 'https://avatars.githubusercontent.com/u/12345678?v=4',
-  }
 ];
 
 </script>
