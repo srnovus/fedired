@@ -78,6 +78,16 @@
 								Donar
 								<template #suffix>Donation</template>
 							</FormLink>
+														<FormLink
+								to="https://help.fedired.com/legal/licencias.html"
+								external
+							>
+								<template #icon>
+									<i :class="icon('ph-gavel')"></i> 
+									</template>
+								Donar
+								<template #suffix>Licencias</template>
+							</FormLink>
 						</div>
 					</FormSection>
 					<FormSection>
@@ -157,9 +167,7 @@ definePageMetadata({
 });
 const contributors = [
 	{ username: '@srnovus', link: 'https://fedired.com/@srnovus', avatar: 'https://avatars.githubusercontent.com/u/81489497?v=4' },
-	{ username: '@ibootech', link: 'https://fedired.com/@ibootech', avatar: 'https://about.fedired.com/storage/2024/10/iboo.png' },
-	{ username: '@joshua', link: 'https://fedired.com/@joshua', avatar: 'https://static.vecteezy.com/system/resources/previews/008/442/086/non_2x/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg' },
-];
+	];
 </script>
 
 <style lang="scss" scoped>
