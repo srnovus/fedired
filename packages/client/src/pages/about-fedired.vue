@@ -87,20 +87,17 @@
 
 <FormSection>
   <template #label>Desarrollador Principal</template>
-  <div class="_formBlock" style="text-align: center; margin-top: 20px; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
-    <!-- Foto del Desarrollador -->
+  <div class="_formBlock" style="text-align: center; margin-top: 20px; background-color: var(--panel); padding: 20px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);">
     <img 
       src="https://avatars.githubusercontent.com/u/81489497?v=4" 
       alt="Foto de @srnovus" 
       style="border-radius: 50%; width: 150px; height: 150px; object-fit: cover; margin-bottom: 15px;"
     />
-    <!-- Nombre y Resumen -->
     <p style="font-size: 1.4em; font-weight: bold; margin: 10px 0; color: #333;">@srnovus</p>
     <p style="max-width: 600px; margin: 0 auto; font-size: 1em; color: #666;">
       Desarrollando Fedired y Ordo Server
     </p>
 
-    <!-- Enlaces o botones adicionales -->
     <a href="https://github.com/srnovus" target="_blank" style="display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #6c63ff; color: white; text-decoration: none; border-radius: 5px;">
       Ver en GitHub
     </a>
