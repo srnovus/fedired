@@ -230,7 +230,13 @@ const contributors = [
     username: '@syuilo',
     link: 'https://github.com/syuilo',
     avatar: 'https://avatars.githubusercontent.com/u/4439005?v=4', 
-  },  {
+  },  
+	{
+    username: '@naskya',
+    link: 'https://codeberg.org/naskya',
+    avatar: 'https://codeberg.org/avatars/0f6ca7a56df9812bc539e499ccac9030fd4cb19a2dc4d57402e1d96f78fa2110?size=512', 
+  }, 
+	{
     username: '@joshua',
     link: 'https://github.com/Developerfullstack5451',
     avatar: 'https://avatars.githubusercontent.com/u/170076457?v=4', 
