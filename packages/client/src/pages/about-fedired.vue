@@ -85,7 +85,7 @@
 								<template #icon>
 									<i :class="icon('ph-gavel')"></i> 
 									</template>
-								Donar
+								Legal
 								<template #suffix>Licencias</template>
 							</FormLink>
 						</div>
