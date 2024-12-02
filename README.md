@@ -6,6 +6,12 @@
 
 **Fedired** es una plataforma de redes sociales descentralizada y de código abierto. Aprovechando el protocolo **ActivityPub**, Fedired ofrece a los usuarios la capacidad de comunicarse y compartir contenido de manera segura y privada. En un mundo donde las redes sociales centralizadas comprometen la privacidad de los datos, Fedired se erige como una alternativa, empoderando a los usuarios para que tengan el control total de su experiencia social en línea.
 
+<p align="center">  
+  <a href="https://help.fedired.com/project/install.html" target="_blank" style="text-decoration: none;">  
+    <img src="https://img.shields.io/badge/🔧%20Instalación%20Fedired-Iniciar-blue?style=for-the-badge" alt="Botón de instalación de Fedired"/>  
+  </a>  
+</p>
+
 <div align="center">
   <img src="./fedired-banner.png" alt="Fedired Banner"/>
 </div>
