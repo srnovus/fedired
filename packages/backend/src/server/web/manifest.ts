@@ -10,7 +10,7 @@ const manifest = {
 	scope: "/",
 	display: "standalone",
 	background_color: "#1f1d2e",
-	theme_color: "#31748f",
+	theme_color: "#6364FF",
 	orientation: "natural",
 	icons: [
 		{
