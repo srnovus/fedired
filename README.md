@@ -17,7 +17,8 @@
 </div>
 
 
-## <span style="color:red;">⚠️ Anuncio Importante</span>  
+> [!WARNING]
+>
 > ¡Hola a todos! Queremos informar a nuestra comunidad que actualmente estamos enfrentando algunos problemas con las actualizaciones de Fedired. Agradecemos su paciencia mientras trabajamos para resolver estos inconvenientes.
 >
 > **¿Cómo puedes ayudar?**
