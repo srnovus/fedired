@@ -14,11 +14,13 @@ services:
       - "3000:3000"
     networks:
       - calcnet
-#     - web
     environment:
       NODE_ENV: production
       NODE_OPTIONS: --max-old-space-size=3072
     volumes:
+      # Monta todo el código fuente en el contenedor
+      - ./:/fedired
+      # Monta directorios específicos como volúmenes solo si son necesarios
       - ./custom:/fedired/custom:ro
       - ./files:/fedired/files
       - ./.config:/fedired/.config:ro
@@ -27,10 +29,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 2048M
 
   redis:
     restart: unless-stopped
@@ -45,10 +43,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 256M
 
   db:
     restart: unless-stopped
@@ -65,13 +59,6 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-    # deploy:
-    #   resources:
-    #     limits:
-    #       memory: 2048M
 
 networks:
   calcnet:
-  #  web:
-  #    external:
-  #      name: web
