@@ -3,7 +3,7 @@ version: "3"
 services:
   web:
     image: docker.io/fedired/fedired:latest
-    container_name: fedired
+    container_name: fedired_web
     restart: unless-stopped
     depends_on:
       db:

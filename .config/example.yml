@@ -45,7 +45,7 @@ db:
 
   # Autenticación
   user: ejemplo-usuario-fedired
-  pass: ejemplo-contraseña-fedired
+  pass: ejemplo-contrasea-fedired
 
   # Deshabilitar el caché de consultas
   #disableCache: true
