@@ -2,9 +2,8 @@ version: "3"
 
 services:
   web:
-    # Usar imagen directamente desde Docker Hub bajo el usuario 'fedired'
-    image: docker.io/fedired/fedired:latest  # Imagen publicada en Docker Hub bajo el usuario 'fedired'
-    container_name: fedired_web
+    image: docker.io/fedired/fedired:latest
+    container_name: fedired
     restart: unless-stopped
     depends_on:
       db:
@@ -15,6 +14,7 @@ services:
       - "3000:3000"
     networks:
       - calcnet
+#     - web
     environment:
       NODE_ENV: production
       NODE_OPTIONS: --max-old-space-size=3072
@@ -27,6 +27,10 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 2048M
 
   redis:
     restart: unless-stopped
@@ -41,10 +45,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 256M
 
   db:
     restart: unless-stopped
-    image: groonga/pgroonga:latest
+    image: docker.io/groonga/pgroonga:3.1.8-alpine-16-slim
     container_name: fedired_db
     networks:
       - calcnet
@@ -57,6 +65,13 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    # deploy:
+    #   resources:
+    #     limits:
+    #       memory: 2048M
 
 networks:
   calcnet:
+  #  web:
+  #    external:
+  #      name: web
