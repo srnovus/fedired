@@ -68,8 +68,8 @@ export default define(meta, paramDef, async (ps) => {
 
 	sendEmail(
 		ps.email,
-		"Password reset requested",
-		`To reset password, please click this link:<br><a href="${link}">${link}</a>`,
-		`To reset password, please click this link: ${link}`,
+		"Se solicitó restablecimiento de contraseña",
+		`Para restablecer la contraseña, haga clic en este enlace:<br><a href="${link}">${link}</a>`,
+		`Para restablecer la contraseña, haga clic en este enlace: ${link}`,
 	);
 });

@@ -3,6 +3,7 @@ version: "3"
 services:
   web:
     image: ghcr.io/fedired-dev/fedired:latest
+    command: bash -c "npm install -g pnpm && pnpm install && npm start"  
     container_name: fedired_web
     restart: unless-stopped
     depends_on:

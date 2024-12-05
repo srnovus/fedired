@@ -84,9 +84,9 @@ export default define(meta, paramDef, async (ps, user) => {
 
 		sendEmail(
 			ps.email,
-			"Email verification",
-			`To verify email, please click this link:<br><a href="${link}">${link}</a>`,
-			`To verify email, please click this link: ${link}`,
+			"Verificación de correo electrónico",
+			`Para verificar el correo electrónico, haga clic en este enlace:<br><a href="${link}">${link}</a>`,
+			`Para verificar el correo electrónico, haga clic en este enlace: ${link}`,
 		);
 	}
 
