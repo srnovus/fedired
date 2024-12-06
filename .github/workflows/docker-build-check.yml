@@ -26,6 +26,10 @@ jobs:
     - name: Install pnpm
       run: npm install -g pnpm
 
+    # Cargo
+    - name: Cargo Update
+      run: cargo update
+
     # Instalar dependencias con pnpm
     - name: Install dependencies
       run: pnpm install --no-frozen-lockfile  # Instalar dependencias sin usar el archivo lock congelado
