@@ -167,7 +167,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
-import * as Acct from "fedired-js/built/acct";
+import { acct } from "firefish-js";
 import type { ComputedRef } from "vue";
 import XCommon from "./_common_/common.vue";
 import type { PageMetadata } from "@/scripts/page-metadata";
@@ -178,18 +178,18 @@ import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { navbarItemDef } from "@/navbar";
 import { i18n } from "@/i18n";
-import { $i } from "@/account";
+import { openAccountMenu as openAccountMenuImpl } from "@/account";
+import { me } from "@/me";
 import { mainRouter } from "@/router";
-import {
-	provideMetadataReceiver,
-	setPageMetadata,
-} from "@/scripts/page-metadata";
+import { provideMetadataReceiver } from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
+import icon from "@/scripts/icon";
 
 const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
 const XStatusBars = defineAsyncComponent(
 	() => import("@/ui/_common_/statusbars.vue"),
 );
+
 
 const DESKTOP_THRESHOLD = 1100;
 const MOBILE_THRESHOLD = 500;
