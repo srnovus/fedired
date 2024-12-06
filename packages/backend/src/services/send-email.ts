@@ -73,7 +73,7 @@ export async function sendEmail(
             <tr>
               <td style="padding: 20px;">
                 <h1 style="color: #f38ba8; font-size: 1.5rem; margin-bottom: 16px; font-weight: bold;">${subject}</h1>
-                <p style="color: #bac2de; margin-bottom: 16px;">${html}</p>
+                <p style="color: #6364FF; margin-bottom: 16px;">${html}</p>
                 <p style="color: #bac2de;">Gestiona tus preferencias en tu <a href="${emailSettingUrl}" style="color: #6364FF; text-decoration: none;">configuración de correo electrónico</a>.</p>
               </td>
             </tr>

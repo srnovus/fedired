@@ -24,6 +24,8 @@ pub enum Error {
     NoResponse,
     #[error("translator is not set")]
     NoTranslator,
+    #[error("access to this URL is not allowed")]
+    UnsafeUrl,
 }
 
 #[macros::export(object)]
@@ -40,7 +42,7 @@ fn is_zh_hant_tw(lang: &str) -> bool {
 #[macros::export]
 pub async fn translate(
     text: &str,
-    source_lang: Option<&str>,
+    source_lang: Option<String>,
     target_lang: &str,
 ) -> Result<Translation, Error> {
     let config = local_server_info().await?;
@@ -48,7 +50,7 @@ pub async fn translate(
     let translation = if let Some(api_key) = config.deepl_auth_key {
         deepl_translate::translate(
             text,
-            source_lang,
+            source_lang.as_deref(),
             target_lang,
             &api_key,
             config.deepl_is_pro,
@@ -57,7 +59,7 @@ pub async fn translate(
     } else if let Some(api_url) = config.libre_translate_api_url {
         libre_translate::translate(
             text,
-            source_lang,
+            source_lang.as_deref(),
             target_lang,
             &api_url,
             config.libre_translate_api_key.as_deref(),
@@ -69,7 +71,7 @@ pub async fn translate(
     {
         deepl_translate::translate(
             text,
-            source_lang,
+            source_lang.as_deref(),
             target_lang,
             auth_key.as_ref().ok_or(Error::MissingApiKey)?,
             is_pro.unwrap_or(false),
@@ -81,7 +83,7 @@ pub async fn translate(
     {
         libre_translate::translate(
             text,
-            source_lang,
+            source_lang.as_deref(),
             target_lang,
             api_url.as_ref().ok_or(Error::MissingApiUrl)?,
             api_key.as_deref(),
@@ -95,7 +97,7 @@ pub async fn translate(
 }
 
 mod deepl_translate {
-    use crate::util::http_client;
+    use crate::{misc::is_safe_url::is_safe_url, util::http_client};
     use futures_util::AsyncReadExt;
     use isahc::{AsyncReadResponseExt, Request};
     use serde::Deserialize;
@@ -127,14 +129,18 @@ mod deepl_translate {
             "https://api-free.deepl.com/v2/translate"
         };
 
+        if !is_safe_url(api_url) {
+            return Err(super::Error::UnsafeUrl);
+        }
+
         let to_zh_hant_tw = super::is_zh_hant_tw(target_lang);
 
         let mut target_lang = target_lang.split('-').collect::<Vec<&str>>()[0];
 
-        // DeepL API requires us to specify "es-ES" or "en-GB" for English
+        // DeepL API requires us to specify "en-US" or "en-GB" for English
         // translations ("en" does not work), so we need to address it
         if target_lang == "en" {
-            target_lang = "es-ES";
+            target_lang = "en-US";
         }
 
         let body = if let Some(source_lang) = source_lang {
@@ -197,7 +203,7 @@ mod deepl_translate {
 }
 
 mod libre_translate {
-    use crate::util::http_client;
+    use crate::{misc::is_safe_url::is_safe_url, util::http_client};
     use futures_util::AsyncReadExt;
     use isahc::{AsyncReadResponseExt, Request};
     use serde::Deserialize;
@@ -222,6 +228,10 @@ mod libre_translate {
         api_url: &str,
         api_key: Option<&str>,
     ) -> Result<super::Translation, super::Error> {
+        if !is_safe_url(api_url) {
+            return Err(super::Error::UnsafeUrl);
+        }
+
         let client = http_client::client()?;
 
         let target_lang = if super::is_zh_hant_tw(target_lang) {
