@@ -1,8 +1,5 @@
 <template>
-	<div
-		class="dkgtipfy"
-		:class="{ wallpaper, isMobile, centered: ui === 'classic' }"
-	>
+	<div class="dkgtipfy" :class="{ wallpaper, isMobile }">
 		<XSidebar v-if="!isMobile" />
 
 		<MkStickyContainer class="contents">
@@ -11,7 +8,7 @@
 			/></template>
 			<main
 				id="maincontent"
-				style="min-inline-size: 0"
+				style="min-width: 0"
 				:style="{ background: pageMetadata?.value?.bg }"
 				@contextmenu.stop="onContextmenu"
 			>
@@ -25,35 +22,30 @@
 
 		<button
 			v-if="!isDesktop && !isMobile"
-			v-vibrate="5"
 			class="widgetButton _button"
 			@click="widgetsShowing = true"
 		>
-			<i :class="icon('ph-stack')"></i>
+			<i class="ph-stack ph-bold ph-lg"></i>
 		</button>
 
 		<div v-if="isMobile" class="buttons">
 			<button
-				v-vibrate="5"
-				:aria-label="i18n.ts.menu"
+				:aria-label="i18n.t('menu')"
 				class="button nav _button"
 				@click="drawerMenuShowing = true"
 			>
 				<div class="button-wrapper">
-					<i :class="icon('ph-list')"></i
+					<i class="ph-list ph-bold ph-lg"></i
 					><span
 						v-if="menuIndicated"
 						class="indicator"
-						:class="{
-							animateIndicator: defaultStore.state.animation,
-						}"
+						:class="{ animateIndicator: $store.state.animation }"
 						><i class="ph-circle ph-fill"></i
 					></span>
 				</div>
 			</button>
 			<button
-				v-vibrate="5"
-				:aria-label="i18n.ts.home"
+				:aria-label="i18n.t('home')"
 				class="button home _button"
 				@click="
 					mainRouter.currentRoute.value.name === 'index'
@@ -66,10 +58,10 @@
 					class="button-wrapper"
 					:class="buttonAnimIndex === 0 ? 'on' : ''"
 				>
-					<i :class="icon('ph-house')"></i>
+					<i class="ph-house ph-bold ph-lg"></i>
 				</div>
 			</button>
-					<button
+			<button
 				:aria-label="i18n.t('notifications')"
 				class="button notifications _button"
 				@click="
@@ -122,16 +114,14 @@
 			</button>
 		</div>
 
-
 		<button
 			v-if="isMobile && mainRouter.currentRoute.value.name === 'index'"
 			ref="postButton"
-			v-vibrate="5"
-			:aria-label="i18n.ts.note"
+			:aria-label="i18n.t('note')"
 			class="postButton button post _button"
 			@click="os.post()"
 		>
-			<i :class="icon('ph-pencil')"></i>
+			<i class="ph-pencil ph-bold ph-lg"></i>
 		</button>
 		<button
 			v-if="
@@ -139,15 +129,13 @@
 			"
 			ref="postButton"
 			class="postButton button post _button"
-			:aria-label="i18n.ts.startMessaging"
+			:aria-label="i18n.t('startMessaging')"
 			@click="messagingStart"
 		>
-			<i :class="icon('ph-user-plus')"></i>
+			<i class="ph-user-plus ph-bold ph-lg"></i>
 		</button>
 
-		<transition
-			:name="defaultStore.state.animation ? 'menuDrawer-back' : ''"
-		>
+		<transition :name="$store.state.animation ? 'menuDrawer-back' : ''">
 			<div
 				v-if="drawerMenuShowing"
 				class="menuDrawer-back _modalBg"
@@ -156,13 +144,11 @@
 			></div>
 		</transition>
 
-		<transition :name="defaultStore.state.animation ? 'menuDrawer' : ''">
+		<transition :name="$store.state.animation ? 'menuDrawer' : ''">
 			<XDrawerMenu v-if="drawerMenuShowing" class="menuDrawer" />
 		</transition>
 
-		<transition
-			:name="defaultStore.state.animation ? 'widgetsDrawer-back' : ''"
-		>
+		<transition :name="$store.state.animation ? 'widgetsDrawer-back' : ''">
 			<div
 				v-if="widgetsShowing"
 				class="widgetsDrawer-back _modalBg"
@@ -171,7 +157,7 @@
 			></div>
 		</transition>
 
-		<transition :name="defaultStore.state.animation ? 'widgetsDrawer' : ''">
+		<transition :name="$store.state.animation ? 'widgetsDrawer' : ''">
 			<XWidgets v-if="widgetsShowing" class="widgetsDrawer" />
 		</transition>
 
@@ -181,7 +167,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
-import { acct } from "fedired-js";
+import * as Acct from "fedired-js/built/acct";
 import type { ComputedRef } from "vue";
 import XCommon from "./_common_/common.vue";
 import type { PageMetadata } from "@/scripts/page-metadata";
@@ -192,12 +178,13 @@ import * as os from "@/os";
 import { defaultStore } from "@/store";
 import { navbarItemDef } from "@/navbar";
 import { i18n } from "@/i18n";
-import { openAccountMenu as openAccountMenuImpl } from "@/account";
-import { me } from "@/me";
+import { $i } from "@/account";
 import { mainRouter } from "@/router";
-import { provideMetadataReceiver } from "@/scripts/page-metadata";
+import {
+	provideMetadataReceiver,
+	setPageMetadata,
+} from "@/scripts/page-metadata";
 import { deviceKind } from "@/scripts/device-kind";
-import icon from "@/scripts/icon";
 
 const XWidgets = defineAsyncComponent(() => import("./universal.widgets.vue"));
 const XStatusBars = defineAsyncComponent(
@@ -208,57 +195,34 @@ const DESKTOP_THRESHOLD = 1100;
 const MOBILE_THRESHOLD = 500;
 
 // デスクトップでウィンドウを狭くしたときモバイルUIが表示されて欲しいことはあるので deviceKind === 'desktop' の判定は行わない
-const windowBlockSize = getComputedStyle(document.documentElement)[
-	"writing-mode"
-].startsWith("vertical")
-	? window.innerHeight
-	: window.innerWidth;
-const isDesktop = ref(windowBlockSize >= DESKTOP_THRESHOLD);
+const isDesktop = ref(window.innerWidth >= DESKTOP_THRESHOLD);
 const isMobile = ref(
-	deviceKind === "smartphone" || windowBlockSize <= MOBILE_THRESHOLD,
+	deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD,
 );
 window.addEventListener("resize", () => {
 	isMobile.value =
-		deviceKind === "smartphone" || windowBlockSize <= MOBILE_THRESHOLD;
+		deviceKind === "smartphone" || window.innerWidth <= MOBILE_THRESHOLD;
 });
-
-const replaceChatButtonWithAccountButton =
-	defaultStore.state.replaceChatButtonWithAccountButton;
-const openAccountMenu = (ev: MouseEvent) => {
-	openAccountMenuImpl(
-		{
-			withExtraOperation: true,
-		},
-		ev,
-		isMobile.value,
-	);
-};
-
-const replaceWidgetsButtonWithReloadButton =
-	defaultStore.state.replaceWidgetsButtonWithReloadButton;
-const reload = () => {
-	window.location.reload();
-};
 
 const buttonAnimIndex = ref(0);
 const drawerMenuShowing = ref(false);
 
-const pageMetadata = ref<null | ComputedRef<PageMetadata>>();
-const widgetsEl = ref<HTMLElement>();
-const postButton = ref<HTMLElement>();
-const widgetsShowing = ref(false);
+let pageMetadata = $ref<null | ComputedRef<PageMetadata>>();
+const widgetsEl = $ref<HTMLElement>();
+const postButton = $ref<HTMLElement>();
+const widgetsShowing = $ref(false);
 
 provide("router", mainRouter);
 provideMetadataReceiver((info) => {
-	pageMetadata.value = info;
-	if (pageMetadata.value.value) {
-		document.title = `${pageMetadata.value.value.title} | ${instanceName}`;
+	pageMetadata = info;
+	if (pageMetadata.value) {
+		document.title = `${pageMetadata.value.title} | ${instanceName}`;
 	}
 });
 
 const menuIndicated = computed(() => {
 	for (const def in navbarItemDef) {
-		if (def === "notifications" || def === "messaging") continue; // Notifications & Messaging are bottom nav buttons and thus shouldn't be highlighted in the sidebar
+		if (def === "notifications") continue; // 通知は下にボタンとして表示されてるから
 		if (navbarItemDef[def].indicated) return true;
 	}
 	return false;
@@ -291,20 +255,14 @@ mainRouter.on("change", () => {
 if (defaultStore.state.widgets.length === 0) {
 	defaultStore.set("widgets", [
 		{
-			name: "calendar",
+			name: "notifications",
 			id: "a",
 			place: "right",
 			data: {},
 		},
 		{
-			name: "notifications",
-			id: "b",
-			place: "right",
-			data: {},
-		},
-		{
 			name: "trends",
-			id: "c",
+			id: "b",
 			place: "right",
 			data: {},
 		},
@@ -316,21 +274,21 @@ function messagingStart(ev) {
 		[
 			{
 				text: i18n.ts.messagingWithUser,
-				icon: `${icon("ph-user")}`,
+				icon: "ph-user ph-bold ph-lg",
 				action: () => {
 					startUser();
 				},
 			},
 			{
 				text: i18n.ts.messagingWithGroup,
-				icon: `${icon("ph-users-three")}`,
+				icon: "ph-users-three ph-bold ph-lg",
 				action: () => {
 					startGroup();
 				},
 			},
 			{
 				text: i18n.ts.manageGroups,
-				icon: `${icon("ph-user-circle-gear")}`,
+				icon: "ph-user-circle-gear ph-bold ph-lg",
 				action: () => {
 					mainRouter.push("/my/groups");
 				},
@@ -342,7 +300,7 @@ function messagingStart(ev) {
 
 async function startUser(): void {
 	os.selectUser().then((user) => {
-		mainRouter.push(`/my/messaging/${acct.toString(user)}`);
+		mainRouter.push(`/my/messaging/${Acct.toString(user)}`);
 	});
 }
 
@@ -370,7 +328,7 @@ async function startGroup(): void {
 
 onMounted(() => {
 	if (!isDesktop.value) {
-		matchMedia(`(min-inline-size: ${DESKTOP_THRESHOLD - 1}px)`).onchange = (
+		matchMedia(`(min-width: ${DESKTOP_THRESHOLD - 1}px)`).onchange = (
 			mql,
 		) => {
 			if (mql.matches) isDesktop.value = true;
@@ -402,7 +360,7 @@ const onContextmenu = (ev: MouseEvent) => {
 				text: path,
 			},
 			{
-				icon: `${icon("ph-browser")}`,
+				icon: "ph-browser ph-bold ph-lg",
 				text: i18n.ts.openInWindow,
 				action: () => {
 					os.pageWindow(path);
@@ -419,18 +377,18 @@ const attachSticky = (el: any) => {
 		"scroll",
 		() => {
 			requestAnimationFrame(() => {
-				widgetsEl.value.scrollTop += window.scrollY - lastScrollTop;
+				widgetsEl.scrollTop += window.scrollY - lastScrollTop;
 				lastScrollTop = window.scrollY;
 			});
 		},
 		{ passive: true },
 	);
-	widgetsEl.value.classList.add("hide-scrollbar");
-	widgetsEl.value.onmouseenter = () => {
+	widgetsEl.classList.add("hide-scrollbar");
+	widgetsEl.onmouseenter = () => {
 		if (document.documentElement.scrollHeight <= window.innerHeight) {
-			widgetsEl.value.classList.remove("hide-scrollbar");
+			widgetsEl.classList.remove("hide-scrollbar");
 		} else {
-			widgetsEl.value.classList.add("hide-scrollbar");
+			widgetsEl.classList.add("hide-scrollbar");
 		}
 	};
 };
@@ -456,15 +414,6 @@ console.log(mainRouter.currentRoute.value.name);
 .widgetsDrawer-leave-active {
 	opacity: 0;
 	transform: translateX(240px);
-	&:dir(rtl) {
-		transform: translateX(-240px);
-	}
-	.vertical-tb & {
-		transform: translateY(-240px);
-	}
-	.vertical-bt & {
-		transform: translateY(240px);
-	}
 }
 
 .widgetsDrawer-back-enter-active,
@@ -489,15 +438,6 @@ console.log(mainRouter.currentRoute.value.name);
 .menuDrawer-leave-active {
 	opacity: 0;
 	transform: translateX(-240px);
-	&:dir(rtl) {
-		transform: translateX(240px);
-	}
-	.vertical-tb & {
-		transform: translateY(240px);
-	}
-	.vertical-bt & {
-		transform: translateY(-240px);
-	}
 }
 
 .menuDrawer-back-enter-active,
@@ -514,7 +454,8 @@ console.log(mainRouter.currentRoute.value.name);
 	$ui-font-size: 1em; // TODO: どこかに集約したい
 	$widgets-hide-threshold: 1090px;
 
-	min-block-size: 100dvb;
+	// ほんとは単に 100vh と書きたいところだが... https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+	min-height: calc(var(--vh, 1vh) * 100);
 	box-sizing: border-box;
 	display: flex;
 
@@ -524,7 +465,7 @@ console.log(mainRouter.currentRoute.value.name);
 	}
 	&:not(.isMobile) {
 		> .contents {
-			border-inline-end: 0.5px solid var(--divider);
+			border-right: 0.5px solid var(--divider);
 		}
 	}
 	&.wallpaper {
@@ -542,133 +483,32 @@ console.log(mainRouter.currentRoute.value.name);
 				z-index: -3;
 			}
 			> ._button:last-child {
-				margin-block-end: 0 !important;
-			}
-		}
-	}
-
-	&.centered {
-		justify-content: center;
-		&:not(.isMobile) {
-			--navBg: transparent;
-			> .contents {
-				border-inline: 0.5px solid var(--divider);
-				margin-inline: -1px;
-			}
-		}
-
-		> :deep(.sidebar:not(.iconOnly)) {
-			margin-inline-start: -200px;
-			padding-inline-start: 200px;
-			box-sizing: content-box;
-			.banner {
-				pointer-events: none;
-				inset-block-start: -20% !important;
-				mask: radial-gradient(
-					farthest-side at top,
-					hsl(0, 0%, 0%) 0%,
-					hsla(0, 0%, 0%, 0.987) 0.3%,
-					hsla(0, 0%, 0%, 0.951) 1.4%,
-					hsla(0, 0%, 0%, 0.896) 3.2%,
-					hsla(0, 0%, 0%, 0.825) 5.8%,
-					hsla(0, 0%, 0%, 0.741) 9.3%,
-					hsla(0, 0%, 0%, 0.648) 13.6%,
-					hsla(0, 0%, 0%, 0.55) 18.9%,
-					hsla(0, 0%, 0%, 0.45) 25.1%,
-					hsla(0, 0%, 0%, 0.352) 32.4%,
-					hsla(0, 0%, 0%, 0.259) 40.7%,
-					hsla(0, 0%, 0%, 0.175) 50.2%,
-					hsla(0, 0%, 0%, 0.104) 60.8%,
-					hsla(0, 0%, 0%, 0.049) 72.6%,
-					hsla(0, 0%, 0%, 0.013) 85.7%,
-					hsla(0, 0%, 0%, 0) 100%
-				) !important;
-				-webkit-mask: radial-gradient(
-					farthest-side at top,
-					hsl(0, 0%, 0%) 0%,
-					hsla(0, 0%, 0%, 0.987) 0.3%,
-					hsla(0, 0%, 0%, 0.951) 1.4%,
-					hsla(0, 0%, 0%, 0.896) 3.2%,
-					hsla(0, 0%, 0%, 0.825) 5.8%,
-					hsla(0, 0%, 0%, 0.741) 9.3%,
-					hsla(0, 0%, 0%, 0.648) 13.6%,
-					hsla(0, 0%, 0%, 0.55) 18.9%,
-					hsla(0, 0%, 0%, 0.45) 25.1%,
-					hsla(0, 0%, 0%, 0.352) 32.4%,
-					hsla(0, 0%, 0%, 0.259) 40.7%,
-					hsla(0, 0%, 0%, 0.175) 50.2%,
-					hsla(0, 0%, 0%, 0.104) 60.8%,
-					hsla(0, 0%, 0%, 0.049) 72.6%,
-					hsla(0, 0%, 0%, 0.013) 85.7%,
-					hsla(0, 0%, 0%, 0) 100%
-				) !important;
-				inline-size: 125% !important;
-				inset-inline-start: -12.5% !important;
-				block-size: 145% !important;
-			}
-		}
-
-		> .contents {
-			min-inline-size: 0;
-			inline-size: 750px;
-			background: var(--panel);
-			border-radius: 0;
-			overflow: clip;
-			--margin: 12px;
-			background: var(--bg);
-		}
-
-		&.wallpaper {
-			.contents {
-				background: var(--acrylicBg) !important;
-				backdrop-filter: var(--blur, blur(12px));
-			}
-			:deep(.tl),
-			:deep(.notes) {
-				background: none;
+				margin-bottom: 0 !important;
 			}
 		}
 	}
 
 	> .contents {
-		inline-size: 100%;
-		min-inline-size: 0;
+		width: 100%;
+		min-width: 0;
 		$widgets-hide-threshold: 1090px;
 		overflow-x: clip;
-		overflow-inline: clip;
-
-		@supports not (overflow-inline: clip) {
-			.vertical-lr &, .vertical-rl & {
-				overflow-x: visible;
-				overflow-y: clip;
-			}
-		}
-
-		@media (max-inline-size: $widgets-hide-threshold) {
-			padding-block-end: calc(env(safe-area-inset-bottom, 0px) + 96px);
+		@media (max-width: $widgets-hide-threshold) {
+			padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 96px);
 		}
 	}
 
 	> .widgets-container {
 		position: sticky;
-		inset-block-start: 0;
-		max-block-size: 100vb;
+		top: 0;
+		max-height: 100vh;
 		overflow-y: auto;
-		overflow-block: auto;
-		padding-block: 0;
-		padding-inline: var(--margin);
-		inline-size: 300px;
-		min-inline-size: max-content;
+		padding: 0 var(--margin);
+		width: 300px;
+		min-width: max-content;
 		box-sizing: content-box;
 
-		@supports not (overflow-block: auto) {
-			.vertical-lr &, .vertical-rl & {
-				overflow-y: visible;
-				overflow-x: auto;
-			}
-		}
-
-		@media (max-inline-size: $widgets-hide-threshold) {
+		@media (max-width: $widgets-hide-threshold) {
 			display: none;
 		}
 	}
@@ -679,26 +519,31 @@ console.log(mainRouter.currentRoute.value.name);
 
 	> .widgetsDrawer {
 		position: fixed;
-		inset-block-start: 0;
-		inset-inline-end: 0;
+		top: 0;
+		right: 0;
 		z-index: 1001;
-			block-size: 100dvb;
+		// ほんとは単に 100vh と書きたいところだが... https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+		height: calc(var(--vh, 1vh) * 100);
 		padding: var(--margin);
 		box-sizing: border-box;
 		overflow: auto;
-		overscroll-behavior: none;
+		overscroll-behavior: contain;
 		background: var(--bg);
 	}
 
 	> .postButton,
 	.widgetButton {
-		inset-block-end: var(--stickyBottom);
-		inset-inline-end: 1.5rem;
-		block-size: 4rem;
-		inline-size: 4rem;
+		bottom: var(--stickyBottom);
+		right: 1.5rem;
+		height: 4rem;
+		width: 4rem;
 		background-position: center;
-		background: var(--panelHighlight);
-		color: var(--fg);
+		background: linear-gradient(
+			-45deg,
+			var(--buttonGradateA),
+			var(--buttonGradateB)
+		);
+		color: var(--fgOnAccent);
 		position: fixed !important;
 		z-index: 1000;
 		font-size: 16px;
@@ -725,11 +570,11 @@ console.log(mainRouter.currentRoute.value.name);
 	> .buttons {
 		position: fixed;
 		z-index: 1000;
-		inset-block-end: 0;
-		inset-inline-start: 0;
+		bottom: 0;
+		left: 0;
 		padding: 12px 12px calc(env(safe-area-inset-bottom, 0px) + 12px) 12px;
 		display: flex;
-		inline-size: 100%;
+		width: 100%;
 		box-sizing: border-box;
 		background-color: var(--bg);
 
@@ -738,72 +583,64 @@ console.log(mainRouter.currentRoute.value.name);
 			flex: 1;
 			padding: 0;
 			margin: auto;
-			block-size: 3.5rem;
+			height: 3.5rem;
 			border-radius: 8px;
 			background-position: center;
 			transition: background 0.6s;
 			color: var(--fg);
 
-			&:active {
-				background-color: var(--accentedBg);
-				background-size: 100%;
-				transition: background 0.1s;
-			}
-
 			> .button-wrapper {
 				display: inline-flex;
 				justify-content: center;
+				padding: 4px 0;
 
 				&.on {
-					background-color: var(--accentedBg);
-					inline-size: 100%;
+					background-color: var(--focus);
+					width: 100%;
 					border-radius: 999px;
-					transform: translateY(-0.5em);
-					transition: all 0.2s ease-in-out;
+					transition: all 0.4s ease-in-out;
 				}
 
 				> .indicator {
 					position: absolute;
-					inset-block-start: 0;
-					inset-inline-start: 0;
+					top: 0;
+					left: 0;
 					color: var(--indicator);
 					font-size: 16px;
 				}
 
 				> .animateIndicator {
-					animation: blink 1s infinite;
 				}
 			}
 
 			&:not(:last-child) {
-				margin-inline-end: 12px;
+				margin-right: 12px;
 			}
 
-			@media (max-inline-size: 400px) {
-				block-size: 60px;
+			@media (max-width: 400px) {
+				height: 60px;
 
 				&:not(:last-child) {
-					margin-inline-end: 8px;
+					margin-right: 8px;
 				}
 			}
 			> .indicator {
 				position: absolute;
-				inset-block-start: 0;
-				inset-inline-start: 0;
+				top: 0;
+				left: 0;
 				color: var(--indicator);
 				font-size: 16px;
 			}
 
 			> .animateIndicator {
-				animation: blink 1s infinite;
 			}
 
 			&:first-child {
-				margin-inline-start: 0;
+				margin-left: 0;
 			}
 
 			&:last-child {
-				margin-inline-end: 0;
+				margin-right: 0;
 			}
 
 			> * {
@@ -826,11 +663,12 @@ console.log(mainRouter.currentRoute.value.name);
 
 	> .menuDrawer {
 		position: fixed;
-		inset-block-start: 0;
-		inset-inline-start: 0;
+		top: 0;
+		left: 0;
 		z-index: 1001;
-			block-size: 100dvb;
-		inline-size: 240px;
+		// ほんとは単に 100vh と書きたいところだが... https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+		height: calc(var(--vh, 1vh) * 100);
+		width: 240px;
 		box-sizing: border-box;
 		contain: strict;
 		overflow: auto;
@@ -843,7 +681,7 @@ console.log(mainRouter.currentRoute.value.name);
 <style lang="scss" module>
 .statusbars {
 	position: sticky;
-	inset-block-start: 0;
-	inset-inline-start: 0;
+	top: 0;
+	left: 0;
 }
 </style>
