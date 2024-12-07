@@ -210,7 +210,7 @@
 
 <script lang="ts" setup>
 import { computed, defineAsyncComponent, onMounted, provide, ref } from "vue";
-import { acct } from "firefish-js";
+import { acct } from "fedired-js";
 import type { ComputedRef } from "vue";
 import XCommon from "./_common_/common.vue";
 import type { PageMetadata } from "@/scripts/page-metadata";
