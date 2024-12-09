@@ -112,28 +112,20 @@
 					<i :class="icon('ph-gear-six icon ph-fw')"></i
 					><span class="text">{{ i18n.ts.settings }}</span>
 				</MkA>
-			</div>
-			<div class="bottom">
-				<button
-					class="item _button post"
-					data-cy-open-post-form
-					@click="os.post"
-				>
-					<i :class="icon('ph-pencil icon ph-fw')"></i
-					><span class="text">{{ i18n.ts.toPost }}</span>
-				</button>
-				<button
+				<div class="divider"></div>
+				<MkA
+					v-click-anime
 					v-tooltip.noDelay.right="i18n.ts.help"
-					class="item _button help"
+					class="item"
+					to="#"
 					@click="openHelpMenu"
 				>
-					<i
-						:class="icon('ph-info help icon ph-xl ph-fw', false)"
-					></i>
-				</button>
+					<i :class="icon('ph-info help icon ph-xl ph-fw', false)"></i>
+					<span class="text">Ayuda </span>
+				</MkA>
 			</div>
 		</div>
-	</div>
+		</div>
 </template>
 
 <script lang="ts" setup>
@@ -146,7 +138,6 @@ import { openHelpMenu_ } from "@/scripts/helpMenu";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import icon from "@/scripts/icon";
-
 const menu = toRef(defaultStore.state, "menu");
 const otherMenuItemIndicated = computed(() => {
 	for (const def in navbarItemDef) {
@@ -155,7 +146,6 @@ const otherMenuItemIndicated = computed(() => {
 	}
 	return false;
 });
-
 function openAccountMenu(ev: MouseEvent) {
 	openAccountMenu_(
 		{
@@ -164,11 +154,9 @@ function openAccountMenu(ev: MouseEvent) {
 		ev,
 	);
 }
-
 function openHelpMenu(ev: MouseEvent) {
 	openHelpMenu_(ev);
 }
-
 function more() {
 	os.popup(
 		defineAsyncComponent(() => import("@/components/MkLaunchPad.vue")),
@@ -184,7 +172,6 @@ function more() {
 	> .body {
 		display: flex;
 		flex-direction: column;
-
 		> .top {
 			position: sticky;
 			inset-block-start: 0;
@@ -194,7 +181,6 @@ function more() {
 			background: var(--X14);
 			-webkit-backdrop-filter: var(--blur, blur(8px));
 			backdrop-filter: var(--blur, blur(8px));
-
 			> .banner {
 				position: absolute;
 				inset-block-start: 0;
@@ -214,13 +200,11 @@ function more() {
 					rgba(0, 0, 0, 0.75) 100%
 				);
 			}
-
 			> .account {
 				position: relative;
 				display: block;
 				text-align: center;
 				inline-size: 100%;
-
 				> .icon {
 					display: inline-block;
 					inline-size: 55px;
@@ -228,7 +212,6 @@ function more() {
 				}
 			}
 		}
-
 		> .bottom {
 			position: sticky;
 			inset-block-end: 0;
@@ -237,7 +220,6 @@ function more() {
 			background: var(--X14);
 			-webkit-backdrop-filter: var(--blur, blur(8px));
 			backdrop-filter: var(--blur, blur(8px));
-
 			> .post {
 				position: relative;
 				display: flex;
@@ -247,7 +229,6 @@ function more() {
 				color: var(--fgOnAccent);
 				font-weight: bold;
 				text-align: start;
-
 				&:before {
 					content: "";
 					display: block;
@@ -263,26 +244,22 @@ function more() {
 						var(--buttonGradateB)
 					);
 				}
-
 				&:hover,
 				&.active {
 					&:before {
 						background: var(--accentLighten);
 					}
 				}
-
 				> .icon {
 					position: relative;
 					margin-inline-start: 30px;
 					margin-inline-end: 8px;
 					inline-size: 32px;
 				}
-
 				> .text {
 					position: relative;
 				}
 			}
-
 			> .help {
 				position: relative;
 				display: block;
@@ -290,14 +267,12 @@ function more() {
 				inline-size: 100%;
 				margin-block-start: 1rem;
 				color: var(--navFg);
-
 				> .icon {
 					display: inline-block;
 					inline-size: 38px;
 					aspect-ratio: 1;
 				}
 			}
-
 			> .instance {
 				position: relative;
 				display: flex;
@@ -310,7 +285,6 @@ function more() {
 				text-align: start;
 				box-sizing: border-box;
 				margin-block-start: 16px;
-
 				> .icon {
 					position: relative;
 					inline-size: 32px;
@@ -320,16 +294,13 @@ function more() {
 				}
 			}
 		}
-
 		> .middle {
 			flex: 0.1;
-
 			> .divider {
 				margin-block: 16px;
 				margin-inline: 16px;
 				border-block-start: solid 0.5px var(--divider);
 			}
-
 			> .item {
 				position: relative;
 				display: block;
@@ -342,13 +313,11 @@ function more() {
 				text-align: start;
 				box-sizing: border-box;
 				color: var(--navFg);
-
 				> .icon {
 					position: relative;
 					inline-size: 32px;
 					margin-inline-end: 8px;
 				}
-
 				> .indicator {
 					position: absolute;
 					inset-block-start: 0;
@@ -356,25 +325,20 @@ function more() {
 					color: var(--navIndicator);
 					font-size: 8px;
 				}
-
 				> .animateIndicator {
 					animation: blink 1s infinite;
 				}
-
 				> .text {
 					position: relative;
 					font-size: 0.9em;
 				}
-
 				&:hover {
 					text-decoration: none;
 					color: var(--navHoverFg);
 				}
-
 				&.active {
 					color: var(--navActive);
 				}
-
 				&:hover,
 				&.active {
 					&:before {
@@ -388,6 +352,14 @@ function more() {
 						border-radius: 999px;
 						background: var(--accentedBg);
 					}
+				}
+				.item.active {
+					background-color: var(--activeBgColor); // Esto puede hacer que parezca presionado
+					color: var(--activeTextColor);
+				}
+				// Estilos generales para el botón
+				&:focus {
+					outline: none; // Eliminar el contorno si no es deseado (prueba)
 				}
 			}
 		}

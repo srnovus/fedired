@@ -65,7 +65,7 @@
                   <i :class="icon('ph-code')"></i>
                 </template>
                 {{ i18n.ts._aboutFedired.source }}
-                <template #suffix>Codigo Fuente</template>
+                <template #suffix>Source</template>
               </FormLink>
               <FormLink to="https://patreon.com/fedired/" external>
                 <template #icon>
