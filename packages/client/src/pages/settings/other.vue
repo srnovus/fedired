@@ -13,6 +13,14 @@
 			>{{ i18n.ts.registry }}</FormLink
 		>
 
+		<FormLink to="https://help.fedired.com/report/bug/" external>
+                <template #icon>
+                  <i :class="icon('ph-bold ph-bug')"></i>
+                </template>
+                Bugs
+                <template #suffix>Reportar Error</template>
+              </FormLink>
+
 		<FormLink to="/settings/delete-account" class="_formBlock"
 			><template #icon><i :class="icon('ph-warning')"></i></template
 			>{{ i18n.ts.closeAccount }}</FormLink

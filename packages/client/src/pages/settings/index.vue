@@ -246,12 +246,6 @@ const menuDef = computed(() => [
 				},
 			},
 			{
-				icon: `${icon("ph-bold ph-bug")}`,
-				text: i18n.ts.errorReport,
-				href: "https://help.fedired.com/report/",
-				target: "_blank",
-			},
-			{
 				type: "button",
 				icon: `${icon("ph-sign-in fa-flip-horizontal")}`,
 				text: i18n.ts.logout,
