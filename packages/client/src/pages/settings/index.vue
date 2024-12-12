@@ -80,18 +80,6 @@ const ro = new ResizeObserver((entries, observer) => {
 
 
 const menuDef = computed(() => [
-
-	{
-		title: i18n.ts.Report,
-		items: [
-			{
-				icon: `${icon("ph-bold ph-bug")}`,
-				text: i18n.ts.errorReport,
-				to: "https://help.fedired.com/fed/error",
-				active: currentPage.value?.route.name === "general",
-			},
-			]	
-	},
 	{
 		title: i18n.ts.basicSettings,
 		items: [
@@ -256,6 +244,12 @@ const menuDef = computed(() => [
 					localStorage.removeItem("theme");
 					unisonReload();
 				},
+			},
+			{
+				icon: `${icon("ph-bold ph-bug")}`,
+				text: i18n.ts.preferencesBackups,
+				to: "https://help.fedired.com/report/",
+				active: currentPage.value?.route.name === "report-error",
 			},
 			{
 				type: "button",
