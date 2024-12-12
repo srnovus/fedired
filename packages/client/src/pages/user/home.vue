@@ -15,7 +15,7 @@
 					/>
 					<MkRemoteCaution
 						v-if="user.host != null"
-						:href="user.url"
+						:href="user.url ?? user.uri"
 						class="warn"
 					/>
 
@@ -43,12 +43,6 @@
 										:user="user"
 										:nowrap="true"
 									/>
-									<span v-if="user.isAdmin && user.username === 'srnovus'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
-										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
-									</span>
-									<span v-if="user.isAdmin && user.username === 'fedired'" v-tooltip.noDelay="'Verificado'" style="color: var(--badge); margin-left: 4px;">
-										<i :class="icon('ph-bold ph-seal-check')" style="font-size: 2.0em;"></i> <!-- Ícono de verificación, tamaño aumentado -->
-									</span>
 									<div v-if="isModerator">
 										<span
 											v-if="user.isSilenced"
@@ -89,7 +83,7 @@
 										v-if="user.isAdmin"
 										v-tooltip.noDelay="i18n.ts.isAdmin"
 										style="color: var(--badge)"
-										><i :class="icon('ph-bold ph-shield-check')"></i
+										><i :class="icon('ph-crown')"></i
 									></span>
 									<span
 										v-if="!user.isAdmin && user.isModerator"
@@ -161,7 +155,7 @@
 									v-if="user.isAdmin"
 									v-tooltip.noDelay="i18n.ts.isAdmin"
 									style="color: var(--badge)"
-									><i :class="icon('ph-bold ph-shield-check')"></i
+									><i :class="icon('ph-crown')"></i
 								></span>
 								<span
 									v-if="!user.isAdmin && user.isModerator"
@@ -368,6 +362,7 @@ import { userPage } from "@/filters/user";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
+import verified form "@/Verifeid.vue";
 import icon from "@/scripts/icon";
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
@@ -375,11 +370,12 @@ const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
 const hideFollowButton = defaultStore.state.hideFollowButtons;
 
 const emit = defineEmits(["refresh"]);
-const props = defineProps<{
-	user: entities.UserDetailed;
-}>();
-
-console.log(props.user); // Verifica que el objeto 'user' tenga los datos esperados
+const props = withDefaults(
+	defineProps<{
+		user: entities.UserDetailed;
+	}>(),
+	{},
+);
 
 const parallaxAnimationId = ref<null | number>(null);
 const narrow = ref<null | boolean>(null);
@@ -395,16 +391,16 @@ const timeForThem = computed(() => {
 		props.user.location!,
 		props.user
 			.location!.replace(
-				/[^A-Za-z0-9ÁĆÉǴÍḰĹḾŃÓṔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.\s].*/,
+				/[^A-Za-z0-9ÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.\s].*/,
 				"",
 			)
 			.trim(),
 		props.user.location!.replace(
-			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź].*/,
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.].*/,
 			"",
 		),
 		props.user.location!.replace(
-			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź\-\'\.].*/,
+			/[^A-Za-zÁĆÉǴÍḰĹḾŃÓṔŔŚÚÝŹáćéǵíḱĺḿńóṕŕśúýź].*/,
 			"",
 		),
 	];
@@ -416,7 +412,7 @@ const timeForThem = computed(() => {
 		const tz = tzInfo[0].timezone;
 		if (!tz) continue;
 
-		const theirTime = new Date().toLocaleString("es-ES", {
+		const theirTime = new Date().toLocaleString("en-US", {
 			timeZone: tz,
 			hour12: false,
 		});
@@ -459,6 +455,7 @@ onUnmounted(() => {
 	}
 });
 </script>
+
 <style lang="scss" scoped>
 .ftskorzw {
 	> .main {

@@ -78,6 +78,25 @@ const ro = new ResizeObserver((entries, observer) => {
 	narrow.value = entries[0].borderBoxSize[0].inlineSize < NARROW_THRESHOLD;
 });
 
+<MkInfo v-if="updateAvailable" warn class="info"
+						>{{ i18n.ts.updateAvailable }}
+						<a
+							href="https://github.com/fedired-dev/fedired/releases"
+							target="_bank"
+							class="_link"
+							>{{ i18n.ts.check }}</a
+						></MkInfo
+					>
+					<MkInfo warn class="info"
+						>Necesitas ayuda
+						<a
+							href="https://github.com/orgs/fedired-dev/discussions"
+							target="_bank"
+							class="_link"
+							>Reciber Soporte</a
+						></MkInfo
+					>
+
 const menuDef = computed(() => [
 	{
 		title: i18n.ts.basicSettings,
