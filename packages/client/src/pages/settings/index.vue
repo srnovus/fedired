@@ -247,9 +247,8 @@ const menuDef = computed(() => [
 			},
 			{
 				icon: `${icon("ph-bold ph-bug")}`,
-				text: i18n.ts.preferencesBackups,
+				text: i18n.ts.errorReport,
 				to: "https://help.fedired.com/report/",
-				active: currentPage.value?.route.name === "report-error",
 			},
 			{
 				type: "button",
