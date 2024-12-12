@@ -362,7 +362,6 @@ import { userPage } from "@/filters/user";
 import { defaultStore } from "@/store";
 import { i18n } from "@/i18n";
 import { isModerator, isSignedIn, me } from "@/me";
-import verified form "@/Verifeid.vue";
 import icon from "@/scripts/icon";
 
 const XPhotos = defineAsyncComponent(() => import("./index.photos.vue"));
