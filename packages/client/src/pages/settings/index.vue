@@ -90,7 +90,8 @@ const menuDef = computed(() => [
 				to: "https://help.fedired.com/fed/error",
 				active: currentPage.value?.route.name === "general",
 			},
-			]	,
+			]	
+	},
 	{
 		title: i18n.ts.basicSettings,
 		items: [
